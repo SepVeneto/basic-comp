@@ -32,7 +32,7 @@ export default defineComponent({
     }, { immediate: true, deep: true });
     watch(() => props.defaultValue, (value) => {
       defaultParams.value = JSON.parse(JSON.stringify({ ...props.modelValue, ...value}));
-      context.emit('update:modelValue', { ...props.modelValue, ...defaultParams.value });
+      context.emit('update:modelValue', JSON.parse(JSON.stringify({ ...props.modelValue, ...defaultParams.value })));
     }, { immediate: true })
 
     function updateData(key: string, val: string | string[]) {
@@ -55,14 +55,23 @@ export default defineComponent({
       for (const key in props.modelValue) {
         const whiteList = Object.keys(params);
         if (!whiteList.includes(key)) {
-          params[key] = Array.isArray(props.modelValue[key]) ? [] : '';
+          params[key] = Array.isArray(props.modelValue[key]) ? [] : undefined;
         } else {
-          params[key] = defaultParams.value[key];
+          const val = defaultParams.value[key]
+          if (isObject(val)) {
+            params[key] = { ...val }
+          } else {
+            params[key] = val
+          }
         }
       }
       context.emit('update:modelValue', params);
       context.emit('reset');
       props.search?.();
+    }
+    function isObject(val) {
+      const type = typeof val
+      return val != null && (type === 'object' || type === 'function')
     }
 
     const create = () => (
