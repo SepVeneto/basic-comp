@@ -6,6 +6,7 @@
     custom-label="name"
     custom-value="detail"
     :options="options"
+    @change="onChange"
   />
   <pre>{{JSON.stringify(select, null, 2)}}</pre>
 </template>
@@ -29,4 +30,7 @@ const options = ref([
     allName: 'Andrea Doria'
   }},
 ])
+function onChange(...args) {
+  console.log(args)
+}
 </script>

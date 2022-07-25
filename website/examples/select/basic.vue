@@ -4,6 +4,7 @@
     v-model:label="label"
     width="180px"
     :options="options"
+    @change="onChange"
   />
 </template>
 <script lang="ts">
@@ -21,5 +22,8 @@ const options = ref([
   { label: '维托里奥 维内托', value: 'vv' },
   { label: '安德烈亚 多利亚', value: 'Andrea Doria' },
 ])
+function onChange(...args) {
+  console.log(args)
+}
 
 </script>

@@ -67,3 +67,8 @@ select/bindObject
 | :--- | :-- | :--- |
 | getOptions | 获取当前选择框的选项列表 | - |
 | getLabel | 获取指定label对应的value | label,默认为当前选中项 |
+
+## 事件
+| 事件名 | 说明 | 参数 |
+| :--- | :--- | :--- |
+| change | 原生`change`事件的增强，会同时包含选择对象本身 | val, obj |

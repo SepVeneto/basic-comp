@@ -50,7 +50,7 @@ import { ElSelect } from 'element-plus'
 
 export default defineComponent({
   name: 'BcSelect',
-  emits: ['update:modelValue', 'update:label', 'fetch'],
+  emits: ['update:modelValue', 'update:label', 'fetch', 'change'],
   props: selectProps,
   components: {
     ElSelect,
@@ -117,7 +117,10 @@ export default defineComponent({
         return typeof item === 'object' ? '' : item;
       }
     }
-    function getObject(value: string) {
+    function getObject(value: unknown) {
+      if (typeof value === 'object') {
+        return value
+      }
       const res = selectOptions.value.find(item => item[optionValue.value] === (value || props.modelValue));
       if (!res) {
         return {};
@@ -148,6 +151,7 @@ export default defineComponent({
     }
     function emitValue(val: unknown) {
       context.emit('update:modelValue', val)
+      context.emit('change', val, getObject(val))
     }
     function emitLabel(val: unknown) {
       context.emit('update:label', getLabel(val))
