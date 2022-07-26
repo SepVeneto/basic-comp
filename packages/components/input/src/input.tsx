@@ -14,7 +14,7 @@ export default defineComponent({
     ElInput
   },
   setup(props, context) {
-    const inputRef = ref<typeof ElInput>();
+    const inputRef = ref<InstanceType<typeof ElInput>>();
 
     const inputWidth = computed(() => {
       if (typeof props.width === 'number') {
@@ -47,27 +47,39 @@ export default defineComponent({
       </>
     )
     async function handleCopy() {
-      await copyText(inputRef.value?.modelValue)
-      ElMessage.success('复制成功')
+      if (inputRef.value) {
+        const text = inputRef.value.input?.value ?? ''
+        await copyText(String(text))
+        ElMessage.success('复制成功')
+      }
     }
+    return {
+      inputRef,
+      borderClass,
+      inputWidth,
+
+      suffix
+    }
+  },
+  render() {
     const input = () => (
       <el-input
-        ref={inputRef}
-        class={['bc-input', borderClass]}
-        style={{width: inputWidth.value}}
+        ref={el => this.inputRef = el}
+        class={['bc-input', this.borderClass]}
+        style={{width: this.inputWidth}}
         placeholder='请输入'
         spellcheck={false}
-        {...context.attrs}
+        {...this.$attrs}
         v-slots={{
-          ...context.slots,
+          ...this.$slots,
           // suffix: () => context.slots.suffix?.()
-          suffix,
+          suffix: this.suffix,
         }}
       />
     )
     const text = () => (
-      <span>{context.attrs.modelValue}</span>
+      <span>{this.$attrs.modelValue}</span>
     )
-    return props.onlyDisplay ? text : input;
-  },
+    return this.onlyDisplay ? text() : input();
+  }
 })
