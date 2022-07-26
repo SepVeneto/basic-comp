@@ -17,7 +17,8 @@
     "docs:dev": "pnpm run -C website dev",
     "docs:build": "pnpm run -C website build",
     "docs:serve": "pnpm run -C website serve",
-    "gh-pages": "git subtree push --prefix website/.vitepress/dist origin gh-pages"
+    "gh-pages": "git subtree push --prefix website/.vitepress/dist origin gh-pages",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "dependencies": {
     "@basic-components/components": "workspace:*",
