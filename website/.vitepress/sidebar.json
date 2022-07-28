@@ -7,6 +7,10 @@
     {
       "link": "quick-start",
       "name": "快速开始"
+    },
+    {
+      "link": "changelog",
+      "name": "更新日志"
     }
   ],
   "components": [

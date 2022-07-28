@@ -7,8 +7,10 @@ import 'element-plus/theme-chalk/index.css'
 
 import VPApp from './components/vp-app.vue'
 import VPDemo from './components/vp-demo.vue'
+import VPChangelog from './components/vp-changelog.vue'
 
 export default VPApp
 export const globals = [
-  [VPDemo, 'Demo']
+  [VPDemo, 'Demo'],
+  [VPChangelog, 'VpChangelog'],
 ]

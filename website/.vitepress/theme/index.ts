@@ -12,6 +12,7 @@ export default {
     app.use(BasicComp)
 
     globals.forEach(([comp, name]) => {
+      console.log(name)
       app.component(name, comp)
     })
   }

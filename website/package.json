@@ -19,6 +19,7 @@
     "vitepress": "^0.22.3"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "normalize.css": "^8.0.1",
     "prismjs": "^1.25.0"
   }
