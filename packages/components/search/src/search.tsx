@@ -58,7 +58,9 @@ export default defineComponent({
           params[key] = Array.isArray(props.modelValue[key]) ? [] : undefined;
         } else {
           const val = defaultParams.value[key]
-          if (isObject(val)) {
+          if (Array.isArray(val)) {
+            params[key] = [...val]
+          } else if (isObject(val)) {
             params[key] = { ...val }
           } else {
             params[key] = val
