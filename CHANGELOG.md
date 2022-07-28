@@ -1,4 +1,13 @@
-# [](https://github.com/SepVeneto/vue-tools-ts/compare/v1.6.1...v) (2022-07-26)
+# [](https://github.com/SepVeneto/vue-tools-ts/compare/v1.6.2...v) (2022-07-28)
+
+
+
+## [1.6.2](https://github.com/SepVeneto/vue-tools-ts/compare/v1.6.1...v1.6.2) (2022-07-28)
+
+
+### Bug Fixes
+
+* **search:** 默认值为数组时重置变为对象 ([c68a349](https://github.com/SepVeneto/vue-tools-ts/commit/c68a349211708e61618e08995d63f6d629c5280e))
 
 
 
