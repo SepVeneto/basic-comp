@@ -12,13 +12,15 @@
           >
             <el-option
               v-for="release in releases"
-              :key="release.node_id"
+              :key="release.id"
               :value="release.name"
             >{{release.name}}</el-option>
           </el-select>
         </div>
         <el-card v-if="currentRelease">
-
+          <div>
+            <VPMarkdown :content="currentRelease.body" />
+          </div>
         </el-card>
       </el-skeleton>
     </ClientOnly>
@@ -28,20 +30,27 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
+import VPMarkdown from './vp-markdown.vue'
+
+interface Release {
+  id: number
+  name: string
+}
+
 const loading = ref(true)
 const currentRelease = ref()
-const releases = ref([])
+const releases = ref<Release>([])
 
 function onVersionChange(val) {
-  console.log(val)
   const _releases = releases.value
   currentRelease.value = _releases[_releases.findIndex((r) => r.name === val)]
+  console.log(currentRelease.value)
 }
 
 onMounted(async() => {
   try {
-    const { data } = await axios.get(
-      'https://api.github.com/repos/SepVeneto/vue-tools-ts/tags'
+    const { data } = await axios.get<Release[]>(
+      'https://api.github.com/repos/SepVeneto/vue-tools-ts/releases'
     )
     releases.value = data
     console.log(data)
