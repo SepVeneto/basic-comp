@@ -39,7 +39,7 @@ interface Release {
 
 const loading = ref(true)
 const currentRelease = ref()
-const releases = ref<Release>([])
+const releases = ref<Release[]>([])
 
 function onVersionChange(val) {
   const _releases = releases.value
