@@ -93,9 +93,8 @@ export default defineComponent({
       onActivated(() => {
         init()
       })
-    } else {
-      init()
     }
+    init()
     function init() {
       if (props.custom) {
         props.api && props.immediate && props.api();
