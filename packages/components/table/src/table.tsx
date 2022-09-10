@@ -27,7 +27,13 @@ export default defineComponent({
 
     const configProviderTable = computed(() => table.value);
     const responseWrap = computed(() => response.value?.data ?? 'data')
-    const tableDataName = computed(() => (props.arrayName || arrayName.value) ?? '')
+    const tableDataName = computed(() => {
+      if (props.arrayName == null) {
+        return null
+      } else {
+        return (props.arrayName || arrayName.value) ?? ''
+      }
+    })
     const tableData = computed<Record<string, unknown>[]>(() => {
       if (props.data && props.data.length > 0) {
         return [...props.data || []];
