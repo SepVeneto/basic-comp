@@ -1,5 +1,5 @@
 {
-  "name": "basic-components",
+  "name": "@sepveneto/basic-comp",
   "version": "1.6.2",
   "description": "",
   "publishConfig": {
@@ -14,14 +14,13 @@
     "theme-chalk/*.css"
   ],
   "author": "SepVeneto",
-  "homepage": "https://sepveneto.github.io/vue-tools-ts/guide/install.html",
-  "changelog": "https://sepveneto.github.io/vue-tools-ts/changelog.html",
+  "homepage": "https://sepveneto.github.io/basic-comp/guide/install.html",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SepVeneto/vue-tools-ts"
+    "url": "https://github.com/SepVeneto/basic-comp"
   },
   "bugs": {
-    "url": "https://github.com/SepVeneto/vue-tools-ts/issues",
+    "url": "https://github.com/SepVeneto/basic-comp/issues",
     "email": "sepveneto@qq.com"
   },
   "license": "ISC",
