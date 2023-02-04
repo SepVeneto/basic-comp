@@ -96,6 +96,8 @@ async function copyFiles() {
   execSync('npm run build:style')
   await copyStyle()
 
+  await copyReadme();
+
   // console.log('pack')
   // execSync('cd ./dist && npm pack --pack-destination ../')
 })().then(() => {
@@ -121,4 +123,8 @@ async function copyStyle() {
   const styleDir = path.join(outputDir, 'theme-chalk');
   fs.mkdirSync(styleDir, { recursive: true })
   await fs.promises.cp(path.join(themeDir, 'index.css'), path.join(outputDir, 'theme-chalk', 'index.css'))
+}
+
+async function copyReadme() {
+  await fs.promises.cp(path.resolve(__dirname, 'README.md'), path.resolve(outputDir, 'README.md'));
 }
