@@ -96,8 +96,8 @@ async function copyFiles() {
   execSync('npm run build:style')
   await copyStyle()
 
-  console.log('pack')
-  execSync('cd ./dist && npm pack --pack-destination ../')
+  // console.log('pack')
+  // execSync('cd ./dist && npm pack --pack-destination ../')
 })().then(() => {
   green('success')
   process.exit(0)

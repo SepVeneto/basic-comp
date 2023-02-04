@@ -1,6 +1,6 @@
 {
   "name": "@sepveneto/basic-comp",
-  "version": "1.6.2",
+  "version": "1.0.0",
   "description": "",
   "publishConfig": {
     "main": "lib/index.js"
