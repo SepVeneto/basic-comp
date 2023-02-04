@@ -5,6 +5,7 @@
     "packages/*",
     "websites"
   ],
+  "packageManager": "pnpm@7.3.0",
   "scripts": {
     "bootstrap": "npm i && lerna bootstrap",
     "serve": "vue-cli-service serve",
