@@ -18,6 +18,7 @@ import { buildModules } from './module'
 const EP_PREFIX = 'element-plus'
 const VUE_REGEX = 'vue'
 const VUE_MONO = '@vue'
+const projectRoot = path.resolve(__dirname, '..');
 const pkgRoot = path.resolve(__dirname, '../packages')
 const indexRoot = path.resolve(pkgRoot, 'basic-components')
 const compRoot = path.resolve(pkgRoot, 'components');
@@ -126,5 +127,5 @@ async function copyStyle() {
 }
 
 async function copyReadme() {
-  await fs.promises.cp(path.resolve(__dirname, 'README.md'), path.resolve(outputDir, 'README.md'));
+  await fs.promises.cp(path.resolve(projectRoot, 'README.md'), path.resolve(outputDir, 'README.md'));
 }
