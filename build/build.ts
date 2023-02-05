@@ -18,6 +18,7 @@ import { buildModules } from './module'
 const EP_PREFIX = 'element-plus'
 const VUE_REGEX = 'vue'
 const VUE_MONO = '@vue'
+const projectRoot = path.resolve(__dirname, '..');
 const pkgRoot = path.resolve(__dirname, '../packages')
 const indexRoot = path.resolve(pkgRoot, 'basic-components')
 const compRoot = path.resolve(pkgRoot, 'components');
@@ -67,9 +68,17 @@ async function copyFiles() {
   await fs.promises.cp(path.resolve(indexRoot, 'index.d.ts'), path.resolve(outputDir, 'es', 'index.d.ts'));
   await fs.promises.cp(path.resolve(indexRoot, 'global.d.ts'), path.resolve(outputDir, 'global.d.ts'))
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(indexRoot, 'package.json'), 'utf-8'));
-  packageJson.main = 'lib/index.js'
-  packageJson.module = 'es/index.mjs'
+  delete packageJson.main
   packageJson.types = 'lib/index.d.ts'
+  packageJson.exports = {
+    ".": {
+      "require": "./lib/index.js",
+      "import": "./es/index.js"
+    },
+    "./css": {
+      "default": "./theme-chalk/index.css"
+    }
+  },
   await fs.promises.writeFile(path.resolve(outputDir, 'package.json'), JSON.stringify(packageJson, null, 2))
   // await fs.promises.cp(path.resolve(indexRoot, 'package.json'), path.resolve(outputDir, 'package.json'));
 }
@@ -96,8 +105,10 @@ async function copyFiles() {
   execSync('npm run build:style')
   await copyStyle()
 
-  console.log('pack')
-  execSync('cd ./dist && npm pack --pack-destination ../')
+  await copyReadme();
+
+  // console.log('pack')
+  // execSync('cd ./dist && npm pack --pack-destination ../')
 })().then(() => {
   green('success')
   process.exit(0)
@@ -121,4 +132,8 @@ async function copyStyle() {
   const styleDir = path.join(outputDir, 'theme-chalk');
   fs.mkdirSync(styleDir, { recursive: true })
   await fs.promises.cp(path.join(themeDir, 'index.css'), path.join(outputDir, 'theme-chalk', 'index.css'))
+}
+
+async function copyReadme() {
+  await fs.promises.cp(path.resolve(projectRoot, 'README.md'), path.resolve(outputDir, 'README.md'));
 }
