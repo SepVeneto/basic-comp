@@ -1,0 +1,29 @@
+name: Publish Docs Deploy
+
+on:
+  workflow_run:
+    workflows: ['Publish to NPM registry']
+    types: [completed]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Build
+        run: |
+          npm i -g pnpm
+          pnpm i
+          pnpm docs:build
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: docs
+          folder: website/.vitepress/dist

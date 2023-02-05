@@ -4,6 +4,7 @@
 
 ```js
 import { createApp } from 'vue'
-import BasicComp from 'basic-components'
+import basicComp from '@sepveneto/basic-comp'
+import '@sepveneto/basic-comp/css'
 createApp().use(BasicComp).mount('#app');
 ```

@@ -1,8 +1,20 @@
-# vue-tools-ts
+# basic-comp
 
-## Project setup
+## 使用
+
+### 安装
+```bash
+pnpm i @sepveento/basic-comp
+npm i @sepveento/basic-comp
+yarn add @sepveento/basic-comp
 ```
-npm install
+
+### 基本用法
+```bash
+import { createApp } from 'vue'
+import basicComp from '@sepveento/basic-comp'
+import '@sepveneto/basic-comp/css'
+createApp().use(basicComp).mount('#app')
 ```
 
 ### Compiles and hot-reloads for development

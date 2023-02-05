@@ -1,4 +1,4 @@
-import BasicComp from 'basic-components'
+import BasicComp from '@sepveneto/basic-comp';
 import ElementPlus from 'element-plus'
 
 import VPApp, { globals } from '../vitepress'

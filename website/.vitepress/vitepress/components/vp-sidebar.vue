@@ -11,19 +11,26 @@
 </template>
 
 <script lang="ts">
-import { isActive } from 'vitepress/dist/client/theme-default/utils'
 import { useRoute } from 'vitepress';
+import type { Route } from 'vitepress';
 import { defineComponent } from 'vue'
 import { useSidebar } from '../hooks/sidebar';
 export default defineComponent({
   name: 'VPSidebar',
+  setup() {
+    const { sidebar } = useSidebar()
+    const route = useRoute()
+
+    function isActive(curr: Route, route: string) {
+      return curr.path.includes(route)
+    }
+    return {
+      isActive,
+      route,
+      sidebar,
+    }
+  }
 })
-
-</script>
-
-<script lang="ts" setup>
-const { sidebar } = useSidebar()
-const route = useRoute()
 </script>
 
 <style lang="scss" scoped>

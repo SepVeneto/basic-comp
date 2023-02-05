@@ -1,1 +1,1 @@
-import 'basic-components/global'
+import '@sepveneto/basic-comp/global'

@@ -26,15 +26,13 @@ pnpm build:comps
 
 ## 使用包管理器安装
 
-由于没有发布到npm上，对于有私有仓库的，可以fork到本地打包上传
-
 ```bash
 # npm
-npm install basic-components --registry {仓库地址}
+npm i @sepveento/basic-comp
 
 #yarn
-yarn add basic-components --registry {仓库地址}
+yarn add @sepveento/basic-comp
 
 #pnpm
-pnpm install basic-components --registry {仓库地址}
+pnpm i @sepveento/basic-comp
 ```
