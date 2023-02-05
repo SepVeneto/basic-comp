@@ -50,7 +50,7 @@ function onVersionChange(val) {
 onMounted(async() => {
   try {
     const { data } = await axios.get<Release[]>(
-      'https://api.github.com/repos/SepVeneto/vue-tools-ts/releases'
+      'https://api.github.com/repos/SepVeneto/basic-comp/releases'
     )
     releases.value = data
     console.log(data)

@@ -15,7 +15,7 @@ title: Install
 ## 本地安装
 
 ```bash
-git clone https://github.com/SepVeneto/vue-tools-ts.git
+git clone https://github.com/SepVeneto/basic-comp.git
 
 pnpm i
 
