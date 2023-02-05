@@ -68,9 +68,17 @@ async function copyFiles() {
   await fs.promises.cp(path.resolve(indexRoot, 'index.d.ts'), path.resolve(outputDir, 'es', 'index.d.ts'));
   await fs.promises.cp(path.resolve(indexRoot, 'global.d.ts'), path.resolve(outputDir, 'global.d.ts'))
   const packageJson = JSON.parse(fs.readFileSync(path.resolve(indexRoot, 'package.json'), 'utf-8'));
-  packageJson.main = 'lib/index.js'
-  packageJson.module = 'es/index.mjs'
+  delete packageJson.main
   packageJson.types = 'lib/index.d.ts'
+  packageJson.exports = {
+    ".": {
+      "require": "./lib/index.js",
+      "import": "./es/index.js"
+    },
+    "./css": {
+      "default": "./theme-chalk/index.css"
+    }
+  },
   await fs.promises.writeFile(path.resolve(outputDir, 'package.json'), JSON.stringify(packageJson, null, 2))
   // await fs.promises.cp(path.resolve(indexRoot, 'package.json'), path.resolve(outputDir, 'package.json'));
 }
