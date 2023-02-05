@@ -218,6 +218,7 @@ export default defineComponent({
         header-cell-class-name="custom-header"
         row-key={this.rowKey}
         onSelect={(...args: any) => this.$emit.apply(this, ['select', ...args])}
+        size="default"
         {...this.$attrs}
       >
         {this.tableConfig.map(config => this.transformTableColumn(config))}
