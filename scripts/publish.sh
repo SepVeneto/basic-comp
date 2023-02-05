@@ -3,8 +3,6 @@
 # when error exit at once
 set -e
 
-echo $GITHUB_REF
-
 pnpm i --frozen-lockfile --registry=https://registry.npmmirror.com
 
 pnpm build

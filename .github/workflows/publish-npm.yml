@@ -1,9 +1,9 @@
 name: Publish to NPM registry
 
 on:
-  workflow_run:
-    workflows: ['Release']
-    types: [completed]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   # Publish to NPM repository

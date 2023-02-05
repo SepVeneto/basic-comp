@@ -3,7 +3,7 @@ name: Publish Docs Deploy
 on:
   workflow_run:
     workflows: ['Publish to NPM registry']
-    types: [completed]
+    types: [success]
 
 jobs:
   deploy:
@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: |
           npm i -g pnpm
-          pnpm i
+          pnpm i --registry=https://registry.npmmirror.com
           pnpm docs:build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.0
