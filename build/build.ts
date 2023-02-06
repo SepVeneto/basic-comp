@@ -73,7 +73,7 @@ async function copyFiles() {
   packageJson.exports = {
     ".": {
       "require": "./lib/index.js",
-      "import": "./es/index.js"
+      "import": "./es/index.mjs"
     },
     "./css": {
       "default": "./theme-chalk/index.css"
