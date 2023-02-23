@@ -1,8 +1,8 @@
 declare module 'vue' {
   export interface GlobalComponents {
-    BcButton: typeof import('basic-components')['BcButton'],
+    BcButton: typeof import('./index')['BcButton'],
     BcSearch: typeof import('basic-components')['BcSearch'],
-    BcTable: typeof import('basic-components')['BcTable'],
+    BcTable: typeof import('@sepveneto/basic-comp')['BcTable'],
     BcClipboard: typeof import('basic-components')['BcClipboard'],
     BcDialog: typeof import('basic-components')['BcDialog'],
     BcInput: typeof import('basic-components')['BcInput'],

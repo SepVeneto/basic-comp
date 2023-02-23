@@ -18,8 +18,8 @@ const indexRoot = path.resolve(pkgRoot, 'basic-components')
 const outputDir = path.resolve(__dirname, '../dist');
 const indexOutput = path.resolve(outputDir)
 
-type Module = 'esm' | 'cjs'
-interface BuildInfo {
+export type Module = 'esm' | 'cjs'
+export interface BuildInfo {
   module: 'ESNext' | 'CommonJS'
   format: ModuleFormat
   ext: 'mjs' | 'cjs' | 'js'
@@ -35,7 +35,7 @@ interface BuildInfo {
     path: string
   }
 }
-const buildConfig: Record<Module, BuildInfo> = {
+export const buildConfig: Record<Module, BuildInfo> = {
   esm: {
     module: 'ESNext',
     format: 'esm',

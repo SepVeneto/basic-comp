@@ -14,16 +14,17 @@ import typescript from '@rollup/plugin-typescript'
 import scss from 'rollup-plugin-scss'
 import { execSync } from 'child_process'
 import { buildModules } from './module'
+import { generateTypesDefinitions } from './types-definitions'
+import {
+  outputDir,
+  indexRoot,
+  themeDir,
+  projectRoot,
+} from './pkg'
 
-const EP_PREFIX = 'element-plus'
 const VUE_REGEX = 'vue'
 const VUE_MONO = '@vue'
-const projectRoot = path.resolve(__dirname, '..');
-const pkgRoot = path.resolve(__dirname, '../packages')
-const indexRoot = path.resolve(pkgRoot, 'basic-components')
-const compRoot = path.resolve(pkgRoot, 'components');
-const outputDir = path.resolve(__dirname, '../dist');
-const themeDir = path.resolve(pkgRoot, 'theme-chalk/dist');
+
 const plugins = [
   scss({
     // output: 'bundle.css'
@@ -41,16 +42,16 @@ const plugins = [
   esbuild(),
 ]
 
-const pathsRewriter = (id: string) => {
-  if (id.startsWith(`${EP_PREFIX}/components`))
-    return id.replace(`${EP_PREFIX}/components`, '..')
-  if (id.startsWith(EP_PREFIX) && ['icons'].every((e) => !id.endsWith(e)))
-    return id.replace(EP_PREFIX, EP_PREFIX)
-  if (id.startsWith('@basic-components')) {
-    return id.replace('@basic-components', '.')
-  }
-  return id
-}
+// const pathsRewriter = (id: string) => {
+//   if (id.startsWith(`${EP_PREFIX}/components`))
+//     return id.replace(`${EP_PREFIX}/components`, '..')
+//   if (id.startsWith(EP_PREFIX) && ['icons'].every((e) => !id.endsWith(e)))
+//     return id.replace(EP_PREFIX, EP_PREFIX)
+//   if (id.startsWith('@basic-components')) {
+//     return id.replace('@basic-components', '.')
+//   }
+//   return id
+// }
 
 async function reporter(opt: FileSizeOptions, outputOptions: OutputOptions, info: FileSizeInfo) {
   const values = [
@@ -90,6 +91,9 @@ async function copyFiles() {
 ;(async () => {
   console.log('build components')
   await buildModules()
+
+  console.log('generate types')
+  await generateTypesDefinitions()
   // await buildComponents()
 
   // console.log('build entry')
