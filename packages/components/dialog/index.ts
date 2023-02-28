@@ -1,11 +1,7 @@
-import { App, Plugin } from 'vue';
 import Dialog from './src/dialog';
-Dialog.install = (app: App) => {
-  app.component(Dialog.name, Dialog);
-}
+import { compInstall } from '../type'
 
-const _Dialog = Dialog as unknown as Plugin;
-export default _Dialog;
-export const BcDialog = _Dialog;
+export const BcDialog = compInstall(Dialog)
+export default BcDialog
 
 export * from './src/type'

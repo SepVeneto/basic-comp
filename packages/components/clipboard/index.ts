@@ -1,11 +1,7 @@
-import { App, Plugin } from 'vue';
 import Clipboard from './src/clipboard.vue';
-Clipboard.install = (app: App) => {
-  app.component(Clipboard.name, Clipboard);
-}
+import { compInstall } from '../type'
 
-const _Clipboard = Clipboard as unknown as Plugin;
-export default _Clipboard;
-export const BcClipboard = _Clipboard;
+export const BcClipboard = compInstall(Clipboard)
+export default BcClipboard
 
 export * from './src/type'

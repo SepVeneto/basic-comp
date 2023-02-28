@@ -1,12 +1,7 @@
-import { App, Plugin } from "vue";
 import ConfigProvider from "./src/configProvider";
+import { compInstall } from '../type'
 
-ConfigProvider.install = (app: App): void => {
-  app.component(ConfigProvider.name, ConfigProvider);
-}
-
-const _ConfigProvider = ConfigProvider as unknown as Plugin;
-export default _ConfigProvider
-export const BcConfigProvider = _ConfigProvider
+export const BcConfigProvider = compInstall(ConfigProvider)
+export default BcConfigProvider 
 
 export * from './src/type'

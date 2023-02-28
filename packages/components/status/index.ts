@@ -1,10 +1,5 @@
-import { App, Plugin } from 'vue';
 import Status from './src/index.vue';
+import { compInstall } from '../type'
 
-Status.install = (app: App) => {
-  app.component(Status.name, Status);
-}
-
-const _Status = Status as unknown as Plugin;
-export default _Status;
-export const BcStatus = _Status;
+export const BcStatus = compInstall(Status)
+export default BcStatus

@@ -1,12 +1,7 @@
-import { App, Plugin } from 'vue';
 import Motion from './src/CssMotion.vue';
+import { compInstall } from '../type'
 
-Motion.install = (app: App) => {
-  app.component(Motion.name, Motion)
-}
-
-const _Motion = Motion as unknown as Plugin;
-export default _Motion;
-export const BcMotion = _Motion;
+export const BcMotion = compInstall(Motion)
+export default BcMotion
 
 export * from './src/type'

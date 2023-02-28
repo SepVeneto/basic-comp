@@ -1,12 +1,7 @@
-import { App, Plugin } from 'vue';
 import MotionGroup from './src/CssMotion.group';
+import { compInstall } from '../type'
 
-MotionGroup.install = (app: App) => {
-  app.component(MotionGroup.name, MotionGroup)
-}
-
-const _MotionGroup = MotionGroup as unknown as Plugin;
-export default _MotionGroup;
-export const BcMotionGroup = _MotionGroup;
+export const BcMotionGroup = compInstall(MotionGroup)
+export default BcMotionGroup 
 
 export * from './src/type'

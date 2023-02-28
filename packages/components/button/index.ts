@@ -1,13 +1,8 @@
-import { App, Plugin } from 'vue';
 import Button from './src/button';
+import { compInstall } from '../type'
 
-Button.install = (app: App): void => {
-  app.component(Button.name, Button);
-}
+export const BcButton = compInstall(Button)
 
-const _Button = Button as unknown as Plugin;
-
-export default _Button;
-export const BcButton = _Button;
+export default BcButton
 
 export * from './src/type'
