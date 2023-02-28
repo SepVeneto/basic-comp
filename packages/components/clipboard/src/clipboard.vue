@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { copyText } from '@basic-components/utils';
+import { copyText } from '@basic-comp/utils';
 import { defineComponent, getCurrentInstance } from 'vue';
 import { clipboardProps } from './type';
 export default defineComponent({

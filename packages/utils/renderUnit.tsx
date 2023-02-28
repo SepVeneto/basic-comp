@@ -1,7 +1,7 @@
 import { ComponentInternalInstance } from "vue";
-import { RenderInputConfigType } from "@basic-components/components/search";
-import { BcButton, BcSelect } from '@basic-components/components'
-import { getValue, setValue } from '@basic-components/utils'
+import { RenderInputConfigType } from "@basic-comp/components/search";
+import { BcButton, BcSelect } from '@basic-comp/components'
+import { getValue, setValue } from '@basic-comp/utils'
 
 export type RenderContextType = {
   handleSearch?: () => void,

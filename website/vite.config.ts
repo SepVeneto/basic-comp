@@ -4,20 +4,24 @@ import { defineConfig } from 'vite'
 // import { projRoot } from './.vitepress/utils/paths'
 import type { Alias } from 'vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import {
+  indexRoot,
+  pkgRoot,
+} from '../build/pkg'
 
 const alias: Alias[] = []
-// if (process.env.DOC_ENV !== 'production') {
-//   alias.push(
-//     {
-//       find: /^element-plus(\/(es|lib))?$/,
-//       replacement: path.resolve(projRoot, 'packages/element-plus/index.ts'),
-//     },
-//     {
-//       find: /^element-plus\/(es|lib)\/(.*)$/,
-//       replacement: `${path.resolve(projRoot, 'packages')}/$2`,
-//     }
-//   )
-// }
+if (process.env.DOC_ENV !== 'production') {
+  alias.push(
+    {
+      find: /^@sepveneto\/basic-comp(\/(es|lib))?$/,
+      replacement: path.resolve(indexRoot, 'index.ts'),
+    },
+    {
+      find: /^@sepveneto\/basic-comp\/(es|lib)\/(.*)$/,
+      replacement: `${pkgRoot}/$2`,
+    },
+  )
+}
 
 export default defineConfig({
   server: {
@@ -33,10 +37,13 @@ export default defineConfig({
     vueJsx()
   ],
   resolve: {
-    alias: {
-      packages: path.resolve(__dirname, '../packages')
-    }
-    // alias,
+    alias: [
+      {
+        find: 'packages',
+        replacement: path.resolve(__dirname, '../packages')
+      },
+      ...alias,
+    ]
   },
   // plugins: [Inspect()],
   // optimizeDeps: {

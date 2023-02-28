@@ -1,5 +1,6 @@
 import { PropType, ExtractPropTypes } from 'vue';
 import type { UploadRequestOptions } from 'element-plus'
+import { ApiResponseType } from '@basic-comp/components/type'
 export type UploadCallbackType = File | UploadRequestOptions | FormData
 export const uploadProps = {
   /**

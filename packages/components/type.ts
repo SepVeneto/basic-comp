@@ -10,3 +10,9 @@ export * from './svgIcon';
 export * from './upload';
 export * from './motion';
 export * from './motionGroup';
+
+export declare interface ApiResponseType {
+  code: string,
+  msg: string,
+  data: unknown,
+}

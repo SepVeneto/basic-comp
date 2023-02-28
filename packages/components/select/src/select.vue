@@ -43,9 +43,9 @@
 <script lang="ts">
 // import serverSelect from './serverSelect';
 import { computed, defineComponent, ref } from 'vue';
-import { getValue } from '@basic-components/utils'
+import { getValue } from '@basic-comp/utils'
 import { SelectProps, selectProps, SelectOptions, SelectOption } from './type';
-import { useConfigInject } from '@basic-components/hooks';
+import { useConfigInject } from '@basic-comp/hooks';
 import { ElSelect } from 'element-plus'
 
 export default defineComponent({

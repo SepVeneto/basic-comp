@@ -1,4 +1,4 @@
-import { useConfigInject } from '@basic-components/hooks'
+import { useConfigInject } from '@basic-comp/hooks'
 import { computed, defineComponent } from 'vue'
 export default defineComponent({
   name: 'BcDatePicker',

@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@sepveneto/basic-comp": "npm:@sepveneto/basic-comp@latest",
     "@types/markdown-it": "^12.2.3",
     "@types/markdown-it-container": "^2.0.4",
     "@types/prismjs": "^1.16.6",
-    "@sepveneto/basic-comp": "workspace:*",
     "vitepress": "^0.22.4"
   },
   "dependencies": {

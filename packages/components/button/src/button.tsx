@@ -1,8 +1,6 @@
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { ElMessageBox, ElButton, ElTooltip } from 'element-plus';
 import { buttonProps } from './type';
-
-const SPECIAL = Object.freeze<string>([])
 
 export default defineComponent({
   name: 'BcButton',

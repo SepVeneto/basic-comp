@@ -1,6 +1,7 @@
 /* eslint-disable */
 import fs from 'fs'
 import path from 'path'
+import { copy } from 'fs-extra'
 import rollup, { OutputOptions } from 'rollup'
 import vue from  '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -13,17 +14,19 @@ import chalk from 'chalk'
 import typescript from '@rollup/plugin-typescript'
 import scss from 'rollup-plugin-scss'
 import { execSync } from 'child_process'
-import { buildModules } from './module'
+import { buildModules, Module, buildConfig } from './module'
+import { generateTypesDefinitions } from './types-definitions'
+import {
+  outputDir,
+  indexRoot,
+  themeDir,
+  projectRoot,
+  indexOutput,
+} from './pkg'
 
-const EP_PREFIX = 'element-plus'
 const VUE_REGEX = 'vue'
 const VUE_MONO = '@vue'
-const projectRoot = path.resolve(__dirname, '..');
-const pkgRoot = path.resolve(__dirname, '../packages')
-const indexRoot = path.resolve(pkgRoot, 'basic-components')
-const compRoot = path.resolve(pkgRoot, 'components');
-const outputDir = path.resolve(__dirname, '../dist');
-const themeDir = path.resolve(pkgRoot, 'theme-chalk/dist');
+
 const plugins = [
   scss({
     // output: 'bundle.css'
@@ -41,16 +44,16 @@ const plugins = [
   esbuild(),
 ]
 
-const pathsRewriter = (id: string) => {
-  if (id.startsWith(`${EP_PREFIX}/components`))
-    return id.replace(`${EP_PREFIX}/components`, '..')
-  if (id.startsWith(EP_PREFIX) && ['icons'].every((e) => !id.endsWith(e)))
-    return id.replace(EP_PREFIX, EP_PREFIX)
-  if (id.startsWith('@basic-components')) {
-    return id.replace('@basic-components', '.')
-  }
-  return id
-}
+// const pathsRewriter = (id: string) => {
+//   if (id.startsWith(`${EP_PREFIX}/components`))
+//     return id.replace(`${EP_PREFIX}/components`, '..')
+//   if (id.startsWith(EP_PREFIX) && ['icons'].every((e) => !id.endsWith(e)))
+//     return id.replace(EP_PREFIX, EP_PREFIX)
+//   if (id.startsWith('@basic-components')) {
+//     return id.replace('@basic-components', '.')
+//   }
+//   return id
+// }
 
 async function reporter(opt: FileSizeOptions, outputOptions: OutputOptions, info: FileSizeInfo) {
   const values = [
@@ -64,32 +67,16 @@ async function reporter(opt: FileSizeOptions, outputOptions: OutputOptions, info
 }
 
 async function copyFiles() {
-  await fs.promises.cp(path.resolve(indexRoot, 'index.d.ts'), path.resolve(outputDir, 'lib', 'index.d.ts'));
-  await fs.promises.cp(path.resolve(indexRoot, 'index.d.ts'), path.resolve(outputDir, 'es', 'index.d.ts'));
-  await fs.promises.cp(path.resolve(indexRoot, 'global.d.ts'), path.resolve(outputDir, 'global.d.ts'))
-  const packageJson = JSON.parse(fs.readFileSync(path.resolve(indexRoot, 'package.json'), 'utf-8'));
-  delete packageJson.main
-  packageJson.types = 'lib/index.d.ts'
-  packageJson.exports = {
-    ".": {
-      "require": "./lib/index.js",
-      "import": "./es/index.mjs"
-    },
-    "./css": {
-      "default": "./theme-chalk/index.css"
-    }
-  },
-  await fs.promises.writeFile(path.resolve(outputDir, 'package.json'), JSON.stringify(packageJson, null, 2))
-  // await fs.promises.cp(path.resolve(indexRoot, 'package.json'), path.resolve(outputDir, 'package.json'));
+  await fs.promises.cp(path.resolve(projectRoot, 'global.d.ts'), path.resolve(indexOutput, 'global.d.ts'))
+  await fs.promises.cp(path.resolve(indexRoot, 'package.json'), path.resolve(indexOutput, 'package.json'))
 }
-
-// function pathsRewriter(id: string) {
-//   if()
-// }
 
 ;(async () => {
   console.log('build components')
   await buildModules()
+
+  console.log('generate types')
+  await generateTypesDefinitions()
   // await buildComponents()
 
   // console.log('build entry')
@@ -98,7 +85,7 @@ async function copyFiles() {
   // console.log('build index')
   // await buildIndexEntry()
 
-  console.log('copy type/package')
+  // console.log('copy type/package')
   await copyFiles()
 
   console.log('copy style')
@@ -106,6 +93,8 @@ async function copyFiles() {
   await copyStyle()
 
   await copyReadme();
+
+  await copyTypesDefinitions()
 
   // console.log('pack')
   // execSync('cd ./dist && npm pack --pack-destination ../')
@@ -128,12 +117,21 @@ function logAndShutdown(e) {
 }
 
 async function copyStyle() {
-  await fs.promises.cp(path.resolve(indexRoot, 'index.d.ts'), path.resolve(outputDir, 'lib', 'index.d.ts'));
-  const styleDir = path.join(outputDir, 'theme-chalk');
+  // await fs.promises.cp(path.resolve(indexRoot, 'index.d.ts'), path.resolve(outputDir, 'lib', 'index.d.ts'));
+  const styleDir = path.join(indexOutput, 'theme-chalk');
   fs.mkdirSync(styleDir, { recursive: true })
-  await fs.promises.cp(path.join(themeDir, 'index.css'), path.join(outputDir, 'theme-chalk', 'index.css'))
+  await fs.promises.cp(path.join(themeDir, 'index.css'), path.join(indexOutput, 'theme-chalk', 'index.css'))
 }
 
 async function copyReadme() {
-  await fs.promises.cp(path.resolve(projectRoot, 'README.md'), path.resolve(outputDir, 'README.md'));
+  await fs.promises.cp(path.resolve(projectRoot, 'README.md'), path.resolve(indexOutput, 'README.md'));
+}
+
+
+function copyTypesDefinitions() {
+  const src = path.resolve(outputDir, 'types', 'packages')
+  const copyTypes = (module: Module) => {
+    return copy(src, buildConfig[module].output.path)
+  }
+  return Promise.all([copyTypes('esm'), copyTypes('cjs')])
 }

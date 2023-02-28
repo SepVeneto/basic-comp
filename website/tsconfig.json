@@ -21,10 +21,12 @@
     // "rootDir": "./",
     "moduleResolution": "node",
     // "baseUrl": "./",
-    // "paths": {},
+    "paths": {
+      "@sepveneto/basic-comp": ["../pakcages/basic-comp"]
+    },
     // "rootDirs": [],
     // "typeRoots": [],
-    "types": ["element-plus/global"],
+    "types": ["element-plus/global", "../types/components"],
     // "allowUmdGlobalAccess": true,
     "resolveJsonModule": true,
     // "noResolve": true,

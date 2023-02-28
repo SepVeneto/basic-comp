@@ -1,5 +1,5 @@
 {
-  "name": "@basic-components/utils",
+  "name": "@basic-comp/utils",
   "main": "index.ts",
   "module": "index.ts"
 }
