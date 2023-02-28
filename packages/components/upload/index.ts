@@ -1,5 +1,5 @@
 import Upload from './src/upload.vue';
-import { compInstall } from '../type'
+import { compInstall } from '@basic-comp/utils'
 
 export const BcUpload = compInstall(Upload)
 export default BcUpload
