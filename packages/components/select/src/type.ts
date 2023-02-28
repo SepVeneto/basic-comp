@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ExtractPropTypes, PropType } from 'vue';
+import { ApiResponseType } from '@basic-comp/components/type'
 
 export type SelectOption = {
   children?: SelectOption[],

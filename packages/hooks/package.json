@@ -1,5 +1,5 @@
 {
-  "name": "@basic-components/hooks",
+  "name": "@basic-comp/hooks",
   "main": "index.ts",
   "module": "index.ts",
   "unpkg": "index.js"

@@ -16,7 +16,7 @@
     "rootDir": ".",
     "types": [],
     "paths": {
-      "@basic-components/*": ["packages/*"]
+      "@basic-comp/*": ["packages/*"]
     }
   }
 }

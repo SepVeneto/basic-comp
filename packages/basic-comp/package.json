@@ -2,10 +2,19 @@
   "name": "@sepveneto/basic-comp",
   "version": "1.0.0",
   "description": "",
-  "types": "index.d.ts",
-  "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "types": "es/index.d.ts",
+  "main": "lib/index.js",
+  "module": "es/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "require": "./lib/index.js",
+      "import": "./es/index.mjs"
+    },
+    "./css": {
+      "default": "./theme-chalk/index.css"
+    },
+    "./*": "./*"
   },
   "sideEffects": [
     "dist/*",
@@ -21,7 +30,7 @@
     "url": "https://github.com/SepVeneto/basic-comp/issues",
     "email": "sepveneto@qq.com"
   },
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "element-plus": "^2.0.0",
     "@element-plus/icons-vue": "^2.0.0",

@@ -1,6 +1,6 @@
 import { computed, inject, UnwrapRef } from "vue"
-import { ConfigProviderProps } from '@basic-components/components/configProvider';
-import { SelectProps } from "@basic-components/components/select";
+import { ConfigProviderProps } from '@basic-comp/components/configProvider';
+import { SelectProps } from "@basic-comp/components/select";
 
 export const useConfigInject = <T>(name: string, props: T) => {
   const configProvider = inject<UnwrapRef<ConfigProviderProps>>('configProvider', {});

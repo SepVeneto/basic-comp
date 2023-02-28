@@ -11,12 +11,11 @@ import commonjs from '@rollup/plugin-commonjs'
 import filesize, { FileSizeInfo, FileSizeOptions } from 'rollup-plugin-filesize'
 import chalk from 'chalk'
 import type { ModuleFormat, OutputOptions } from 'rollup'
-
-const pkgRoot = path.resolve(__dirname, '../packages')
-const indexRoot = path.resolve(pkgRoot, 'basic-components')
-
-const outputDir = path.resolve(__dirname, '../dist');
-const indexOutput = path.resolve(outputDir)
+import {
+  pkgRoot,
+  indexRoot,
+  indexOutput
+} from './pkg'
 
 export type Module = 'esm' | 'cjs'
 export interface BuildInfo {
@@ -45,7 +44,7 @@ export const buildConfig: Record<Module, BuildInfo> = {
       path: path.resolve(indexOutput, 'es')
     },
     bundle: {
-      path: 'basic-components/es',
+      path: '@sepveneto/basic-comp/es',
     }
   },
   cjs: {
@@ -57,7 +56,7 @@ export const buildConfig: Record<Module, BuildInfo> = {
       path: path.resolve(indexOutput, 'lib'),
     },
     bundle: {
-      path: 'basic-components/lib'
+      path: '@sepveneto/basic-comp/lib'
     },
   },
 }

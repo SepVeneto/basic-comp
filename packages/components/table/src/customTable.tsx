@@ -11,7 +11,7 @@ import {
   computed,
 } from 'vue';
 import { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults';
-import { extractObject, getValue, setValue } from '@basic-components/utils';
+import { extractObject, getValue, setValue } from '@basic-comp/utils';
 import cellEdit from './cellEdit';
 import { ElTable, ElTableColumn, ElRadio } from 'element-plus';
 import { useSelection } from './useSelection'

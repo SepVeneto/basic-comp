@@ -1,9 +1,10 @@
-import { computed, defineComponent, getCurrentInstance, onActivated, reactive, ref, watch} from 'vue'
-import { useConfigInject } from '@basic-components/hooks';
+import { computed, defineComponent, onActivated, reactive, ref, watch} from 'vue'
+import { useConfigInject } from '@basic-comp/hooks';
 import customTable from './customTable';
 import customPagination from './pagination.vue';
 import { CellType } from './type';
 import { tableProps } from './type';
+import { ApiResponseType } from '@basic-comp/components/type'
 
 export default defineComponent({
   name: 'BcTable',
@@ -117,7 +118,6 @@ export default defineComponent({
       }
       const wrap = responseWrap.value;
       const array = tableDataName.value;
-      /* global ApiResponseType */
       return props.api?.().then((data: ApiResponseType) => {
         arrayData.value = (array ? data[wrap][array] : data[wrap]) || [];
         loading.value = false;

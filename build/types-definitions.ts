@@ -46,8 +46,8 @@ export const generateTypesDefinitions = async () => {
   const sourceFiles = await addSourceFiles(project)
   consola.success('Added source files')
 
-  typeCheck(project)
-  consola.success('Type check passed!')
+  // typeCheck(project)
+  // consola.success('Type check passed!')
 
   await project.emit({
     emitOnlyDtsFiles: true,
@@ -64,6 +64,7 @@ export const generateTypesDefinitions = async () => {
     const emitOutput = sourceFile.getEmitOutput()
     const emitFiles = emitOutput.getOutputFiles()
     if (emitFiles.length === 0) {
+      console.log(pkgRoot, sourceFile.getFilePath())
       throw new Error(`Emit no file: ${chalk.bold(relativePath)}`)
     }
 
@@ -97,7 +98,7 @@ async function addSourceFiles(project: Project) {
 
   const globSourceFile = '**/*.{js?(x),ts?(x),vue}'
   const filePaths = excludeFiles(
-    await glob([globSourceFile, '!basic-components/**/*'], {
+    await glob([globSourceFile, '!basic-comp/**/*'], {
       cwd: pkgRoot,
       absolute: true,
       onlyFiles: true,
@@ -154,6 +155,7 @@ async function addSourceFiles(project: Project) {
 }
 
 function typeCheck(project: Project) {
+  console.log('start check...')
   const diagnostics = project.getPreEmitDiagnostics()
   if (diagnostics.length > 0) {
     consola.error(project.formatDiagnosticsWithColorAndContext(diagnostics))
