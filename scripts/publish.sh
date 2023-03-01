@@ -7,6 +7,9 @@ pnpm i --frozen-lockfile --registry=https://registry.npmmirror.com
 
 pnpm build
 
+echo "log npmrc"
+cat ./.npmrc
+echo "log button.d.ts"
 cat dist/types/packages/components/button/src/button.d.ts
 
 asdf;asf;sad;fkasd asfksiifesf
