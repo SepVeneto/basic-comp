@@ -1,10 +1,9 @@
 name: Publish to NPM registry
 
-on: [push]
-# on:
-#   push:
-#     tags:
-#       - 'v*'
+on:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   # Publish to NPM repository
