@@ -26,7 +26,7 @@ export default defineComponent({
       }
       copyText(text).then(() => {
         props.success?.();
-        $message.success(props.message)
+        $message?.success(props.message)
       }).catch(err => {
         console.error(err)
       })

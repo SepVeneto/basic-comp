@@ -10,6 +10,7 @@
   "include": ["packages", "types/components.d.ts", "types/env.d.ts"],
   "exclude": [
     "node_modules",
-    "**/dist"
+    "**/dist",
+    "**/__tests__/**/*"
   ]
 }

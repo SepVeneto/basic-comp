@@ -73,13 +73,15 @@ export function copyText(text: string): Promise<boolean> {
         resolve(true);
       })
     } catch (err) {
-      console.error(err);
-      reject(err)
+      if (process.env.NODE_ENV !== 'test') {
+        console.error(err);
+        reject(err)
+      }
       const input = document.createElement('input');
       input.value = text;
       document.body.appendChild(input);
       input.select();
-      document.execCommand('copy');
+      document.execCommand?.('copy');
       input.style.display = 'none';
       document.body.removeChild(input);
       resolve(true);
