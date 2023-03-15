@@ -6,6 +6,13 @@ title: Tables
 
 基于`elementui plus`的`table`二次封装，通过配置`config`的形式简化书写表格代码时的重复度。对于`table`和`table column`的属性在透传上进行了增强，进一步加强了表格的功能性。
 
+
+:::warning
+当表格里每一条数据都包含很多子组件的时候，不可避免的会创建相当多的组件实例，这样会导致表格内容的首次渲染时间变长，目前没有什么好的解决方案。
+
+可以考虑通过异步渲染`defineAsyncComponent`来让表格优先被数据填充，再去加载子组件。虽然总体上的时间没有任何提升，甚至由于异步的原因，会有网络连接的损耗，但是至少能显著提高首屏的渲染时间。
+:::
+
 ## Basic table
 
 Basic table is just for data display.
