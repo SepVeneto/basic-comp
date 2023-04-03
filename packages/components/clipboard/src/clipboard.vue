@@ -4,14 +4,13 @@
 
 <script lang="ts">
 import { copyText } from '@basic-comp/utils';
-import { defineComponent, getCurrentInstance } from 'vue';
+import { defineComponent } from 'vue';
 import { clipboardProps } from './type';
+import { ElMessage } from 'element-plus'
 export default defineComponent({
   name: 'BcClipboard',
   props: clipboardProps,
   setup(props) {
-    const inst = getCurrentInstance();
-    const $message = inst?.appContext.config.globalProperties.$message;
     function handleClick() {
       let text = '';
       if (props.text) {
@@ -26,7 +25,7 @@ export default defineComponent({
       }
       copyText(text).then(() => {
         props.success?.();
-        $message?.success(props.message)
+        ElMessage.success(props.message)
       }).catch(err => {
         console.error(err)
       })

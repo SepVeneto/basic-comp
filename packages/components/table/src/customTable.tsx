@@ -1,13 +1,9 @@
 import {
   defineComponent,
   getCurrentInstance,
-  onMounted,
   ref,
-  shallowRef,
   watch,
-  watchEffect,
   PropType,
-  Fragment,
   computed,
 } from 'vue';
 import { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults';

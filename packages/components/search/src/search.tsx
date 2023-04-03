@@ -2,8 +2,8 @@ import { defineComponent, getCurrentInstance, ref, watch, h } from 'vue'
 import { useConfigInject } from '@basic-comp/hooks';
 import { RenderInputConfigType, searchProps } from './type';
 import { renderUnit, setValue } from '@basic-comp/utils';
-import BcButton from '@basic-comp/components/button'
-import BcUpload from '@basic-comp/components/upload'
+import BcUpload from '../../upload'
+import BcButton from '../../button/src/button'
 import { ElForm, ElFormItem } from 'element-plus'
 
 export default defineComponent({
@@ -11,10 +11,10 @@ export default defineComponent({
   props: searchProps,
   emits: ['update:modelValue', 'reset', 'create', 'export'],
   components: {
-    BcButton,
     ElForm,
     ElFormItem,
     BcUpload,
+    BcButton,
   },
   setup(props, context) {
     const searchInject = useConfigInject('search', props).search;

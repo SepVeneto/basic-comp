@@ -1,4 +1,4 @@
-import { ElDialog } from 'element-plus'
+import { ElDialog, ElScrollbar, ElButton } from 'element-plus'
 import { computed, defineComponent, ref } from 'vue';
 import { FullScreen } from '@element-plus/icons-vue';
 export default defineComponent({
@@ -11,6 +11,8 @@ export default defineComponent({
   },
   components: {
     ElDialog,
+    ElScrollbar,
+    ElButton,
     FullScreen,
   },
   setup(props, context) {

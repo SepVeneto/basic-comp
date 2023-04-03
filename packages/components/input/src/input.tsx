@@ -1,7 +1,7 @@
 import { computed, defineComponent, ref } from 'vue'
 import { inputProps } from './type';
 import { DocumentCopy } from '@element-plus/icons-vue'
-import { ElInput, ElMessage } from 'element-plus'
+import { ElInput, ElMessage, ElIcon } from 'element-plus'
 // import '../style.css'
 import { copyText } from '@basic-comp/utils';
 
@@ -11,7 +11,8 @@ export default defineComponent({
   inheritAttrs: false,
   components: {
     DocumentCopy,
-    ElInput
+    ElInput,
+    ElIcon,
   },
   setup(props, context) {
     const inputRef = ref<InstanceType<typeof ElInput>>();

@@ -1,10 +1,14 @@
 import { useConfigInject } from '@basic-comp/hooks'
 import { computed, defineComponent } from 'vue'
+import { ElDatePicker } from 'element-plus'
 export default defineComponent({
   name: 'BcDatePicker',
   props: {
     width: [String, Number],
     dayEnd: Boolean,
+  },
+  components: {
+    ElDatePicker,
   },
   setup(props, { attrs }) {
     const { datePicker } = useConfigInject('datePicker', props)

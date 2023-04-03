@@ -1,6 +1,6 @@
 import { ComponentInternalInstance } from "vue";
 import { RenderInputConfigType } from "@basic-comp/components/search";
-import { BcButton, BcSelect } from '@basic-comp/components'
+import { BcSelect, BcInput, BcDatePicker } from '@basic-comp/components'
 import { getValue, setValue } from '@basic-comp/utils'
 
 export type RenderContextType = {
@@ -36,7 +36,7 @@ export const renderUnit = (
   const { catalog, prop, name, options, ...params } = config;
   const modelValue = getValue(value, prop)
   if (catalog === 'input') {
-    return <bc-input
+    return <BcInput
       model-value={modelValue}
       placeholder={name}
       {...{
@@ -47,7 +47,7 @@ export const renderUnit = (
       // {...{ : params }}
     />
   } else if (catalog === 'select') {
-    return <bc-select
+    return <BcSelect
       model-value={modelValue}
       placeholder={name}
       {...{
@@ -58,7 +58,7 @@ export const renderUnit = (
       { ...params }
     />
   } else if (catalog === 'datepicker') {
-    return <bc-date-picker
+    return <BcDatePicker
       model-value={modelValue}
       placeholder={name}
       {...{
