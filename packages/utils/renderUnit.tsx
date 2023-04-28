@@ -1,12 +1,13 @@
-import { ComponentInternalInstance } from "vue";
-import { RenderInputConfigType } from "@basic-comp/components/search";
+import type { SetupContext, VNode, Slot } from "vue";
+import type { RenderInputConfigType, NameMode } from "@basic-comp/components/search";
 import { BcSelect, BcInput, BcDatePicker } from '@basic-comp/components'
 import { getValue, setValue } from '@basic-comp/utils'
 
 export type RenderContextType = {
+  nameMode: NameMode,
   handleSearch?: () => void,
   updateData?: (key: string, val: string | string[]) => void,
-  context: ComponentInternalInstance | null,
+  context: SetupContext,
 } | null;
 
 function updateData(
@@ -32,35 +33,34 @@ export const renderUnit = (
   value: Record<string, unknown>,
   config: RenderInputConfigType,
   context: RenderContextType,
-) => {
+): VNode | Slot | undefined => {
   const { catalog, prop, name, options, ...params } = config;
   const modelValue = getValue(value, prop)
   if (catalog === 'input') {
     return <BcInput
       model-value={modelValue}
-      placeholder={name}
       {...{
         ...params,
         'onUpdate:modelValue': (val: string) => updateData(value, prop, val, context),
       }}
+      placeholder={context?.nameMode === 'placeholder' ? name : params.placeholder}
       onkeyup={(e: KeyboardEvent) => e.code === 'Enter' && handleSearch(context)}
       // {...{ : params }}
     />
   } else if (catalog === 'select') {
     return <BcSelect
       model-value={modelValue}
-      placeholder={name}
       {...{
         'onUpdate:modelValue': (val: string | string[]) => updateData(value, prop, val, context),
         onChange: () => handleSearch(context),
       }}
+      placeholder={context?.nameMode === 'placeholder' ? name : params.placeholder}
       options={config.options}
       { ...params }
     />
   } else if (catalog === 'datepicker') {
     return <BcDatePicker
       model-value={modelValue}
-      placeholder={name}
       {...{
         startPlaceholder: '开始日期',
         endPlaceholder: '结束日期',
@@ -72,6 +72,6 @@ export const renderUnit = (
       {...params}
     />
   } else {
-    return context?.context?.slots[config.prop] || context?.context?.parent?.slots?.[config.prop]?.();
+    return context?.context?.slots[config.prop];
   }
 };

@@ -1,4 +1,5 @@
-import { defineComponent, getCurrentInstance, ref, watch, h } from 'vue'
+import { defineComponent, ref, watch, h } from 'vue'
+import type { SetupContext } from 'vue'
 import { useConfigInject } from '@basic-comp/hooks';
 import { RenderInputConfigType, searchProps } from './type';
 import { renderUnit, setValue } from '@basic-comp/utils';
@@ -21,7 +22,6 @@ export default defineComponent({
     const { pageName: tablePageName } = useConfigInject('table', props);
     const pageName = searchInject?.pageName ?? tablePageName.value
     const needExport = searchInject?.export ?? props.export
-    const instance = getCurrentInstance();
 
     const uploadVisible = ref(false);
     const searchConfig = ref<RenderInputConfigType[]>();
@@ -71,7 +71,7 @@ export default defineComponent({
       context.emit('reset');
       props.search?.();
     }
-    function isObject(val) {
+    function isObject(val: unknown) {
       const type = typeof val
       return val != null && (type === 'object' || type === 'function')
     }
@@ -101,11 +101,12 @@ export default defineComponent({
       <section class="bc-search-wraper">
         <el-form class="bc-search-containers" inline onSubmit={handleSubmit}>
           {searchConfig.value?.map(item => (
-            <el-form-item>
+            <el-form-item label={props.nameMode === 'label' ? item.name : ''}>
               {renderUnit(h, props.modelValue as Record<string, unknown>, item, {
+                nameMode: props.nameMode,
                 handleSearch: props.search,
                 updateData,
-                context: instance,
+                context: context as SetupContext,
               })}
             </el-form-item>
           ))}

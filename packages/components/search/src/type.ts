@@ -1,5 +1,6 @@
 import { PropType, ExtractPropTypes } from 'vue';
 export type SearchOperate = 'create' | 'search' | 'reset' | 'upload' | 'export' | 'advance';
+export type NameMode = 'placeholder' | 'label'
 
 export type RenderInputConfigType = {
   catalog: 'input' | 'select' | 'datepicker',
@@ -20,6 +21,10 @@ export const searchProps = {
   defaultValue: {
     type: Object,
     default: () => ({})
+  },
+  nameMode: {
+    type: String as PropType<NameMode>,
+    default: 'placeholder',
   },
   /**
    * 是否需要显示新增按钮
