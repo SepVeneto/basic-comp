@@ -40,6 +40,7 @@ search/nameMode
 | 属性          | 说明                       | 类型     | 可选值                                     | 默认值                                             |
 | :------------ | :------------------------- | :------- | :----------------------------------------- | :------------------------------------------------- |
 | v-model/modelValue| 绑定值 | object | - | - |
+| name-mode | 输入框标题的展示方式 | string | 'placeholder' \| 'label' | 'placeholder'
 | page-name     | 分页时当前页码的字段       | string   | -                                          | 'page'                                             |
 | default-value | 重置时的默认值             | object   | -                                          | -                                                  |
 | create        | 是否显示新增按钮           | boolean  | -                                          | false                                              |
