@@ -1,15 +1,15 @@
+import type { PropType } from 'vue'
 import {
+  computed,
   defineComponent,
   getCurrentInstance,
   ref,
   watch,
-  PropType,
-  computed,
-} from 'vue';
-import { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults';
-import { extractObject, getValue, setValue } from '@basic-comp/utils';
-import cellEdit from './cellEdit';
-import { ElTable, ElTableColumn, ElRadio } from 'element-plus';
+} from 'vue'
+import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
+import { extractObject, getValue, logWarn, setValue } from '@basic-comp/utils'
+import cellEdit from './cellEdit'
+import { ElRadio, ElTable, ElTableColumn } from 'element-plus'
 import { useSelection } from './useSelection'
 // import useLazyStore from './useLazyStore';
 
@@ -21,9 +21,8 @@ export type RowType = {
 
 export default defineComponent({
   name: 'CustomTable',
-  emits: ['save', 'radio', 'select'],
   components: {
-    cellEdit,
+    CellEdit: cellEdit,
     ElTable,
     ElTableColumn,
     ElRadio,
@@ -38,9 +37,12 @@ export default defineComponent({
       default: () => ({
         selectedRowKeys: [],
         onChange: () => ({}),
-      })
+      }),
     },
-    rowKey: [String, Function],
+    rowKey: {
+      type: [String, Function],
+      default: undefined,
+    },
     disableTravel: Boolean,
     bodyBorder: Boolean,
     wrapHeader: Boolean,
@@ -48,7 +50,6 @@ export default defineComponent({
     hiddenCurrent: Boolean,
     rowEdit: Boolean,
     banSelectAll: Boolean,
-    refs: String,
     customIcon: Boolean,
     data: {
       type: Array as PropType<Record<string, any>[]>,
@@ -60,14 +61,15 @@ export default defineComponent({
     },
     htmlContent: Boolean,
   },
+  emits: ['save', 'radio', 'select'],
   setup(props, context) {
-    const tableConfig = ref<Record<string, unknown>[]>([]);
-    const radio = ref('');
-    const instance = getCurrentInstance();
+    const tableConfig = ref<Record<string, unknown>[]>([])
+    const radio = ref('')
+    const instance = getCurrentInstance()
 
-    const tableRef = ref();
+    const tableRef = ref()
 
-    const rowSelection = ref();
+    const rowSelection = ref()
     // const getRowKeyFn = computed(() => {
     //   if (typeof props.rowKey === 'function') {
     //     return props.rowKey
@@ -83,12 +85,12 @@ export default defineComponent({
     const [renderSelect, renderSelectTop] = useSelection(rowSelection, {
       pageData: computed(() => props.data),
       getRowKey,
-      getRecordByKey: getRowByKey
+      getRecordByKey: getRowByKey,
     })
 
     watch(() => props.config, (config) => {
-      tableConfig.value = [...config] ;
-    }, { immediate: true, deep: true });
+      tableConfig.value = [...config]
+    }, { immediate: true, deep: true })
     // watchEffect(() => {
     //   keySet.value = new Set(props.rowSelection.selectedRowKeys)
     // })
@@ -98,13 +100,13 @@ export default defineComponent({
     }
     function getRowKey(row: any, rowKey = props.rowKey, index?: number) {
       if (!rowKey) {
-        console.warn('没有设置row-key，不推荐使用index作为key')
-        return index;
+        console.warn('没有设置row-key')
+        return index
       }
       if (typeof rowKey === 'function') {
-        return rowKey(row);
+        return rowKey(row)
       } else if (row[rowKey]) {
-        return row[rowKey];
+        return row[rowKey]
       } else {
         return false
       }
@@ -118,10 +120,10 @@ export default defineComponent({
         model-value={radio.value}
         {...{
           'onUpdate:modelValue': (val: string) => {
-            radio.value = val;
-            context.emit('radio', radio.value, row);
-            context.emit('select', [row]);
-          }
+            radio.value = val
+            context.emit('radio', radio.value, row)
+            context.emit('select', [row])
+          },
         }}
         label={getRowKey(row, props.rowKey, index)}
         disabled={config.selectable ? !config.selectable(row) : false}
@@ -131,50 +133,51 @@ export default defineComponent({
       <cell-edit
         modelValue={getValue(row, column.property, config, props.disableTravel)}
         onBlur={(val: string) => { setValue(row, column.property, val) }}
-        onSave={(cell: string) => { instance?.parent?.emit('save', cell, column.property)}}
+        onSave={(cell: string) => { instance?.parent?.emit('save', cell, column.property) }}
       />
     )
 
     const getColumnSlot = (data: RowType, config: any) => {
       if (config.children && config.children.length > 0) {
-        return config.children.map(config => transformTableColumn(config))
+        return config.children.map((config: any) => transformTableColumn(config))
         // return tableColumns(config.children);
       }
-      const { row, column, $index } = data;
+      const { row, column, $index } = data
       if (config.type === 'expand') {
-        return context.slots.expand?.(data);
+        return context.slots.expand?.(data)
       } else if (config.type === 'radio') {
+        logWarn('[bc-table] radio将被弃用，请使用row-selection.type = \'radio\', 具体请参考https://sepveneto.github.io/basic-comp/components/table.html#%E5%8D%95%E9%80%89')
         // 不知道哪儿来的-1
         if (!~$index) {
-          return;
+          return
         }
-        return renderRadio(row, $index, config);
+        return renderRadio(row, $index, config)
       } else if (config.editable) {
-        return renderCellEdit(row, column, config);
+        return renderCellEdit(row, column, config)
       }
       if (!column.property) {
-        return null;
+        return null
       }
-      const slot = context.slots[config.prop];
+      const slot = context.slots[config.prop]
       const value = getValue(row, column.property, config, props.disableTravel)
       const realValue = typeof props.emptyText === 'function'
         ? props.emptyText(value, column)
-        : ( value === '' ? props.emptyText : value)
+        : (value === '' ? props.emptyText : value)
       return slot
         ? slot(data)
         : <span>{realValue}</span>
-    };
+    }
 
     const transformTableColumn = (config: Record<string, unknown>): JSX.Element | null => {
       if (!config) {
-        return null;
+        return null
       }
       if (config.type === 'select') {
         return (<el-table-column
           width="48px"
           v-slots={{
             default: (data: RowType) => renderSelect(data, config),
-            header: () => renderSelectTop()
+            header: () => renderSelectTop(),
           }}
         />)
       }
@@ -185,23 +188,23 @@ export default defineComponent({
         show-overflow-tooltip={props.showOverflowTooltip}
         v-slots={{
           default: (data: RowType) => getColumnSlot(data, config),
-          header: (({column, $index}: RowType) => {
-            const header = context.slots[`${config.prop}-header`];
-            return header ? header({column, $index}) : <span>{column.label}</span>
-          })
+          header: ({ column, $index }: RowType) => {
+            const header = context.slots[`${config.prop}-header`]
+            return header ? header({ column, $index }) : <span>{column.label}</span>
+          },
         }}
         {...extractObject(config, ['children'], 'exclude')}
       />)
-    };
+    }
     context.expose({
       clearSelection,
-      getRef: () => tableRef.value
+      getRef: () => tableRef.value,
     })
 
     return {
       tableRef,
       tableConfig,
-      transformTableColumn
+      transformTableColumn,
     }
   },
   render() {
@@ -213,12 +216,12 @@ export default defineComponent({
         data={this.data}
         header-cell-class-name="custom-header"
         row-key={this.rowKey}
-        onSelect={(...args: any) => this.$emit.apply(this, ['select', ...args])}
+        onSelect={(...args: any) => this.$emit('select', args)}
         size="default"
         {...this.$attrs}
       >
         {this.tableConfig.map(config => this.transformTableColumn(config))}
       </el-table>
     )
-  }
+  },
 })

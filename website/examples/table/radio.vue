@@ -3,21 +3,20 @@
     :config="tableConfig"
     :data="tableData"
     row-key="name"
-  >
-  </bc-table>
+    :row-selection="{
+      type: 'radio',
+      selectedRowKeys,
+      onChange: onSelectChange,
+    }"
+  />
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-  name: 'Radio',
-})
-</script>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+
+const selectedRowKeys = ref<string>('')
 const tableConfig = ref([
-  { type: 'radio', width: 50 },
+  { type: 'select', width: 50 },
   { label: '国籍', prop: 'country' },
   { label: '生日', prop: 'date' },
   { label: '舰种', prop: 'catalog' },
@@ -68,5 +67,10 @@ const tableData = ref([
     height: '269.4',
     weight: '59150',
   },
-]);
+])
+
+function onSelectChange(key: string) {
+  console.log(key)
+  selectedRowKeys.value = key
+}
 </script>

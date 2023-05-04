@@ -1,5 +1,10 @@
 <template>
-  <bc-button @click="handleSelect" style="margin-bottom: 10px;">选择第二行</bc-button>
+  <bc-button
+    style="margin-bottom: 10px;"
+    @click="handleSelect"
+  >
+    选择第二行
+  </bc-button>
   <bc-table
     ref="tableRef"
     :config="tableConfig"
@@ -9,7 +14,7 @@
       selectedRowKeys,
       onChange: onSelectChange,
     }"
-  ></bc-table>
+  />
 </template>
 
 <script lang="ts" setup>
@@ -17,7 +22,7 @@ import { ref } from 'vue'
 const selectedRowKeys = ref<number[]>([1])
 const tableRef = ref()
 const tableConfig = [
-  { type: 'select', },
+  { type: 'select' },
   { label: '姓名', prop: 'name' },
   { label: '年龄', prop: 'age' },
   { label: '身高', prop: 'height', unit: 'm' },
@@ -28,7 +33,7 @@ const tableData = ref([
   { name: '安德烈亚•多利亚', age: 18, height: 186.9, weight: 28700, id: 2 },
 ])
 function onSelectChange(keys: number[]) {
-  selectedRowKeys.value = keys;
+  selectedRowKeys.value = keys
 }
 function handleSelect() {
   selectedRowKeys.value = [2]

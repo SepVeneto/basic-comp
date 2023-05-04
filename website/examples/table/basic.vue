@@ -2,7 +2,7 @@
   <bc-table
     :config="tableConfig"
     :data="tableData"
-  ></bc-table>
+  />
 </template>
 
 <script lang="ts">
@@ -14,7 +14,6 @@ export default defineComponent({
 
 <script lang="ts" setup>
 const tableConfig = [
-  { type: 'select', },
   { label: '姓名', prop: 'name' },
   { label: '年龄', prop: 'age' },
   { label: '身高', prop: 'height', unit: 'm' },
