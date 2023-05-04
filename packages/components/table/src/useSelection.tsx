@@ -1,17 +1,19 @@
-import { RowType } from './customTable'
-import { computed, Ref, shallowRef, watchEffect } from 'vue'
+import type { RowType } from './customTable'
+import type { ComputedRef, Ref } from 'vue'
+import { computed, shallowRef, watchEffect } from 'vue'
+
 export function useSelection(
   rowSelectionRef: Ref<any>,
   configRef: {
     getRowKey: (row: Record<string, any>) => string,
-    pageData: Record<string, any>,
+    pageData: ComputedRef<Record<string, any>[]>,
     getRecordByKey: (key: string) => Record<string, any>
-  }
-): [(data: RowType, config: Record<string, any>) => JSX.Element, () => JSX.Element] {
+  },
+): [(data: RowType, config: Record<string, any>) => JSX.Element, () => JSX.Element | null] {
   const { getRowKey, pageData } = configRef
   const mergedRowSelection = computed(() => {
     const tmp = rowSelectionRef.value ?? {}
-    return { ...tmp }
+    return { type: 'checkbox', ...tmp }
   })
 
   const mergedSelectedKeys = computed(() => {
@@ -48,12 +50,12 @@ export function useSelection(
         }
         newCache.set(key, record)
       })
-      preserveRecords.value = newCache;
+      preserveRecords.value = newCache
     }
   }
 
   function setSelectedKeys(keys: any[], record?: RowType) {
-    let avaliableKeys: any[] = [];
+    let avaliableKeys: any[] = []
     let records: Record<string, any>[] = []
     updateRecordsCache(keys)
     const { preserveRowKeys, onChange: onSelectionChange } = mergedRowSelection.value
@@ -71,8 +73,31 @@ export function useSelection(
     }
     onSelectionChange?.(avaliableKeys, records, record)
   }
+  function setSelectedKey(key: any, record?: RowType) {
+    const { onChange: onSelectionChange } = mergedRowSelection.value
+    onSelectionChange?.(key, record)
+  }
 
-  function renderCell({ row }: RowType, config: Record<string, any>) {
+  function renderCell({ row }: RowType, _config: Record<string, any>) {
+    return mergedRowSelection.value.type === 'radio' ? renderRadio(row) : renderCheckbox(row)
+  }
+  function renderRadio(row: RowType['row']) {
+    const keySelected = derivedSelectedKey.value
+    const key = getRowKey(row)
+
+    function onRowSelect() {
+      setSelectedKey(key, row)
+    }
+    return (
+      <el-radio
+        label={true}
+        model-value={key === keySelected}
+        onClick={(e: MouseEvent) => e.stopPropagation()}
+        onChange={() => onRowSelect()}
+      >{ '' }</el-radio>
+    )
+  }
+  function renderCheckbox(row: RowType['row']) {
     const keySet = new Set(derivedSelectedKeySet.value)
     const key = getRowKey(row)
 
@@ -85,7 +110,6 @@ export function useSelection(
       }
       setSelectedKeys(Array.from(keySet), row)
     }
-
     return (
       <el-checkbox
         model-value={keySet.has(key)}
@@ -113,14 +137,16 @@ export function useSelection(
       }
       setSelectedKeys(Array.from(keySet))
     }
-    return (
+    return mergedRowSelection.value.type === 'radio'
+      ? null
+      : (
       <el-checkbox
         model-value={checkedCurrentAll.value && !disabledChecked.value}
         indeterminate={!checkedCurrentAll.value && checkedCurrentSome.value}
         onChange={onSelectAllChange}
         disabled={disabledChecked.value}
       />
-    )
+        )
   }
   return [renderCell, renderTop]
 }

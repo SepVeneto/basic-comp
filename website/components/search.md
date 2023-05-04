@@ -26,6 +26,15 @@ search/default
 
 :::
 
+## 输入框标签
+
+可以通过`name-mode`来决定标签的展示形式，是作为`placeholder`还是外部的`label`
+:::demo
+
+search/nameMode
+
+:::
+
 ## 属性
 
 | 属性          | 说明                       | 类型     | 可选值                                     | 默认值                                             |

@@ -23,6 +23,14 @@ table/basic
 
 :::
 
+## 单选
+
+:::demo
+
+table/radio
+
+:::
+
 ## 多选
 
 由于`element`的`table`多选功能的手动选择依赖表格数据的引用，在回显的时候很难处理，因此参考了`antdv`的做法，增强了多选功能，可以通过`{ type: 'select' }`开启.
@@ -75,7 +83,10 @@ table/cellEdit
 
 :::
 
-## 单选框
+## 单选框 (废弃)
+:::warning
+该用法将被废弃，请使用`row-selection`进行设置
+:::
 
 :::demo 与`type: selection`类似，可以通过`type: radio`添加一列单选框。
 
@@ -182,5 +193,6 @@ table/emptyCell
 
 | 参数           | 说明                                                      | 类型                | 可选值 | 默认值                  |
 | :------------- | :-------------------------------------------------------- | :------------------ | :----- | :---------------------- |
+| type | 选择框的类型 | 'checkbox' \| 'radio' | 'checkbox' |
 | selectedRowKeys | 指定选中项的 key 数组，需要和 onChange 进行配合 | string[] | [] |
 | onChange | 选中项发生变化时的回调 | Function(selectedRowKeys) | - |
