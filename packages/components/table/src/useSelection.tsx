@@ -2,6 +2,8 @@ import type { RowType } from './customTable'
 import type { ComputedRef, Ref } from 'vue'
 import { computed, shallowRef, watchEffect } from 'vue'
 
+type Key = string | number
+
 export function useSelection(
   rowSelectionRef: Ref<any>,
   configRef: {
@@ -17,7 +19,7 @@ export function useSelection(
   })
 
   const mergedSelectedKeys = computed(() => {
-    return mergedRowSelection.value.selectedRowKeys
+    return mergedRowSelection.value.selectedRowKeys as Key | Key[]
   })
 
   const selectKeysState = computed(() => {
@@ -28,7 +30,7 @@ export function useSelection(
 
   const derivedSelectedKeySet = computed(() => {
     const keys = derivedSelectedKey.value
-    return new Set(keys)
+    return new Set(Array.isArray(keys) ? keys : [keys])
   })
   const preserveRecords = shallowRef(new Map<any, Record<string, any>>())
 
@@ -37,7 +39,8 @@ export function useSelection(
   })
 
   watchEffect(() => {
-    updateRecordsCache(mergedSelectedKeys.value)
+    const keys = mergedSelectedKeys.value
+    updateRecordsCache(Array.isArray(keys) ? keys : [keys])
   })
 
   function updateRecordsCache(keys: any[]) {

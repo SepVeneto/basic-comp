@@ -2,7 +2,7 @@
   <bc-table
     :config="tableConfig"
     :data="tableData"
-    row-key="name"
+    row-key="id"
     :row-selection="{
       type: 'radio',
       selectedRowKeys,
@@ -36,6 +36,7 @@ const tableData = ref([
     address: '里亚斯特造船厂',
     height: '237.8',
     weight: '40517',
+    id: 1,
   },
   {
     country: '意大利',
@@ -46,6 +47,7 @@ const tableData = ref([
     address: '拉斯佩齐亚船厂',
     height: '186.9',
     weight: '28700',
+    id: 2,
   },
   {
     country: '意大利',
@@ -56,6 +58,7 @@ const tableData = ref([
     address: '西赛斯特里造船厂',
     height: '107.3',
     weight: '1900',
+    id: 3,
   },
   {
     country: '苏联',
@@ -66,6 +69,7 @@ const tableData = ref([
     address: '波罗的海造船厂',
     height: '269.4',
     weight: '59150',
+    id: 4,
   },
 ])
 
