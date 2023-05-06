@@ -1,4 +1,4 @@
-import Upload from './src/upload.vue';
+import Upload from './src/upload.vue'
 import { compInstall } from '@basic-comp/utils'
 
 export const BcUpload = compInstall(Upload)
