@@ -3,10 +3,10 @@ export type SearchOperate = 'create' | 'search' | 'reset' | 'upload' | 'export' 
 export type NameMode = 'placeholder' | 'label'
 
 export type RenderInputConfigType = {
-  catalog: 'input' | 'select' | 'datepicker',
+  catalog: string,
   prop: string,
   name?: string,
-  options?: Record<string, unknown>,
+  options?: Record<string, unknown>[],
   [key: string]: unknown,
 }
 

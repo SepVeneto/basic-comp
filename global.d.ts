@@ -9,7 +9,7 @@ declare module 'vue' {
     BcSelect: typeof import('@sepveneto/basic-comp')['BcSelect'],
     BcMotion: typeof import('@sepveneto/basic-comp')['BcMotion'],
     BcMotionGroup: typeof import('@sepveneto/basic-comp')['BcMotionGroup'],
-    BcUplaod: typeof import('@sepveneto/basic-comp')['BcUpload'],
+    BcUpload: typeof import('@sepveneto/basic-comp')['BcUpload'],
   }
 }
 
