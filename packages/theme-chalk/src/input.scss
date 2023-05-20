@@ -1,11 +1,12 @@
 @use 'mixins/mixins.scss' as *;
 
 @include b(input) {
+  color: crimson;
   .el-icon {
     height: 100%;
   }
   &.no-border {
-    > .el-input__inner {
+    > .el-input__wrapper {
       background-color: transparent;
       display: flex;
       align-items: center;
@@ -13,6 +14,7 @@
       border: 0;
       font-family: 'YaHei';
       line-height: 1.5;
+      box-shadow: none;
     }
     > .el-textarea__inner {
       background-color: transparent;
@@ -24,10 +26,11 @@
       line-height: 1.5;
       resize: none;
       padding: 0;
+      box-shadow: none;
     }
   }
   &.bottom-border {
-    > .el-input__inner {
+    > .el-input__wrapper {
       background-color: transparent;
       border-radius: initial;
       padding-left: 0;
@@ -35,6 +38,7 @@
       border-bottom: 1px solid #DCDFE6;
       font-family: 'YaHei';
       line-height: 1.5;
+      box-shadow: none;
     }
     > .el-textarea__inner {
       background-color: transparent;
@@ -45,6 +49,7 @@
       font-family: 'YaHei';
       line-height: 1.5;
       resize: none;
+      box-shadow: none;
     }
   }
 }
