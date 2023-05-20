@@ -1,4 +1,4 @@
-import Search from './src/search';
+import Search from './src/search'
 import { compInstall } from '@basic-comp/utils'
 
 export const BcSearch = compInstall(Search)

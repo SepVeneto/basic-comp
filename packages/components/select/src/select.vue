@@ -1,18 +1,18 @@
 <template>
-  <el-select
+  <ElSelect
     v-if="!onlyDisplay"
     :model-value="modelValue"
-    @update:modelValue="emitValue"
-    @change="emitLabel"
     :style="{ width: selectWidth }"
-    v-bind="{ clearable: true, valueKey: optionKey, ...$attrs}"
+    v-bind="{ clearable: true, valueKey: optionKey, ...$attrs }"
+    @update:model-value="emitValue"
+    @change="emitLabel"
   >
     <template v-if="needGroup">
       <el-option-group
         v-for="(groupOptions, index) in selectOptions"
         :key="index"
         :label="hasValue(groupOptions)"
-        :value="groupOptions[optionValue] == null ? groupOptions: groupOptions[optionValue]"
+        :value="groupOptions[optionValue] == null ? groupOptions : groupOptions[optionValue]"
       >
         <el-option
           v-for="item in groupOptions.children"
@@ -21,7 +21,7 @@
           :value="item[optionValue] == null ? item : item[optionValue]"
           :disabled="itemDisabled && itemDisabled(item)"
         >
-          <slot v-bind="{...item}"/>
+          <slot v-bind="{ ...item }" />
         </el-option>
       </el-option-group>
     </template>
@@ -33,121 +33,122 @@
         :value="item[optionValue] == null ? item : item[optionValue]"
         :disabled="itemDisabled && itemDisabled(item)"
       >
-        <slot v-bind="{...item}"/>
+        <slot v-bind="{ ...item }" />
       </el-option>
     </template>
-  </el-select>
-  <span v-else>{{displayText}}</span>
+  </ElSelect>
+  <span v-else>{{ displayText }}</span>
 </template>
 
 <script lang="ts">
 // import serverSelect from './serverSelect';
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue'
 import { getValue } from '@basic-comp/utils'
-import { SelectProps, selectProps, SelectOptions, SelectOption } from './type';
-import { useConfigInject } from '@basic-comp/hooks';
+import type { SelectOption, SelectOptions, SelectProps } from './type'
+import { selectProps } from './type'
+import { useConfigInject } from '@basic-comp/hooks'
 import { ElSelect } from 'element-plus'
 
 export default defineComponent({
   name: 'BcSelect',
-  emits: ['update:modelValue', 'update:label', 'fetch', 'change'],
-  props: selectProps,
   components: {
     ElSelect,
   },
+  props: selectProps,
+  emits: ['update:modelValue', 'update:label', 'fetch', 'change'],
   setup(props, context) {
-    const {arrayName, label: optionLabel, value: optionValue, response} = useConfigInject<SelectProps>('select', props);
+    const { arrayName, label: optionLabel, value: optionValue, response } = useConfigInject<SelectProps>('select', props)
 
     const optionsName = computed(() => (props.arrayName || arrayName.value) ?? '')
     const responseWrap = computed(() => response.value?.data ?? 'data')
-    const apiOptions = ref<SelectOptions>([]);
+    const apiOptions = ref<SelectOptions>([])
 
     const selectOptions = computed<SelectOptions>(() => {
-      return [...(props.options || apiOptions.value || [])];
+      return [...(props.options || apiOptions.value || [])]
     })
     const needGroup = computed(() => {
       if (!props.group) {
-        return false;
+        return false
       }
       return selectOptions.value.some(item => item.children)
     })
     const displayText = computed(() => {
-      const value = Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue];
-      const res:(string | number)[] = [];
+      const value = Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue]
+      const res:(string | number)[] = []
       value.forEach(item => {
-        let obj: SelectOption = {};
+        let obj: SelectOption = {}
         if (props.modelValue instanceof Object) {
-          obj = props.modelValue as SelectOption;
+          obj = props.modelValue as SelectOption
         } else {
-          obj = selectOptions.value.find(each => each[optionValue.value] === item) || {};
+          obj = selectOptions.value.find(each => each[optionValue.value] === item) || {}
         }
-        res.push(obj ? obj[optionLabel.value] as string : '');
+        res.push(obj ? obj[optionLabel.value] as string : '')
       })
       return res.join(',')
     })
     const selectWidth = computed(() => {
       if (!props.width) {
-        return '';
+        return ''
       }
       if (typeof props.width === 'string') {
-        return props.width;
+        return props.width
       } else {
-        return props.width + 'px';
+        return props.width + 'px'
       }
-    });
-    
-    props.immediate && getList();
-    props.defaultValue && context.emit('update:modelValue', props.defaultValue);
+    })
+
+    props.immediate && getList()
+    props.defaultValue && context.emit('update:modelValue', props.defaultValue)
 
     function getList() {
       if (typeof props.api === 'function') {
         props.api().then((data) => {
           if (data[responseWrap.value]) {
-            apiOptions.value = data[responseWrap.value][optionsName.value] || data[responseWrap.value];
+            apiOptions.value = data[responseWrap.value][optionsName.value] || data[responseWrap.value]
           }
-          context.emit('fetch', apiOptions.value);
-        });
+          context.emit('fetch', apiOptions.value)
+        })
       }
     }
     function hasValue(item: SelectOption) {
-      const value = getValue(item, optionLabel.value);
+      const value = getValue(item, optionLabel.value)
       if (value === '' || !!value) {
-        return value;
+        return value
       } else {
-        return typeof item === 'object' ? '' : item;
+        return typeof item === 'object' ? '' : item
       }
     }
     function getObject(value: unknown) {
       if (typeof value === 'object') {
         return value
       }
-      const res = selectOptions.value.find(item => item[optionValue.value] === (value || props.modelValue));
+      const res = selectOptions.value.find(item => item[optionValue.value] === (value || props.modelValue))
       if (!res) {
-        return {};
+        return {}
       }
-      return res;
+      return res
     }
     function getLabel(val?: unknown) {
       const value = val || props.modelValue
       if (Array.isArray(value)) {
         return value.reduce((res, curr) => {
-          const result = selectOptions.value.find(item => item[optionValue.value] === curr) || {};
+          const result = selectOptions.value.find(item => item[optionValue.value] === curr) || {}
           if (!result) {
             res.push('')
           }
-          res.push(result[optionLabel.value]);
-          return res;
+          res.push(result[optionLabel.value])
+          return res
         }, [])
       } else {
-        const res = selectOptions.value.find(item => item[optionValue.value] === value);
+        const res = selectOptions.value.find(item => item[optionValue.value] === value)
         if (!res) {
-          return '';
+          return ''
         }
-        return res[optionLabel.value];
+        return res[optionLabel.value]
       }
     }
     function getOptions() {
-      return selectOptions.value;
+      return selectOptions.value
     }
     function emitValue(val: unknown) {
       context.emit('update:modelValue', val)

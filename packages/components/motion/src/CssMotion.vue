@@ -7,13 +7,16 @@
       transitionDelay: delay,
     }"
   >
-    <slot ref="slotRef" v-if="show" />
+    <slot
+      v-if="show"
+      ref="slotRef"
+    />
   </transition>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { motionProps } from './type';
+import { motionProps } from './type'
 
 export default defineComponent({
   name: 'BcMotion',

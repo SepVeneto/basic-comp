@@ -2,34 +2,37 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'BcTableCellEdit',
-  emits: ['save', 'blur'],
   directives: {
     focus: {
       mounted: el => {
-        el.querySelector('input').focus();
-      }
-    }
+        el.querySelector('input').focus()
+      },
+    },
   },
   props: {
     modelValue: {
       type: [String, Number],
       default: '',
     },
-    unit: String,
+    unit: {
+      type: String,
+      default: undefined,
+    },
   },
+  emits: ['save', 'blur'],
   setup(props, context) {
-    const editing = ref(false);
-    const cell = ref<string | number>('');
-    const inputRef = ref();
+    const editing = ref(false)
+    const cell = ref<string | number>('')
+    const inputRef = ref()
 
     function toggleEdit() {
-      editing.value = !editing.value;
+      editing.value = !editing.value
     }
     function save() {
-      context.emit('save', cell.value);
+      context.emit('save', cell.value)
       // toggleEdit();
       const el = inputRef.value.$el
-      el?.querySelector('input').blur();
+      el?.querySelector('input').blur()
     }
 
     const editInput = () => (
@@ -45,14 +48,14 @@ export default defineComponent({
           'onUpdate:modelValue': (val: string) => { cell.value = val },
           onFocus: () => { cell.value = props.modelValue },
           onBlur: () => { toggleEdit(); context.emit('blur', cell.value) },
-          onKeyup: (e: KeyboardEvent) => { e.code === 'Enter' && save() }
+          onKeyup: (e: KeyboardEvent) => { e.code === 'Enter' && save() },
         }}
       >
       </bc-input>
-    );
+    )
     const displayInput = () => (
       <div class="bc-table-cell-edit" onClick={toggleEdit}>{props.modelValue}</div>
     )
-    return () => editing.value ? editInput() : displayInput();
+    return () => editing.value ? editInput() : displayInput()
   },
 })

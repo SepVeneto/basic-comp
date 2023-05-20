@@ -1,4 +1,5 @@
-import { ExtractPropTypes } from "vue";
+import type { ExtractPropTypes } from 'vue'
+
 export const svgIconProps = {
   /**
    * 宽度
@@ -32,5 +33,6 @@ export const svgIconProps = {
    */
   disabled: Boolean,
 }
+export const svgIconEmits = ['click']
 
-export type SvgIconProps = ExtractPropTypes<typeof svgIconProps>;
+export type SvgIconProps = ExtractPropTypes<typeof svgIconProps>

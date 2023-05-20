@@ -1,34 +1,35 @@
 import { computed, defineComponent, ref } from 'vue'
-import { inputProps } from './type';
+import { inputProps } from './type'
 import { DocumentCopy } from '@element-plus/icons-vue'
-import { ElInput, ElMessage, ElIcon } from 'element-plus'
-// import '../style.css'
-import { copyText } from '@basic-comp/utils';
+import { ElIcon, ElInput, ElMessage } from 'element-plus'
+import { copyText } from '@basic-comp/utils'
+
+type ElInputRef = InstanceType<typeof ElInput>
 
 export default defineComponent({
   name: 'BcInput',
-  props: inputProps,
-  inheritAttrs: false,
   components: {
     DocumentCopy,
     ElInput,
     ElIcon,
   },
+  inheritAttrs: false,
+  props: inputProps,
   setup(props, context) {
-    const inputRef = ref<InstanceType<typeof ElInput>>();
+    const inputRef = ref<InstanceType<typeof ElInput>>()
 
     const inputWidth = computed(() => {
       if (typeof props.width === 'number') {
-        return `${props.width}px`;
+        return `${props.width}px`
       }
-      return props.width;
-    });
+      return props.width
+    })
 
     const borderClass = {
       none: 'no-border',
       bottom: 'bottom-border',
       all: '',
-    }[props.border];
+    }[props.border]
     const copyOptions = typeof props.copy === 'boolean' ? { size: 20 } : props.copy
     const suffix = () => (
       <>
@@ -59,15 +60,15 @@ export default defineComponent({
       borderClass,
       inputWidth,
 
-      suffix
+      suffix,
     }
   },
   render() {
     const input = () => (
       <el-input
-        ref={el => this.inputRef = el}
+        ref={(el: ElInputRef) => { this.inputRef = el }}
         class={['bc-input', this.borderClass]}
-        style={{width: this.inputWidth}}
+        style={{ width: this.inputWidth }}
         placeholder='请输入'
         spellcheck={false}
         {...this.$attrs}
@@ -81,6 +82,6 @@ export default defineComponent({
     const text = () => (
       <span>{this.$attrs.modelValue}</span>
     )
-    return this.onlyDisplay ? text() : input();
-  }
+    return this.onlyDisplay ? text() : input()
+  },
 })

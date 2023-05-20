@@ -1,17 +1,17 @@
-import { BcButton } from '@basic-comp/components/button';
-import { BcInput } from '@basic-comp/components/input';
-import { BcTable } from '@basic-comp/components/table';
-import { BcSelect } from '@basic-comp/components/select';
-import { BcSearch } from '@basic-comp/components/search';
-import { BcDialog } from '@basic-comp/components/dialog';
-import { BcUpload } from '@basic-comp/components/upload';
-import { BcClipboard } from '@basic-comp/components/clipboard';
-import { BcMotion } from '@basic-comp/components/motion';
-import { BcMotionGroup } from '@basic-comp/components/motionGroup';
-import { BcSvgIcon } from '@basic-comp/components/svgIcon';
-import { BcConfigProvider } from '@basic-comp/components/configProvider';
+import { BcButton } from '@basic-comp/components/button'
+import { BcInput } from '@basic-comp/components/input'
+import { BcTable } from '@basic-comp/components/table'
+import { BcSelect } from '@basic-comp/components/select'
+import { BcSearch } from '@basic-comp/components/search'
+import { BcDialog } from '@basic-comp/components/dialog'
+import { BcUpload } from '@basic-comp/components/upload'
+import { BcClipboard } from '@basic-comp/components/clipboard'
+import { BcMotion } from '@basic-comp/components/motion'
+import { BcMotionGroup } from '@basic-comp/components/motionGroup'
+import { BcSvgIcon } from '@basic-comp/components/svgIcon'
+import { BcConfigProvider } from '@basic-comp/components/configProvider'
 import { BcStatus } from '@basic-comp/components/status'
-import { BcDatePicker } from '@basic-comp/components/date-picker';
+import { BcDatePicker } from '@basic-comp/components/date-picker'
 export default [
   BcStatus,
   BcButton,

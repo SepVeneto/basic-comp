@@ -1,6 +1,7 @@
-import { PropType, ExtractPropTypes } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue'
 import type { UploadRequestOptions } from 'element-plus'
-import { ApiResponseType } from '@basic-comp/components/type'
+import type { ApiResponseType } from '@basic-comp/components/type'
+
 export type UploadCallbackType = File | UploadRequestOptions | FormData
 export const uploadProps = {
   /**
@@ -22,7 +23,7 @@ export const uploadProps = {
   drag: {
     type: Boolean,
     default: true,
-  }
+  },
 }
 
-export type UploadProps = ExtractPropTypes<typeof uploadProps>;
+export type UploadProps = ExtractPropTypes<typeof uploadProps>

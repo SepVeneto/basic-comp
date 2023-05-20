@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ExtractPropTypes, PropType } from 'vue';
-import { ApiResponseType } from '@basic-comp/components/type'
+import type { ExtractPropTypes, PropType } from 'vue'
+import type { ApiResponseType } from '@basic-comp/components/type'
 
 export type SelectOption = {
   children?: SelectOption[],
@@ -9,7 +8,7 @@ export type SelectOption = {
 
 export type SelectOptions = SelectOption[]
 
-export type selectApiType = '';
+export type selectApiType = ''
 
 export const selectProps = {
   /**
@@ -53,9 +52,9 @@ export const selectProps = {
   api: {
     type: Function as PropType<() => Promise<ApiResponseType>>,
     validator(val: () => unknown | selectApiType): boolean {
-      const allow = ['users', 'groups', 'ips', 'shterm'];
+      const allow = ['users', 'groups', 'ips', 'shterm']
       return typeof val === 'function' || allow.includes(val)
-    }
+    },
   },
   /**
    * 本地选项列表
@@ -81,4 +80,4 @@ export const selectProps = {
   itemDisabled: Function as PropType<(val: unknown) => boolean>,
 }
 
-export type SelectProps = Partial<ExtractPropTypes<typeof selectProps>>;
+export type SelectProps = Partial<ExtractPropTypes<typeof selectProps>>

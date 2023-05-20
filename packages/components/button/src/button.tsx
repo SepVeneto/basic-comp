@@ -1,34 +1,34 @@
-import { defineComponent } from "vue";
-import { ElMessageBox, ElButton, ElTooltip } from 'element-plus';
-import { buttonProps } from './type';
+import { defineComponent } from 'vue'
+import { ElButton, ElMessageBox, ElTooltip } from 'element-plus'
+import { buttonProps } from './type'
 
 export default defineComponent({
   name: 'BcButton',
-  emits: ['click'],
-  props: buttonProps,
   components: {
     ElButton,
-    ElTooltip
+    ElTooltip,
   },
+  props: buttonProps,
+  emits: ['click'],
   setup(props, context) {
     function handleClick(event: MouseEvent) {
       if (props.confirm || props.type === 'delete' || props.type === 'danger') {
-        const confirmText = typeof props.confirm === 'boolean' ? '此操作无法撤销，是否继续？' : props.confirm;
+        const confirmText = typeof props.confirm === 'boolean' ? '此操作无法撤销，是否继续？' : props.confirm
         ElMessageBox.confirm(confirmText, '警告', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
         }).then(() => {
-          context.emit('click', event);
+          context.emit('click', event)
         }).catch(() => ({}))
       } else {
-        context.emit('click', event);
+        context.emit('click', event)
       }
     }
     const tooltip = (node: () => JSX.Element) => (
       <el-tooltip
         placement="top"
-        v-slots={{content: () => <span>{context.slots.default?.()}</span>}}
+        v-slots={{ content: () => <span>{context.slots.default?.()}</span> }}
       >
         <span>{node()}</span>
       </el-tooltip>
@@ -36,7 +36,7 @@ export default defineComponent({
     const spanContent = !props.tooltip ? (context.slots.default || null) : null
     const button = () => (
       <el-button
-        class={['bc-button', {mini: props.mini }]}
+        class={['bc-button', { mini: props.mini }]}
         {...{
           ...context.attrs,
           type: props.type,
@@ -49,7 +49,7 @@ export default defineComponent({
     )
     const iconButton = () => (
       <el-button
-        class={['bc-button', {mini: props.mini }]}
+        class={['bc-button', { mini: props.mini }]}
         {...{
           ...context.attrs,
           type: props.type,
@@ -62,4 +62,4 @@ export default defineComponent({
       ? tooltip(iconButton)
       : (context.attrs.icon ? iconButton() : button())
   },
-});
+})

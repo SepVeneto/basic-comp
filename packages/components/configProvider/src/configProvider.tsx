@@ -1,6 +1,4 @@
-import { reactive } from 'vue';
-import { provide } from 'vue';
-import { defineComponent } from 'vue';
+import { defineComponent, provide, reactive } from 'vue'
 import { configProviderProps } from './type'
 
 export default defineComponent({
@@ -10,7 +8,7 @@ export default defineComponent({
     const configProvider = reactive({
       ...props,
     })
-    provide('configProvider', { ...configProvider, ...attrs });
+    provide('configProvider', { ...configProvider, ...attrs })
     return () => slots.default?.()
   },
 })

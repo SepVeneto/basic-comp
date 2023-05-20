@@ -1,6 +1,6 @@
-import type { SetupContext, VNode, Slot } from "vue";
-import type { RenderInputConfigType, NameMode } from "@basic-comp/components/search";
-import { BcSelect, BcInput, BcDatePicker } from '@basic-comp/components'
+import type { SetupContext, Slot, VNode } from 'vue'
+import type { NameMode, RenderInputConfigType } from '@basic-comp/components/search'
+import { BcDatePicker, BcInput, BcSelect } from '@basic-comp/components'
 import { getValue, setValue } from '@basic-comp/utils'
 
 export type RenderContextType = {
@@ -8,23 +8,23 @@ export type RenderContextType = {
   handleSearch?: () => void,
   updateData?: (key: string, val: string | string[]) => void,
   context: SetupContext,
-} | null;
+} | null
 
 function updateData(
   params: Record<string, unknown>,
   prop: string,
   val: string | string[],
-  context: RenderContextType
+  context: RenderContextType,
 ) {
   if (context?.updateData) {
-    context.updateData(prop, val);
+    context.updateData(prop, val)
   } else {
     setValue(params, prop, val)
   }
 }
 function handleSearch(context: RenderContextType) {
   if (context?.handleSearch) {
-    context.handleSearch();
+    context.handleSearch()
   }
 }
 
@@ -34,18 +34,17 @@ export const renderUnit = (
   config: RenderInputConfigType,
   context: RenderContextType,
 ): VNode | Slot | undefined => {
-  const { catalog, prop, name, options, ...params } = config;
+  const { catalog, prop, name, options, ...params } = config
   const modelValue = getValue(value, prop)
   if (catalog === 'input') {
     return <BcInput
       model-value={modelValue}
       {...{
-        ...params,
+        placeholder: context?.nameMode === 'placeholder' ? name : params.placeholder,
         'onUpdate:modelValue': (val: string) => updateData(value, prop, val, context),
+        onKeyup: (e: KeyboardEvent) => e.code === 'Enter' && handleSearch(context),
       }}
-      placeholder={context?.nameMode === 'placeholder' ? name : params.placeholder}
-      onkeyup={(e: KeyboardEvent) => e.code === 'Enter' && handleSearch(context)}
-      // {...{ : params }}
+      {...params}
     />
   } else if (catalog === 'select') {
     return <BcSelect
@@ -53,9 +52,9 @@ export const renderUnit = (
       {...{
         'onUpdate:modelValue': (val: string | string[]) => updateData(value, prop, val, context),
         onChange: () => handleSearch(context),
+        placeholder: context?.nameMode === 'placeholder' ? name : params.placeholder,
       }}
-      placeholder={context?.nameMode === 'placeholder' ? name : params.placeholder}
-      options={config.options}
+      options={options}
       { ...params }
     />
   } else if (catalog === 'datepicker') {
@@ -72,6 +71,6 @@ export const renderUnit = (
       {...params}
     />
   } else {
-    return context?.context?.slots[config.prop];
+    return context?.context?.slots[config.prop]
   }
-};
+}

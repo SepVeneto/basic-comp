@@ -1,4 +1,4 @@
-import { ExtractPropTypes } from "vue";
+import type { ExtractPropTypes } from 'vue'
 export const clipboardProps = {
   /**
    * css选择器
@@ -20,7 +20,7 @@ export const clipboardProps = {
    */
   success: {
     type: Function,
-  }
+  },
 }
 
-export type ClipboardProps = Partial<ExtractPropTypes<typeof clipboardProps>>;
+export type ClipboardProps = Partial<ExtractPropTypes<typeof clipboardProps>>

@@ -1,4 +1,4 @@
-import Clipboard from './src/clipboard.vue';
+import Clipboard from './src/clipboard.vue'
 import { compInstall } from '@basic-comp/utils'
 
 export const BcClipboard = compInstall(Clipboard)

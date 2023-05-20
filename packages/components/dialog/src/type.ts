@@ -1,9 +1,9 @@
-import { ExtractPropTypes } from "vue";
+import type { ExtractPropTypes } from 'vue'
 export const dialogProps = {
   /**
    * 是否隐藏底部操作栏
    */
-  noFooter: Boolean
+  noFooter: Boolean,
 }
 
-export type DialogProps = Partial<ExtractPropTypes<typeof dialogProps>>;
+export type DialogProps = Partial<ExtractPropTypes<typeof dialogProps>>

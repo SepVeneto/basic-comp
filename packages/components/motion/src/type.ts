@@ -1,4 +1,5 @@
-import { ExtractPropTypes } from "vue";
+import type { ExtractPropTypes } from 'vue'
+
 export const motionProps = {
   type: String,
   direction: String,
@@ -7,4 +8,4 @@ export const motionProps = {
   modelValue: Boolean,
 }
 
-export type MotionProps = Partial<ExtractPropTypes<typeof motionProps>>;
+export type MotionProps = Partial<ExtractPropTypes<typeof motionProps>>

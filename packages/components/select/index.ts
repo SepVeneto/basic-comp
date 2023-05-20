@@ -1,4 +1,4 @@
-import Select from './src/select.vue';
+import Select from './src/select.vue'
 import { compInstall } from '@basic-comp/utils'
 
 export const BcSelect = compInstall(Select)

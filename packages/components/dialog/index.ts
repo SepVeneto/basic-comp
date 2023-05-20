@@ -1,4 +1,4 @@
-import Dialog from './src/dialog';
+import Dialog from './src/dialog'
 import { compInstall } from '@basic-comp/utils'
 
 export const BcDialog = compInstall(Dialog)

@@ -1,4 +1,4 @@
-import { ExtractPropTypes, PropType } from 'vue';
+import type { ExtractPropTypes, PropType } from 'vue'
 
 export interface ConfigProviderSearchProps {
   pageName?: string,
@@ -21,13 +21,13 @@ export interface ConfigProviderDatePicker {
 }
 export const configProviderProps = {
   table: {
-    type: Object as PropType<ConfigProviderTableProps>
+    type: Object as PropType<ConfigProviderTableProps>,
   },
   search: {
-    type: Object as PropType<ConfigProviderSearchProps>
+    type: Object as PropType<ConfigProviderSearchProps>,
   },
   select: {
-    type: Object as PropType<ConfigProviderSelectProps>
+    type: Object as PropType<ConfigProviderSelectProps>,
   },
   response: {
     type: Object as PropType<{ code?: string, msg?: string, data?: string }>,
@@ -35,8 +35,8 @@ export const configProviderProps = {
   datePicker: {
     type: Object as PropType<ConfigProviderDatePicker>,
     default: (): ConfigProviderDatePicker => ({
-      valueFormat: 'YYYY-MM-DD hh:mm:ss'
-    })
-  }
+      valueFormat: 'YYYY-MM-DD hh:mm:ss',
+    }),
+  },
 }
-export type ConfigProviderProps = Partial<ExtractPropTypes<typeof configProviderProps>>;
+export type ConfigProviderProps = Partial<ExtractPropTypes<typeof configProviderProps>>

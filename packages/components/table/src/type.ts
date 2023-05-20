@@ -1,11 +1,12 @@
-import { PropType, ExtractPropTypes } from 'vue';
-import { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults';
+import type { ExtractPropTypes, PropType } from 'vue'
+import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
+
 export type CellType = {
   row: Record<string, unknown>,
   rowIndex: number,
   column: TableColumnCtx<unknown>,
   columnIndex: number,
-};
+}
 
 export type Colspanoptions = {
   includes: string[],
@@ -66,7 +67,7 @@ export const tableProps = {
    */
   modelValue: {
     type: Object as PropType<Record<string, unknown>>,
-    default: () => ({ page: 1, rows: 20 })
+    default: () => ({ page: 1, rows: 20 }),
   },
   /**
    * 表格列的配置
@@ -102,7 +103,7 @@ export const tableProps = {
    */
   activatedUpdate: {
     type: Boolean,
-  }
+  },
 }
 
-export type TableProps = Partial<ExtractPropTypes<typeof tableProps>>;
+export type TableProps = Partial<ExtractPropTypes<typeof tableProps>>

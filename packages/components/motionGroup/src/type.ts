@@ -1,4 +1,5 @@
-import { ExtractPropTypes } from "vue";
+import type { ExtractPropTypes } from 'vue'
+
 export const motionGroupProps = {
   delay: {
     type: Number,
@@ -7,7 +8,7 @@ export const motionGroupProps = {
   step: {
     type: Number,
     default: 0,
-  }
+  },
 }
 
-export type MotionGroupProps = Partial<ExtractPropTypes<typeof motionGroupProps>>;
+export type MotionGroupProps = Partial<ExtractPropTypes<typeof motionGroupProps>>

@@ -1,4 +1,4 @@
-import type { ExtractPropTypes } from 'vue';
+import type { ExtractPropTypes } from 'vue'
 export const buttonProps = {
   /**
    * 是否需要二次操作的确认提示，支持自定义提示文本
@@ -25,4 +25,4 @@ export const buttonProps = {
   },
 }
 
-export type ButtonProps = Partial<ExtractPropTypes<typeof buttonProps>>;
+export type ButtonProps = Partial<ExtractPropTypes<typeof buttonProps>>

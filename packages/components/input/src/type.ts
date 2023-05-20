@@ -1,5 +1,5 @@
-import { PropType, ExtractPropTypes, DefineComponent } from 'vue';
-type IInputBorder = PropType<'none' | 'bottom' | 'all'>;
+import type { DefineComponent, ExtractPropTypes, PropType } from 'vue'
+type IInputBorder = PropType<'none' | 'bottom' | 'all'>
 type ICopyOptions = {
   size?: number,
   color?: string,
@@ -21,7 +21,7 @@ export const inputProps = {
   border: {
     type: String as IInputBorder,
     validator: (val: string): boolean => {
-      return ['none', 'bottom', 'all'].includes(val);
+      return ['none', 'bottom', 'all'].includes(val)
     },
     default: 'all',
   },
@@ -38,7 +38,7 @@ export const inputProps = {
   copy: {
     type: [Boolean, Object] as PropType<boolean | ICopyOptions | DefineComponent>,
     default: false,
-  }
+  },
 }
 
-export type InputProps = Partial<ExtractPropTypes<typeof inputProps>>;
+export type InputProps = Partial<ExtractPropTypes<typeof inputProps>>

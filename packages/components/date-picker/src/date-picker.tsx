@@ -3,12 +3,15 @@ import { computed, defineComponent } from 'vue'
 import { ElDatePicker } from 'element-plus'
 export default defineComponent({
   name: 'BcDatePicker',
-  props: {
-    width: [String, Number],
-    dayEnd: Boolean,
-  },
   components: {
     ElDatePicker,
+  },
+  props: {
+    width: {
+      type: [String, Number],
+      default: undefined,
+    },
+    dayEnd: Boolean,
   },
   setup(props, { attrs }) {
     const { datePicker } = useConfigInject('datePicker', props)
@@ -25,7 +28,7 @@ export default defineComponent({
       startPlaceholder: '开始时间',
       endPlaceholder: '结束时间',
       rangeSeparator: '至',
-      defaultTime: props.dayEnd && type.value === 'datetimerange' ? timeRange : null
+      defaultTime: props.dayEnd && type.value === 'datetimerange' ? timeRange : null,
     }
     return {
       realWidth,
@@ -40,9 +43,9 @@ export default defineComponent({
       value-format={this.datePicker?.valueFormat}
       style={{ width: this.realWidth }}
       {...{
-        ...(this.type?.includes('range') ? this.rangeDefaultConfig: {}),
+        ...(this.type?.includes('range') ? this.rangeDefaultConfig : {}),
         ...this.$attrs,
       }}
     />)
-  }
+  },
 })

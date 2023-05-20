@@ -11,13 +11,14 @@ import glob from 'fast-glob'
 import chalk from 'chalk'
 import { Project } from 'ts-morph'
 import {
-  outputDir as buildOutput,
-  projectRoot as projRoot,
-  pkgRoot,
-  indexRoot as epRoot,
   PKG_PREFIX,
+  outputDir as buildOutput,
+  indexRoot as epRoot,
+  pkgRoot,
+  projectRoot as projRoot,
 } from './pkg'
-import { buildConfig, Module, BuildInfo } from './module'
+import type { Module } from './module'
+import { buildConfig } from './module'
 
 // import { pathRewriter } from '../utils'
 import type { CompilerOptions, SourceFile } from 'ts-morph'
@@ -46,8 +47,8 @@ export const generateTypesDefinitions = async () => {
   const sourceFiles = await addSourceFiles(project)
   consola.success('Added source files')
 
-  // typeCheck(project)
-  // consola.success('Type check passed!')
+  typeCheck(project)
+  consola.success('Type check passed!')
 
   await project.emit({
     emitOnlyDtsFiles: true,
@@ -57,8 +58,8 @@ export const generateTypesDefinitions = async () => {
     const relativePath = path.relative(pkgRoot, sourceFile.getFilePath())
     consola.trace(
       chalk.yellow(
-        `Generating definition for file: ${chalk.bold(relativePath)}`
-      )
+        `Generating definition for file: ${chalk.bold(relativePath)}`,
+      ),
     )
 
     const emitOutput = sourceFile.getEmitOutput()
@@ -77,13 +78,13 @@ export const generateTypesDefinitions = async () => {
       await writeFile(
         filepath,
         pathRewriter('esm')(outputFile.getText()),
-        'utf8'
+        'utf8',
       )
 
       consola.success(
         chalk.green(
-          `Definition for file: ${chalk.bold(relativePath)} generated`
-        )
+          `Definition for file: ${chalk.bold(relativePath)} generated`,
+        ),
       )
     })
 
@@ -102,13 +103,13 @@ async function addSourceFiles(project: Project) {
       cwd: pkgRoot,
       absolute: true,
       onlyFiles: true,
-    })
+    }),
   )
   const epPaths = excludeFiles(
     await glob(globSourceFile, {
       cwd: epRoot,
       onlyFiles: true,
-    })
+    }),
   )
 
   const sourceFiles: SourceFile[] = []
@@ -134,7 +135,7 @@ async function addSourceFiles(project: Project) {
           const lang = scriptSetup?.lang || script?.lang || 'js'
           const sourceFile = project.createSourceFile(
             `${path.relative(process.cwd(), file)}.${lang}`,
-            content
+            content,
           )
           sourceFiles.push(sourceFile)
         }
@@ -146,7 +147,7 @@ async function addSourceFiles(project: Project) {
     ...epPaths.map(async (file) => {
       const content = await readFile(path.resolve(epRoot, file), 'utf-8')
       sourceFiles.push(
-        project.createSourceFile(path.resolve(pkgRoot, file), content)
+        project.createSourceFile(path.resolve(pkgRoot, file), content),
       )
     }),
   ])
@@ -168,7 +169,7 @@ function typeCheck(project: Project) {
 export const excludeFiles = (files: string[]): string[] => {
   const excludes = ['node_modules', 'test', 'mock', 'gulpfile', 'dist']
   return files.filter(
-    (path) => !excludes.some((exclude) => path.includes(exclude))
+    (path) => !excludes.some((exclude) => path.includes(exclude)),
   )
 }
 

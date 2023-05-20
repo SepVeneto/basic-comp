@@ -1,27 +1,35 @@
-import {defineComponent } from 'vue'
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
 import { ElTable, ElTableColumn } from 'element-plus'
+import type { ExtractProps } from '@basic-comp/utils'
+
+type ElTableColumnProps = ExtractProps<typeof ElTableColumn>
+
 export default defineComponent({
   name: 'SimpleTable',
-  props: {
-    data: Object,
-    config: {
-      type: Object,
-      required: true,
-    }
-  },
   components: {
     ElTable,
     ElTableColumn,
   },
-  setup(props, context) {
+  props: {
+    data: {
+      type: Array,
+      default: () => ([]),
+    },
+    config: {
+      type: Object as PropType<ElTableColumnProps[]>,
+      required: true,
+    },
+  },
+  setup(props) {
     return () => (
-      <el-table
+      <ElTable
         data={props.data}
       >
         {props.config.map(config => (
-          <el-table-column {...config} />
+          <ElTableColumn {...config} />
         ))}
-      </el-table>
+      </ElTable>
     )
-  }
+  },
 })

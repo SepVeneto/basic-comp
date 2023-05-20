@@ -1,4 +1,4 @@
-import SvgIcon from './svgIcon.vue';
+import SvgIcon from './svgIcon.vue'
 import { compInstall } from '@basic-comp/utils'
 
 export const BcSvgIcon = compInstall(SvgIcon)

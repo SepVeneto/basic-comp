@@ -1,5 +1,5 @@
-export * from './button';
-export * from './clipboard';
+export * from './button'
+export * from './clipboard'
 export * from './configProvider'
 export * from './dialog'
 export * from './input'

@@ -1,4 +1,4 @@
-import Motion from './src/CssMotion.vue';
+import Motion from './src/CssMotion.vue'
 import { compInstall } from '@basic-comp/utils'
 
 export const BcMotion = compInstall(Motion)

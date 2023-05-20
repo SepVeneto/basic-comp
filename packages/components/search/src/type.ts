@@ -1,5 +1,5 @@
-import { PropType, ExtractPropTypes } from 'vue';
-export type SearchOperate = 'create' | 'search' | 'reset' | 'upload' | 'export' | 'advance';
+import type { ExtractPropTypes, PropType } from 'vue'
+export type SearchOperate = 'create' | 'search' | 'reset' | 'upload' | 'export' | 'advance'
 export type NameMode = 'placeholder' | 'label'
 
 export type RenderInputConfigType = {
@@ -20,7 +20,7 @@ export const searchProps = {
    */
   defaultValue: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   nameMode: {
     type: String as PropType<NameMode>,
@@ -42,7 +42,7 @@ export const searchProps = {
    */
   modelValue: {
     type: Object,
-    required: true
+    required: true,
   },
   /**
    * 搜索按钮的回调函数
@@ -80,7 +80,7 @@ export const searchProps = {
   layout: {
     type: Array as PropType<SearchOperate[]>,
     default: () => ['create', 'search', 'reset', 'upload', 'export'],
-  }
+  },
 }
 
-export type SearchProps = Partial<ExtractPropTypes<typeof searchProps>>;
+export type SearchProps = Partial<ExtractPropTypes<typeof searchProps>>
