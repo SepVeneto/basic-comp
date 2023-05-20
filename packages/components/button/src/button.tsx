@@ -12,7 +12,7 @@ export default defineComponent({
   emits: ['click'],
   setup(props, context) {
     function handleClick(event: MouseEvent) {
-      if (props.confirm || props.type === 'delete' || props.type === 'danger') {
+      if (props.confirm || context.attrs.type === 'danger') {
         const confirmText = typeof props.confirm === 'boolean' ? '此操作无法撤销，是否继续？' : props.confirm
         ElMessageBox.confirm(confirmText, '警告', {
           confirmButtonText: '确定',
@@ -35,31 +35,27 @@ export default defineComponent({
     )
     const spanContent = !props.tooltip ? (context.slots.default || null) : null
     const button = () => (
-      <el-button
+      <ElButton
         class={['bc-button', { mini: props.mini }]}
         {...{
           ...context.attrs,
-          type: props.type,
-          tooltip: props.tooltip,
           onClick: handleClick,
         }}
       >
         <span>{spanContent?.()}</span>
-      </el-button>
+      </ElButton>
     )
     const iconButton = () => (
-      <el-button
+      <ElButton
         class={['bc-button', { mini: props.mini }]}
         {...{
           ...context.attrs,
-          type: props.type,
-          tooltip: props.tooltip,
           onClick: handleClick,
         }}
       />
     )
     return () => (context.slots.default && props.tooltip)
       ? tooltip(iconButton)
-      : (context.attrs.icon ? iconButton() : button())
+      : button()
   },
 })

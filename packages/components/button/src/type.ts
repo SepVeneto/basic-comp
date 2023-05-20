@@ -16,13 +16,6 @@ export const buttonProps = {
    * 小按钮，只显示图标，一般配置tooltip来提示操作文本
    */
   mini: Boolean,
-  /**
-   * 按钮类型
-   */
-  type: {
-    type: String,
-    default: null,
-  },
 }
 
 export type ButtonProps = Partial<ExtractPropTypes<typeof buttonProps>>

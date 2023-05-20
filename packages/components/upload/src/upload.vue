@@ -1,5 +1,5 @@
 <template>
-  <bc-dialog
+  <BcDialog
     v-model="dialogVisible"
     width="480px"
     title="文件导入"
@@ -35,7 +35,7 @@
       >
         <template v-if="drag">
           <el-icon class="el-icon--upload">
-            <plus />
+            <IconPlus />
           </el-icon>
           <div class="el-upload__text">
             将文件拖到此处，或<em>点击上传</em>
@@ -46,7 +46,7 @@
           class="el-upload-dragger"
         >
           <el-icon class="el-icon--upload">
-            <plus />
+            <Plus />
           </el-icon>
           <div class="el-upload__text">
             <em>点击上传</em>
@@ -55,21 +55,21 @@
         <!-- <div class="el-upload__tip" slot="tip">只能上传excel文件</div> -->
       </el-upload>
     </section>
-  </bc-dialog>
+  </BcDialog>
 </template>
 
 <script lang="ts">
 import type { UploadRequestOptions } from 'element-plus'
 import { computed, defineComponent, ref } from 'vue'
 import { uploadProps } from './type'
-import { Plus } from '@element-plus/icons-vue'
+import { Plus as IconPlus } from '@element-plus/icons-vue'
 import { BcDialog } from '@basic-comp/components'
 
 export default defineComponent({
   name: 'BcUpload',
   components: {
     BcDialog,
-    Plus,
+    IconPlus,
   },
   props: uploadProps,
   emits: ['update:modelValue', 'success', 'error'],
