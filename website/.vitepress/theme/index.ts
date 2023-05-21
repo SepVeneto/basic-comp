@@ -1,4 +1,4 @@
-import BasicComp from '@sepveneto/basic-comp';
+import BasicComp from '@sepveneto/basic-comp'
 import ElementPlus from 'element-plus'
 
 import VPApp, { globals } from '../vitepress'
@@ -15,5 +15,5 @@ export default {
       console.log(name)
       app.component(name, comp)
     })
-  }
+  },
 }

@@ -31,25 +31,26 @@ const buildTransformers = () => {
 }
 
 export const config: UserConfig = {
-  title: 'Basic Comp说明文档',
+  title: 'Basic Comp说明文档1',
   description: 'Basic Comp说明文档',
   base: '/basic-comp/',
+  scrollOffset: 1,
   themeConfig: {
     sidebar,
   },
   lang: 'zh-CN',
 
   markdown: {
-    config: (md) => mdPlugin(md)
+    config: (md) => mdPlugin(md),
   },
   vue: {
     template: {
       ssr: true,
       compilerOptions: {
-        directiveTransforms: buildTransformers()
-      }
-    }
-  }
+        directiveTransforms: buildTransformers(),
+      },
+    },
+  },
 }
 
 export default config

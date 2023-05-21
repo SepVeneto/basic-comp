@@ -1,32 +1,39 @@
 <template>
-  <aside ref="container" class="catalog-container">
+  <aside
+    ref="container"
+    class="catalog-container"
+  >
     <nav class="vp-catalog">
-      <div class="title">目录</div>
+      <div class="title">
+        目录
+      </div>
       <ul>
-        <li v-for="item in catalogs" :key="item.link">
-          <a :href="item.link"> {{item.text}} </a>
+        <li
+          v-for="item in catalogs"
+          :key="item.link"
+        >
+          <a :href="item.link"> {{ item.text }} </a>
         </li>
       </ul>
-      <div class="catalog-marker" ref="marker"></div>
+      <div
+        ref="marker"
+        class="catalog-marker"
+      />
     </nav>
   </aside>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { useActiveSidebarLinks } from '../hooks/active-bar';
-export default defineComponent({
-  name: 'VPCatalog',
-})
-</script>
-
 <script lang="ts" setup>
+import { useActiveSidebarLinks } from '../hooks/active-bar'
 import { useCatalog } from '../hooks/catalog'
 import { ref } from 'vue'
+defineOptions({
+  name: 'VPCatalog',
+})
 const container = ref()
 const marker = ref()
-useActiveSidebarLinks(container, marker);
-const catalogs = useCatalog();
+useActiveSidebarLinks(container, marker)
+const catalogs = useCatalog()
 </script>
 
 <style lang="scss" scoped>
