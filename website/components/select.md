@@ -58,7 +58,7 @@ select/bindObject
 | onlyDisplay | 是否只读（以div包裹）| boolean | - | false |
 | optionKey | 选项的key值，在绑定值为对象时必填 | string | - | 'value' |
 | width | 选择框的宽度 | string / number | - | - |
-| api| 获取远程数据的方法，返回一个promise对象 | function | - | - |
+| api| 获取远程数据的方法，返回一个promise对象。`string`时会通过`config-provider`获取api | function \| string | - | - |
 | options | 选项列表 | array | - | - |
 | itemDisabled | 选项中的禁用项，等价于`element-plus`中`select-options`的disabled | function(option): boolean | - | - |
 

@@ -8,13 +8,13 @@
     @change="emitLabel"
   >
     <template v-if="needGroup">
-      <el-option-group
+      <ElOptionGroup
         v-for="(groupOptions, index) in selectOptions"
         :key="index"
         :label="hasValue(groupOptions)"
         :value="groupOptions[optionValue] == null ? groupOptions : groupOptions[optionValue]"
       >
-        <el-option
+        <ElOption
           v-for="item in groupOptions.children"
           :key="item[optionKey || optionValue]"
           :label="hasValue(item)"
@@ -22,11 +22,11 @@
           :disabled="itemDisabled && itemDisabled(item)"
         >
           <slot v-bind="{ ...item }" />
-        </el-option>
-      </el-option-group>
+        </ElOption>
+      </ElOptionGroup>
     </template>
     <template v-else>
-      <el-option
+      <ElOption
         v-for="item in selectOptions"
         :key="item[optionKey || optionValue]"
         :label="hasValue(item)"
@@ -34,7 +34,7 @@
         :disabled="itemDisabled && itemDisabled(item)"
       >
         <slot v-bind="{ ...item }" />
-      </el-option>
+      </ElOption>
     </template>
   </ElSelect>
   <span v-else>{{ displayText }}</span>
@@ -43,24 +43,32 @@
 <script lang="ts">
 // import serverSelect from './serverSelect';
 import { computed, defineComponent, ref } from 'vue'
-import { getValue } from '@basic-comp/utils'
+import { getValue, logWarn } from '@basic-comp/utils'
 import type { SelectOption, SelectOptions, SelectProps } from './type'
 import { selectProps } from './type'
 import { useConfigInject } from '@basic-comp/hooks'
-import { ElSelect } from 'element-plus'
+import { ElOption, ElOptionGroup, ElSelect } from 'element-plus'
 
 export default defineComponent({
   name: 'BcSelect',
   components: {
     ElSelect,
+    ElOption,
+    ElOptionGroup,
   },
   props: selectProps,
   emits: ['update:modelValue', 'update:label', 'fetch', 'change'],
   setup(props, context) {
-    const { arrayName, label: optionLabel, value: optionValue, response } = useConfigInject<SelectProps>('select', props)
+    const {
+      arrayName,
+      label: optionLabel,
+      value: optionValue,
+      selectApis: apis,
+      response,
+    } = useConfigInject<SelectProps>('select', props)
 
     const optionsName = computed(() => (props.arrayName || arrayName.value) ?? '')
-    const responseWrap = computed(() => response.value?.data ?? 'data')
+    const responseWrap = computed(() => response.value?.data || 'data')
     const apiOptions = ref<SelectOptions>([])
 
     const selectOptions = computed<SelectOptions>(() => {
@@ -101,16 +109,29 @@ export default defineComponent({
     props.defaultValue && context.emit('update:modelValue', props.defaultValue)
 
     function getList() {
-      if (typeof props.api === 'function') {
-        props.api().then((data) => {
-          if (data[responseWrap.value]) {
-            apiOptions.value = data[responseWrap.value][optionsName.value] || data[responseWrap.value]
+      let api = props.api
+      if (typeof props.api === 'string') {
+        api = apis.value[props.api]
+      }
+      if (typeof api === 'function') {
+        api().then((data) => {
+          const response = data[responseWrap.value] as Record<string, SelectOption[]> | SelectOption[]
+          if (!response) {
+            logWarn('[select]api返回值异常')
+            return
+          }
+          if (Array.isArray(response) && response) {
+            apiOptions.value = response
+          } else if (response instanceof Object) {
+            apiOptions.value = response[optionsName.value]
+          } else {
+            logWarn('[bc-select]api返回值解析失败')
           }
           context.emit('fetch', apiOptions.value)
         })
       }
     }
-    function hasValue(item: SelectOption) {
+    function hasValue(item: SelectOption): string {
       const value = getValue(item, optionLabel.value)
       if (value === '' || !!value) {
         return value

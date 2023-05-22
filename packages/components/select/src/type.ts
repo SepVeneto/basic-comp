@@ -50,11 +50,8 @@ export const selectProps = {
    * 拉取远程数据时调用的函数，支持promise
    */
   api: {
-    type: Function as PropType<() => Promise<ApiResponseType>>,
-    validator(val: () => unknown | selectApiType): boolean {
-      const allow = ['users', 'groups', 'ips', 'shterm']
-      return typeof val === 'function' || allow.includes(val)
-    },
+    type: [Function, String] as PropType<(() => Promise<ApiResponseType>) | string>,
+    default: undefined,
   },
   /**
    * 本地选项列表

@@ -120,9 +120,10 @@ export default defineComponent({
       const wrap = responseWrap.value
       const array = tableDataName.value
       return props.api?.().then((data: ApiResponseType) => {
-        arrayData.value = (array ? data[wrap][array] : data[wrap]) || []
+        const response = data[wrap] as Record<string, any>
+        arrayData.value = (array ? response[array] : data[wrap]) || []
         loading.value = false
-        arrayTotal.value = data[wrap][table.value?.totalName ?? 'total'] || 0
+        arrayTotal.value = response[table.value?.totalName ?? 'total'] || 0
         return Promise.resolve(arrayData.value)
       }).catch(() => {
         loading.value = false

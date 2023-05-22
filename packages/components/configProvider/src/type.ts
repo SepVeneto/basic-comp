@@ -1,3 +1,4 @@
+import type { ApiResponseType } from '@basic-comp/components/type'
 import type { ExtractPropTypes, PropType } from 'vue'
 
 export interface ConfigProviderSearchProps {
@@ -15,6 +16,7 @@ export interface ConfigProviderSelectProps {
   label?: string,
   value?: string,
   arrayName?: string,
+  apis?: Record<string, () => Promise<ApiResponseType>>
 }
 export interface ConfigProviderDatePicker {
   valueFormat?: string,

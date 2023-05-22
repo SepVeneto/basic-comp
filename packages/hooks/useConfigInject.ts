@@ -11,6 +11,7 @@ export const useConfigInject = <T>(name: string, props: T) => {
   const arrayName = computed<string>(() => configProvider.table?.arrayName || 'data')
   const label = computed<string>(() => configProvider.select?.label || (props as SelectProps).customLabel || 'label')
   const value = computed<string>(() => configProvider.select?.value || (props as SelectProps).customValue || 'value')
+  const selectApis = computed(() => configProvider.select?.apis || {})
   const optionsName = computed<string>(() => configProvider.select?.arrayName || (props as SelectProps).arrayName || 'rows')
   const response = computed(() => configProvider.response)
   const datePicker = computed(() => configProvider.datePicker)
@@ -25,5 +26,6 @@ export const useConfigInject = <T>(name: string, props: T) => {
     value,
     optionsName,
     response,
+    selectApis,
   }
 }

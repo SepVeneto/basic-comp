@@ -40,3 +40,4 @@ configProvider/configProvider
 | arrayName | 远程数据的对应字段 | string | -      | -      |
 | label     | 显示内容对应的字段 | string | -      | -      |
 | value     | 绑定数据对应的字段 | string | -      | -      |
+| apis | options的数据源的键值对集合 | \{`() => Promise`\} | - | \{\} |

@@ -13,7 +13,12 @@ export type CellConfigType = Partial<{
  * @param {boolean} disableTravel 禁用链式取值
  * @returns string
  */
-export function getValue(row: AnyType, column: string, config: CellConfigType = {}, disableTravel?: boolean): string | unknown {
+export function getValue<T extends Record<string, any>>(
+  row: T,
+  column: string,
+  config: CellConfigType = {},
+  disableTravel?: boolean,
+): string {
   const emptyText = ''
   if (disableTravel) {
     return row[column] || emptyText
@@ -40,14 +45,17 @@ export function getValue(row: AnyType, column: string, config: CellConfigType = 
   }
   return filterValue(emptyText, config.filter)
 }
-function filterValue(val: any, filter: Record<string, any> | ((val: any) => any) | undefined) {
+function filterValue<T>(
+  val: T,
+  filter: Record<string, any> | ((val: any) => any) | undefined,
+) {
   if (!filter) {
     return val
   }
   if (typeof filter === 'function') {
     return filter(val)
   } else {
-    return filter[val]
+    return filter[val as string]
   }
 }
 

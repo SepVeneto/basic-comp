@@ -1,6 +1,9 @@
 <template>
   <bc-config-provider v-bind="globalConfig">
-    <el-row style="width: 100vw; max-width: 100%" :gutter="10">
+    <el-row
+      style="width: 100vw; max-width: 100%"
+      :gutter="10"
+    >
       <el-col :span="16">
         <bc-search
           v-model="params"
@@ -16,10 +19,16 @@
       <el-col :span="8">
         <el-form>
           <el-form-item label="pageName: ">
-            <bc-input v-model="globalConfig.table.pageName" width="120px" />
+            <bc-input
+              v-model="globalConfig.table.pageName"
+              width="120px"
+            />
           </el-form-item>
           <el-form-item label="table.arrayName: ">
-            <bc-input v-model="globalConfig.table.arrayName" width="120px" />
+            <bc-input
+              v-model="globalConfig.table.arrayName"
+              width="120px"
+            />
           </el-form-item>
           <el-form-item label="select.label: ">
             <bc-input v-model="globalConfig.select.label" />
@@ -32,20 +41,16 @@
           </el-form-item>
         </el-form>
       </el-col>
-    </el-row>  
-    <pre>{{JSON.stringify(params, null, 2)}}</pre>
+    </el-row>
+    <pre>{{ JSON.stringify(params, null, 2) }}</pre>
   </bc-config-provider>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-  name: 'ConfigProvider',
-})
-</script>
-
 <script lang="ts" setup>
 import { ref } from 'vue'
+defineOptions({
+  name: 'ConfigProvider',
+})
 const options = [
   {
     id: 1,
@@ -61,7 +66,7 @@ const options = [
 ]
 const searchConfig = ref([
   { catalog: 'input', prop: 'name' },
-  { catalog: 'select', prop: 'options', api: getOptions }
+  { catalog: 'select', prop: 'options', api: 'test' },
 ])
 const params = ref({})
 const globalConfig = ref({
@@ -77,7 +82,10 @@ const globalConfig = ref({
     label: 'name',
     value: 'id',
     arrayName: 'list',
-  }
+    apis: {
+      test: getOptions,
+    },
+  },
 })
 const tableConfig = ref([
   { label: '姓名', prop: 'name' },
@@ -89,13 +97,13 @@ const tableData = ref([
   { name: '维内托', age: 18, height: 237.8, weight: 40517 },
   { name: '安德烈亚•多利亚', age: 18, height: 186.9, weight: 28700 },
 ])
-const tableRef = ref();
+const tableRef = ref()
 
 function getOptions() {
   return Promise.resolve({
     data: {
       list: options,
-    }
+    },
   })
 }
 
@@ -103,11 +111,11 @@ function getList() {
   return Promise.resolve({
     data: {
       list: tableData.value,
-    }
+    },
   })
 }
 
 function handleSearch() {
-  tableRef.value.getList();
+  tableRef.value.getList()
 }
 </script>

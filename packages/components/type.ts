@@ -15,4 +15,5 @@ export declare interface ApiResponseType {
   code: string,
   msg: string,
   data: unknown,
+  [key: string]: unknown
 }
