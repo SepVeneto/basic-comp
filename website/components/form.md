@@ -22,5 +22,4 @@ form/basic
 ## FormItem 属性
 | 属性 | 说明 | 类型 | 可选值 | 默认值 |
 | :---- | :--- | :---- | :----- | :------ |
-| no-footer | 不显示对话框底部的操作栏（对插槽生效） | boolean | - | false |
-| need-fullscreen | 是否显示右上角的全屏按钮 | boolean | - | false |
+| required | 是否必填 | boolean | - | false |
