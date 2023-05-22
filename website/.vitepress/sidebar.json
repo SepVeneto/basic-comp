@@ -15,6 +15,10 @@
   ],
   "components": [
     {
+      "link": "form",
+      "name": "表单"
+    },
+    {
       "link": "table",
       "name": "表格"
     },

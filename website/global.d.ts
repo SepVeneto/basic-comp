@@ -1,4 +1,6 @@
 import {
+  ElForm,
+  ElFormItem,
   ElButton,
   ElTable,
   ElDialog,
@@ -6,16 +8,18 @@ import {
   ElSelect,
 } from 'element-plus'
 
-type Button = typeof ElButton & typeof import('@sepveneto/basic-comp')['BcButton']
+type Button = typeof ElButton | typeof import('@sepveneto/basic-comp')['BcButton']
 type Search = typeof import('@sepveneto/basic-comp')['BcSearch']
-type Table = typeof ElTable & typeof import('@sepveneto/basic-comp')['BcTable']
+type Table = typeof ElTable | typeof import('@sepveneto/basic-comp')['BcTable']
 type Clipboard = typeof import('@sepveneto/basic-comp')['BcClipboard']
-type Dialog = typeof ElDialog & typeof import('@sepveneto/basic-comp')['BcDialog']
-type Input = typeof ElInput & typeof import('@sepveneto/basic-comp')['BcInput']
-type Select = typeof ElSelect & typeof import('@sepveneto/basic-comp')['BcSelect']
+type Dialog = typeof ElDialog | typeof import('@sepveneto/basic-comp')['BcDialog']
+type Input = typeof ElInput | typeof import('@sepveneto/basic-comp')['BcInput']
+type Select = typeof ElSelect | typeof import('@sepveneto/basic-comp')['BcSelect']
 type Motion = typeof import('@sepveneto/basic-comp')['BcMotion']
 type MotionGroup = typeof import('@sepveneto/basic-comp')['BcMotionGroup']
 type Upload = typeof import('@sepveneto/basic-comp')['BcUpload']
+type Form = typeof ElForm
+type FormItem = typeof ElFormItem | typeof import('@sepveneto/basic-comp')['BcFormItem']
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -29,6 +33,8 @@ declare module 'vue' {
     BcMotion: Motion,
     BcMotionGroup: MotionGroup,
     BcUpload: Upload,
+    BcForm: Form,
+    BcFormItem: FormItem,
   }
 }
 

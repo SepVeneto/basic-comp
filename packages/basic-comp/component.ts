@@ -12,7 +12,11 @@ import { BcSvgIcon } from '@basic-comp/components/svgIcon'
 import { BcConfigProvider } from '@basic-comp/components/configProvider'
 import { BcStatus } from '@basic-comp/components/status'
 import { BcDatePicker } from '@basic-comp/components/date-picker'
+import { BcForm, BcFormItem } from '@basic-comp/components/form'
+
 export default [
+  BcForm,
+  BcFormItem,
   BcStatus,
   BcButton,
   BcInput,

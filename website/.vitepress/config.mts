@@ -31,7 +31,7 @@ const buildTransformers = () => {
 }
 
 export const config: UserConfig = {
-  title: 'Basic Comp说明文档1',
+  title: 'Basic Comp说明文档',
   description: 'Basic Comp说明文档',
   base: '/basic-comp/',
   scrollOffset: 1,
