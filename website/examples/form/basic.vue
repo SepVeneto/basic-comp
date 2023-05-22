@@ -1,13 +1,13 @@
 <template>
-  <bc-form :model="formData">
+  <el-form :model="formData">
     <bc-form-item
-      label="name"
+      label="名称"
       prop="name"
       required
     >
       <bc-input v-model="formData.name" />
     </bc-form-item>
-  </bc-form>
+  </el-form>
 </template>
 
 <script lang="ts" setup>
