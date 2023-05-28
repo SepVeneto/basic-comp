@@ -3,7 +3,7 @@ import { BcInput } from '@basic-comp/components/input'
 import { BcTable } from '@basic-comp/components/table'
 import { BcSelect } from '@basic-comp/components/select'
 import { BcSearch } from '@basic-comp/components/search'
-import { BcDialog } from '@basic-comp/components/dialog'
+import { BcDialog, createDialog } from '@basic-comp/components/dialog'
 import { BcUpload } from '@basic-comp/components/upload'
 import { BcClipboard } from '@basic-comp/components/clipboard'
 import { BcMotion } from '@basic-comp/components/motion'
@@ -31,4 +31,6 @@ export default [
   BcSvgIcon,
   BcConfigProvider,
   BcDatePicker,
+
+  createDialog,
 ]

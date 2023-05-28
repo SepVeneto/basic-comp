@@ -1,6 +1,7 @@
 import { ElButton, ElDialog, ElScrollbar } from 'element-plus'
 import { computed, defineComponent, ref } from 'vue'
 import { FullScreen } from '@element-plus/icons-vue'
+import { dialogProps } from './type'
 
 export default defineComponent({
   name: 'BcDialog',
@@ -10,13 +11,18 @@ export default defineComponent({
     ElButton,
     FullScreen,
   },
-  props: {
-    noFooter: Boolean,
-    needFullscreen: Boolean,
-  },
+  props: dialogProps,
   // inheritAttrs: false, // 不被作为props的attributes不会暴露在组件的根元素上
   emits: ['update:modelValue', 'cancel', 'submit'],
   setup(props, context) {
+    const visible = computed({
+      get() {
+        return props.modelValue
+      },
+      set(val) {
+        context.emit('update:modelValue', val)
+      },
+    })
     const fullscreen = ref(false)
     // const isFullscreen = ref(false);
     const isFullscreen = computed(() => {
@@ -30,11 +36,15 @@ export default defineComponent({
     fullscreen.value = !!context.attrs.fullscreen
     // isFullscreen.value = !!context.attrs.fullscreen || context.attrs.fullscreen === '';
 
+    context.expose({
+      visible,
+    })
+
     function handleFullScreen() {
       fullscreen.value = !fullscreen.value
     }
     function handleCancel() {
-      context.emit('update:modelValue', false)
+      visible.value = false
       context.emit('cancel')
     }
 
@@ -54,10 +64,11 @@ export default defineComponent({
       <el-dialog
         close-on-click-modal={false}
         fullscreen={fullscreen.value}
-        {...{
-          'onUpdate:modelValue': (visible:boolean) => context.emit('update:modelValue', visible),
-        }}
         {...context.attrs}
+        {...{
+          modelValue: visible.value,
+          'onUpdate:modelValue': (show:boolean) => { visible.value = show },
+        }}
         v-slots={{
           header,
           footer: () => (!props.noFooter && (context.slots?.footer?.() || footer())),
