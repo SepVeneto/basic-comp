@@ -7,8 +7,8 @@ import {
   ref,
   unref,
 } from 'vue'
+import type { ConfigProviderProps } from '@basic-comp/components/configProvider'
 import {
-  type ConfigProviderProps,
   configProviderContextKey,
 } from '@basic-comp/components/configProvider'
 import { logWarn } from '@basic-comp/utils'
