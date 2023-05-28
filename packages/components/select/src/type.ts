@@ -14,7 +14,10 @@ export const selectProps = {
   /**
    * 选项列表对应的字段名称，可通过config-provider全局设置
    */
-  arrayName: String,
+  arrayName: {
+    type: String,
+    default: undefined,
+  },
   /**
    * 是否需要分组（根据children分组）
    */
@@ -64,12 +67,14 @@ export const selectProps = {
    */
   customLabel: {
     type: String,
+    default: 'label',
   },
   /**
    * 选项中用于取值的字段，可通过config-provider全局设置
    */
   customValue: {
     type: String,
+    default: 'value',
   },
   /**
    * 禁用选项的条件

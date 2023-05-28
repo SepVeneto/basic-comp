@@ -1,15 +1,11 @@
 import type { ApiResponseType } from '@basic-comp/components/type'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, InjectionKey, PropType, Ref } from 'vue'
 
 export interface ConfigProviderSearchProps {
-  pageName?: string,
-  pageSizeName?: string,
   export?: boolean,
 }
 export interface ConfigProviderTableProps {
   arrayName?: string,
-  pageName?: string,
-  pageSizeName?: string,
   totalName?: string,
 }
 export interface ConfigProviderSelectProps {
@@ -18,10 +14,17 @@ export interface ConfigProviderSelectProps {
   arrayName?: string,
   apis?: Record<string, () => Promise<ApiResponseType>>
 }
+export interface ConfigProviderPaginationProps {
+  pageName?: string
+  pageSizeName?: string
+}
 export interface ConfigProviderDatePicker {
   valueFormat?: string,
 }
 export const configProviderProps = {
+  pagination: {
+    type: Object as PropType<ConfigProviderPaginationProps>,
+  },
   table: {
     type: Object as PropType<ConfigProviderTableProps>,
   },
@@ -42,3 +45,5 @@ export const configProviderProps = {
   },
 }
 export type ConfigProviderProps = Partial<ExtractPropTypes<typeof configProviderProps>>
+
+export const configProviderContextKey: InjectionKey<Ref<ConfigProviderProps>> = Symbol('configProviderContextKey')

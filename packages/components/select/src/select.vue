@@ -44,7 +44,7 @@
 // import serverSelect from './serverSelect';
 import { computed, defineComponent, ref } from 'vue'
 import { getValue, logWarn } from '@basic-comp/utils'
-import type { SelectOption, SelectOptions, SelectProps } from './type'
+import type { SelectOption, SelectOptions } from './type'
 import { selectProps } from './type'
 import { useConfigInject } from '@basic-comp/hooks'
 import { ElOption, ElOptionGroup, ElSelect } from 'element-plus'
@@ -59,16 +59,28 @@ export default defineComponent({
   props: selectProps,
   emits: ['update:modelValue', 'update:label', 'fetch', 'change'],
   setup(props, context) {
-    const {
-      arrayName,
-      label: optionLabel,
-      value: optionValue,
-      selectApis: apis,
-      response,
-    } = useConfigInject<SelectProps>('select', props)
+    const selectInject = useConfigInject('select')
+    const responseInject = useConfigInject('response')
 
-    const optionsName = computed(() => (props.arrayName || arrayName.value) ?? '')
-    const responseWrap = computed(() => response.value?.data || 'data')
+    const arrayName = computed(() =>
+      selectInject.value?.arrayName || props.arrayName,
+    )
+    const optionLabel = computed(() =>
+      selectInject.value?.label || props.customLabel,
+    )
+    const optionValue = computed(() =>
+      selectInject.value?.value || props.customValue,
+    )
+    const apis = computed(() =>
+      selectInject.value?.apis || {},
+    )
+
+    const optionsName = computed(() =>
+      (props.arrayName || arrayName.value) ?? '',
+    )
+    const responseWrap = computed(() =>
+      responseInject.value?.data || 'data',
+    )
     const apiOptions = ref<SelectOptions>([])
 
     const selectOptions = computed<SelectOptions>(() => {
@@ -111,6 +123,7 @@ export default defineComponent({
     function getList() {
       let api = props.api
       if (typeof props.api === 'string') {
+        console.log(apis.value)
         api = apis.value[props.api]
       }
       if (typeof api === 'function') {

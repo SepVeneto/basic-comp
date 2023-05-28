@@ -1,29 +1,30 @@
 <template>
-  <div class="App">
-    <VPSidebar />
-    <div>
-      <div class="app-main">
-        <VPContent  class="main-docs" style="max-width: 60rem;" />
-        <VPCatalog v-if="page.headers" />
+  <bc-config-provider>
+    <div class="App">
+      <VPSidebar />
+      <div>
+        <div class="app-main">
+          <VPContent
+            class="main-docs"
+            style="max-width: 60rem;"
+          />
+          <VPCatalog v-if="page.headers" />
+        </div>
       </div>
+      <Debug />
     </div>
-    <Debug />
-  </div>
+  </bc-config-provider>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-  name: 'VPApp',
-})
-</script>
 
 <script lang="ts" setup>
 import { useData } from 'vitepress'
 import VPContent from './vp-content.vue'
 import VPSidebar from './vp-sidebar.vue'
 import VPCatalog from './vp-catalog.vue'
-const { page } = useData();
+defineOptions({
+  name: 'VpApp',
+})
+const { page } = useData()
 </script>
 
 <style lang="scss" scoped>

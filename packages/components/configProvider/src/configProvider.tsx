@@ -1,14 +1,15 @@
-import { defineComponent, provide, reactive } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import { configProviderProps } from './type'
+import { provideGlobalConfig } from '@basic-comp/hooks'
 
 export default defineComponent({
   name: 'BcConfigProvider',
   props: configProviderProps,
-  setup(props, { slots, attrs }) {
+  setup(props, { slots }) {
     const configProvider = reactive({
       ...props,
     })
-    provide('configProvider', { ...configProvider, ...attrs })
+    provideGlobalConfig(configProvider)
     return () => slots.default?.()
   },
 })

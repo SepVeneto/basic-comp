@@ -14,7 +14,12 @@ export default defineComponent({
     dayEnd: Boolean,
   },
   setup(props, { attrs }) {
-    const { datePicker } = useConfigInject('datePicker', props)
+    const datePickerInject = useConfigInject('datePicker')
+    const valueFormat = computed(() =>
+      datePickerInject.value?.valueFormat ||
+      attrs.valueFormat,
+    )
+
     const realWidth = computed(() => {
       if (typeof props.width === 'string') {
         return props.width
@@ -35,12 +40,12 @@ export default defineComponent({
       rangeDefaultConfig,
       type,
       timeRange,
-      datePicker,
+      valueFormat,
     }
   },
   render() {
     return (<el-date-picker
-      value-format={this.datePicker?.valueFormat}
+      value-format={this.valueFormat}
       style={{ width: this.realWidth }}
       {...{
         ...(this.type?.includes('range') ? this.rangeDefaultConfig : {}),

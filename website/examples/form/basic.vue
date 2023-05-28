@@ -9,6 +9,10 @@
       required
     >
       <bc-input v-model="formData.name" />
+      <bc-select
+        v-model="formData.name"
+        api="merchant"
+      />
     </bc-form-item>
   </ElForm>
 </template>

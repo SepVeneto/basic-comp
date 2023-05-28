@@ -15,7 +15,26 @@ export default defineComponent({
   props: tableProps,
   emits: ['update:modelValue'],
   setup(props, context) {
-    const { arrayName, pageSizeName, pageName, response, table } = useConfigInject('bcTable', props)
+    const tableInject = useConfigInject('table')
+    const arrayName = computed(() =>
+      tableInject.value?.arrayName || props.arrayName,
+    )
+    const totalName = computed(() =>
+      tableInject.value?.totalName || 'total',
+    )
+
+    const paginationInject = useConfigInject('pagination')
+    const pageSizeName = computed(() =>
+      paginationInject.value?.pageSizeName || 'rows',
+    )
+    const pageName = computed(() =>
+      paginationInject.value?.pageName || 'page',
+    )
+
+    const responseInject = useConfigInject('response')
+    const responseWrap = computed(() =>
+      responseInject.value?.data || 'data',
+    )
 
     const arrayData = ref([])
     const arrayTotal = ref(0)
@@ -26,8 +45,8 @@ export default defineComponent({
 
     const customTableRef = ref()
 
-    const configProviderTable = computed(() => table.value)
-    const responseWrap = computed(() => response.value?.data ?? 'data')
+    // const configProviderTable = computed(() => table.value)
+    // const responseWrap = computed(() => response.value?.data ?? 'data')
     const tableDataName = computed(() => {
       if (props.arrayName == null) {
         return null
@@ -123,7 +142,7 @@ export default defineComponent({
         const response = data[wrap] as Record<string, any>
         arrayData.value = (array ? response[array] : data[wrap]) || []
         loading.value = false
-        arrayTotal.value = response[table.value?.totalName ?? 'total'] || 0
+        arrayTotal.value = response[totalName.value] || 0
         return Promise.resolve(arrayData.value)
       }).catch(() => {
         loading.value = false
@@ -132,10 +151,12 @@ export default defineComponent({
       })
     }
     function updateParams(params: Record<string, unknown>) {
-      const pageName = configProviderTable.value?.pageName ?? 'page'
-      const pageSizeName = configProviderTable.value?.pageSizeName ?? 'rows'
       const { page, rows, ...args } = params
-      context.emit('update:modelValue', { ...args, [pageName]: page, [pageSizeName]: rows })
+      context.emit('update:modelValue', {
+        ...args,
+        [pageName.value]: page,
+        [pageSizeName.value]: rows,
+      })
     }
     function spanMethod({ row, column, rowIndex }: CellType) {
       const { includes = [], parentProp = null } = props.colspanOptions

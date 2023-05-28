@@ -14,7 +14,10 @@ export const searchProps = {
   /**
    * 查询操作默认设置页码的字段名，默认是page，可通过config-provider设置
    */
-  pageName: String,
+  pageName: {
+    type: String,
+    default: 'page',
+  },
   /**
    * 查询的默认值，会影响到重置操作
    */

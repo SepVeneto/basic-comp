@@ -20,7 +20,7 @@
         <el-form>
           <el-form-item label="pageName: ">
             <bc-input
-              v-model="globalConfig.table.pageName"
+              v-model="globalConfig.pagination.pageName"
               width="120px"
             />
           </el-form-item>
@@ -70,9 +70,11 @@ const searchConfig = ref([
 ])
 const params = ref({})
 const globalConfig = ref({
-  table: {
+  pagination: {
     pageName: 'pageNum',
     pageSize: 'pageSize',
+  },
+  table: {
     arrayName: 'list',
   },
   search: {

@@ -1,4 +1,4 @@
-import { defineComponent, h, ref, watch } from 'vue'
+import { computed, defineComponent, h, ref, watch } from 'vue'
 import type { SetupContext } from 'vue'
 import { useConfigInject } from '@basic-comp/hooks'
 import type { RenderInputConfigType } from './type'
@@ -19,10 +19,15 @@ export default defineComponent({
   props: searchProps,
   emits: ['update:modelValue', 'reset', 'create', 'export'],
   setup(props, context) {
-    const searchInject = useConfigInject('search', props).search
-    const { pageName: tablePageName } = useConfigInject('table', props)
-    const pageName = searchInject?.pageName ?? tablePageName.value
-    const needExport = searchInject?.export ?? props.export
+    const searchInject = useConfigInject('search')
+    const needExport = computed(() =>
+      searchInject.value?.export ?? props.export,
+    )
+
+    const paginationInject = useConfigInject('pagination')
+    const pageName = computed(() =>
+      paginationInject.value?.pageName || props.pageName,
+    )
 
     const uploadVisible = ref(false)
     const searchConfig = ref<RenderInputConfigType[]>()
@@ -48,7 +53,7 @@ export default defineComponent({
       e.preventDefault()
     }
     function handleSearch(params: MouseEvent | Record<string, unknown>) {
-      context.emit('update:modelValue', { ...props.modelValue, ...(params instanceof MouseEvent ? {} : params), [pageName]: 1 })
+      context.emit('update:modelValue', { ...props.modelValue, ...(params instanceof MouseEvent ? {} : params), [pageName.value]: 1 })
       props.search?.()
     }
     function handleReset() {
@@ -95,7 +100,7 @@ export default defineComponent({
     )
     const exportButton = () => (
       context.slots.export?.() ||
-      (needExport && <bc-button onClick={() => { context.emit('export') }}>导出</bc-button>)
+      (needExport.value && <bc-button onClick={() => { context.emit('export') }}>导出</bc-button>)
     )
     const layout = { create, search, reset, upload, export: exportButton, advance: () => <></> }
     const node = () => (

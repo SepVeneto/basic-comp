@@ -9,7 +9,13 @@ export default {
     app.use(ElementPlus, {
       // locale: await import('element-plus/es/locale/lang/zh-cn')
     })
-    app.use(BasicComp)
+    app.use(BasicComp, {
+      select: {
+        apis: {
+          merchant: () => Promise.resolve({ data: [{ labe: 1, value: 1 }] }),
+        },
+      },
+    })
 
     globals.forEach(([comp, name]) => {
       console.log(name)
