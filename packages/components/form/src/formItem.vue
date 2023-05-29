@@ -10,8 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElFormItem } from 'element-plus'
-import type { FormItemRule } from 'element-plus'
+import { ElFormItem, type FormItemRule } from 'element-plus'
 import { computed, useAttrs } from 'vue'
 import { formItemProps } from './formItem'
 const rawAttrs = useAttrs()
