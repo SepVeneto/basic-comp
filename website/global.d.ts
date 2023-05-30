@@ -20,6 +20,7 @@ type MotionGroup = typeof import('@sepveneto/basic-comp')['BcMotionGroup']
 type Upload = typeof import('@sepveneto/basic-comp')['BcUpload']
 type Form = typeof ElForm
 type FormItem = typeof ElFormItem | typeof import('@sepveneto/basic-comp')['BcFormItem']
+type Status = typeof import('@sepveneto/basic-comp')['BcStatus']
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -35,6 +36,7 @@ declare module 'vue' {
     BcUpload: Upload,
     BcForm: Form,
     BcFormItem: FormItem,
+    BcStatus: Status,
   }
 }
 

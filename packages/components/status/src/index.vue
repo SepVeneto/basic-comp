@@ -10,11 +10,13 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
+import type { PropType } from 'vue'
+
 export default defineComponent({
   name: 'BcStatus',
   props: {
     type: {
-      type: String,
+      type: String as PropType<'primary' | 'error' | 'info' | 'warning' | 'success'>,
       default: 'primary',
     },
   },

@@ -18,32 +18,32 @@
       height: 8px;
     }
   }
-  &--danger {
-    background-color: var(--el-color-danger-light);
+  &--error {
+    background-color: var(--el-color-error-light-7);
     &::after {
       background-color: var(--el-color-error);
     }
   }
   &--primary {
-    background-color: var(--el-color-primary-light-6);
+    background-color: var(--el-color-primary-light-7);
     &::after {
       background-color: var(--el-color-primary);
     }
   }
   &--info {
-    background-color: var(--el-color-info-light);
+    background-color: var(--el-color-info-light-7);
     &::after {
       background-color: var(--el-color-info);
     }
   }
   &--warning {
-    background-color: var(--el-color-warning-light);
+    background-color: var(--el-color-warning-light-7);
     &::after {
       background-color: var(--el-color-warning);
     }
   }
   &--success {
-    background-color: var(--el-color-success-light);
+    background-color: var(--el-color-success-light-7);
     &::after {
       background-color: var(--el-color-success);
     }
