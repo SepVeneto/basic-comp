@@ -5,7 +5,7 @@ import type { DialogFn, DialogProps } from './type'
 import { logWarn } from '@basic-comp/utils'
 
 export const createDialog: DialogFn & { _context?: AppContext } =
-function (component, props) {
+function (component, props = {}) {
   const vm = createVNode(component, props)
 
   const appendTo = document.body
@@ -33,6 +33,10 @@ function (component, props) {
       },
       { default: () => vm },
     )
+
+    dialog.props!.onClosed = () => {
+      render(null, container)
+    }
 
     if (createDialog._context) {
       dialog.appContext = createDialog._context
