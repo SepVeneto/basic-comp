@@ -46,7 +46,7 @@
           class="el-upload-dragger"
         >
           <el-icon class="el-icon--upload">
-            <Plus />
+            <IconPlus />
           </el-icon>
           <div class="el-upload__text">
             <em>点击上传</em>
