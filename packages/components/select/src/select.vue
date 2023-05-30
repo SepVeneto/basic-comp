@@ -123,7 +123,6 @@ export default defineComponent({
     function getList() {
       let api = props.api
       if (typeof props.api === 'string') {
-        console.log(apis.value)
         api = apis.value[props.api]
       }
       if (typeof api === 'function') {
