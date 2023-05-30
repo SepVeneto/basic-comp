@@ -103,6 +103,7 @@ export default defineComponent({
           form.append('file', options.file)
           callbackData = form
       }
+      // @ts-expect-error: 三种类型都可以
       props.uploadApi?.(callbackData).then(() => {
         uploading.value = false
         context.emit('success')

@@ -1,8 +1,9 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { UploadRequestOptions } from 'element-plus'
-import type { ApiResponseType } from '@basic-comp/components/type'
 
 export type UploadCallbackType = File | UploadRequestOptions | FormData
+type UploadApiFn<T extends UploadCallbackType> = (data: T) => Promise<any>
+type UploadApi = UploadApiFn<File> | UploadApiFn<UploadRequestOptions> | UploadApiFn<FormData>
 export const uploadProps = {
   /**
    * 是否展示
@@ -15,7 +16,7 @@ export const uploadProps = {
   /**
    * 调用文件的上传接口
    */
-  uploadApi: Function as PropType<(data: UploadCallbackType) => Promise<ApiResponseType>>,
+  uploadApi: Function as PropType<UploadApi>,
   callbackType: {
     type: String,
     default: 'form',
