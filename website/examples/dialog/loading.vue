@@ -5,7 +5,7 @@
   <bc-dialog
     v-model="visible"
     title="对话框"
-    @submit="handleSubmit"
+    :confirm="handleSubmit"
   >
     <div>body</div>
   </bc-dialog>
