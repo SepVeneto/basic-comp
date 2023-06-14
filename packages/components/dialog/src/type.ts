@@ -1,6 +1,8 @@
-import type { Component, ExtractPropTypes } from 'vue'
+import type { Component, ExtractPropTypes, PropType } from 'vue'
 import type { ExtractProps } from '@basic-comp/utils'
 import type { ElDialog } from 'element-plus'
+
+export type ConfirmFn = (...args: any[]) => void | Promise<void>
 
 export const dialogProps = {
   /**
@@ -9,6 +11,10 @@ export const dialogProps = {
   noFooter: Boolean,
   needFullscreen: Boolean,
   modelValue: Boolean,
+  confirm: {
+    type: Function as PropType<ConfirmFn>,
+    default: undefined,
+  },
 }
 
 type Instance = abstract new (...args: any) => any

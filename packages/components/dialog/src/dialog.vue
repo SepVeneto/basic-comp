@@ -41,7 +41,10 @@
           <ElButton @click="handleCancel">
             取消
           </ElButton>
-          <ElButton @click="emit('submit')">
+          <ElButton
+            :loading="loading"
+            @click="handleSubmit"
+          >
             确认
           </ElButton>
         </footer>
@@ -67,6 +70,7 @@ const props = defineProps(dialogProps)
 const emit = defineEmits(['update:modelValue', 'cancel', 'submit'])
 const slots = useSlots()
 const rawAttrs = useAttrs()
+const loading = ref(false)
 
 const visible = ref(false)
 
@@ -94,9 +98,27 @@ const scrollbarClass = computed(() => [
 ])
 fullscreen.value = !!rawAttrs.fullscreen
 
+function handleSubmit() {
+  if (!props.confirm) {
+    emit('submit')
+    return
+  }
+  loading.value = true
+  const res = props.confirm()
+  if (res instanceof Promise) {
+    res.finally(() => {
+      loading.value = false
+    })
+  }
+  emit('submit')
+}
 function close() {
   visible.value = false
   emit('update:modelValue', false)
+}
+function open() {
+  visible.value = true
+  emit('update:modelValue', true)
 }
 function handleFullScreen() {
   fullscreen.value = !fullscreen.value
@@ -104,8 +126,13 @@ function handleFullScreen() {
 function handleCancel() {
   close()
 }
+function setLoading(state: boolean) {
+  loading.value = state
+}
 
 defineExpose({
-  visible,
+  open,
+  close,
+  setLoading,
 })
 </script>

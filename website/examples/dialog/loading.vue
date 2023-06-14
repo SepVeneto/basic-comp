@@ -17,7 +17,14 @@ const visible = ref(false)
 function handleOpen() {
   visible.value = true
 }
-function handleSubmit() {
+async function handleSubmit() {
+  await mockPost()
   visible.value = false
+}
+function mockPost() {
+  console.log('post')
+  return new Promise(resolve => {
+    setTimeout(resolve, 2000)
+  })
 }
 </script>

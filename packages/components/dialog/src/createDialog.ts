@@ -15,15 +15,9 @@ function (component, props = {}) {
 
   function open(
     props?: DialogProps,
-    confirmFn?: (...args: any) => void,
+    confirmFn?: (...args: any) => Promise<void> | void,
     cancelFn?: () => void,
   ) {
-    function onSubmit() {
-      confirmFn?.(vm.component?.exposed)
-    }
-    function onCancel() {
-      cancelFn?.()
-    }
     dialog = createVNode(
       DialogConstructor,
       {
@@ -47,11 +41,26 @@ function (component, props = {}) {
     render(dialog, container)
     appendTo.appendChild(container.firstElementChild!)
 
-      dialog.component!.exposed!.visible.value = true
+    dialog.component!.exposed!.open()
+
+    function onSubmit() {
+      const res = confirmFn?.(vm.component?.exposed)
+      if (res instanceof Promise) {
+        dialog!.component!.exposed!.setLoading(true)
+        res.finally(() => {
+          dialog!.component!.exposed!.setLoading(false)
+        })
+      } else {
+        dialog!.component!.exposed!.setLoading(false)
+      }
+    }
+    function onCancel() {
+      cancelFn?.()
+    }
   }
   function close() {
     if (!dialog) return
-    dialog.component!.exposed!.visible.value = false
+    dialog.component!.exposed!.close()
   }
 
   return {

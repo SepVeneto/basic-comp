@@ -14,10 +14,18 @@ async function handleOpen() {
     { title: '命令式', width: '550px' },
     async (res) => {
       const data = await res?.getFormData()
+      await mockPost()
+      console.log('end')
       console.log(data)
       close()
     },
   )
   // console.log(res)
+}
+function mockPost() {
+  console.log('post')
+  return new Promise(resolve => {
+    setTimeout(resolve, 2000)
+  })
 }
 </script>
