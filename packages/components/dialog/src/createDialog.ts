@@ -1,12 +1,16 @@
 import type { AppContext, VNode } from 'vue'
-import { createVNode, render } from 'vue'
+import { createVNode, render, shallowRef } from 'vue'
 import DialogConstructor from './dialog.vue'
 import type { DialogFn, DialogProps } from './type'
 import { logWarn } from '@basic-comp/utils'
 
 export const createDialog: DialogFn & { _context?: AppContext } =
 function (component, props = {}) {
-  const vm = createVNode(component, props)
+  const compRef = shallowRef()
+  const vm = createVNode(component, {
+    ...props,
+    onVnodeMounted: (vnode) => { compRef.value = vnode.component?.exposed },
+  })
 
   const appendTo = document.body
   const container = document.createElement('div')
@@ -42,6 +46,8 @@ function (component, props = {}) {
     appendTo.appendChild(container.firstElementChild!)
 
     dialog.component!.exposed!.open()
+
+    return compRef
 
     function onSubmit() {
       const res = confirmFn?.(vm.component?.exposed)

@@ -1,4 +1,4 @@
-import type { Component, ExtractPropTypes, PropType } from 'vue'
+import type { Component, ExtractPropTypes, PropType, ShallowRef } from 'vue'
 import type { ExtractProps } from '@basic-comp/utils'
 import type { ElDialog } from 'element-plus'
 
@@ -27,6 +27,6 @@ export type DialogFn = <T extends Component & Instance>(
     props?: DialogProps,
     confirmFn?: (exposed?: InstanceType<T>) => void,
     cancelFn?: () => void
-  ) => void,
+  ) => ShallowRef<InstanceType<T> | undefined>,
   close: () => void
 }

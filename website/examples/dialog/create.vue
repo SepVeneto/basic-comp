@@ -10,7 +10,7 @@ import DialogForm from '../form/basic.vue'
 
 async function handleOpen() {
   const { open, close } = createDialog(DialogForm)
-  open(
+  const instRef = open(
     { title: '命令式', width: '550px' },
     async (res) => {
       const data = await res?.getFormData()
@@ -20,7 +20,7 @@ async function handleOpen() {
       close()
     },
   )
-  // console.log(res)
+  console.log(instRef)
 }
 function mockPost() {
   console.log('post')
