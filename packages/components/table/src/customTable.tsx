@@ -211,7 +211,7 @@ export default defineComponent({
     return (
       <el-table
         class={['custom-table', { 'cutom-icon': this.customIcon }, { 'current-hover': this.hiddenCurrent }]}
-        ref={this.tableRef}
+        ref="tableRef"
         border
         data={this.data}
         header-cell-class-name="custom-header"
