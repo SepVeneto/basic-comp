@@ -80,8 +80,20 @@ export function useActiveSidebarLinks(container: Ref<HTMLElement>, marker: Ref<H
     }
   }
 
+  function scrollToActive() {
+    const hash = decodeURIComponent(window.location.hash)
+    if (!hash) return
+
+    activeLink()
+    const sidebarLinks = getSidebarLinks()
+    const anchors = getAnchors(sidebarLinks)
+    const anchor = anchors.find(item => item.getAttribute('href') === hash)
+    if (anchor) anchor.scrollIntoView()
+  }
+
   onMounted(() => {
     activeLink()
+    scrollToActive()
     window.requestAnimationFrame(setActiveLink)
     window.addEventListener('scroll', onScroll)
   })

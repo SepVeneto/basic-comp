@@ -130,6 +130,38 @@ table/emptyCell
 
 :::
 
+## 拖曳排序
+
+可以将[`useSortable`](https://vueuse.org/integrations/useSortable)整合进表格中来实现拖曳排序
+
+:::warning
+
+必须设置`row-key`，否则会导致表格数据与表现不符
+
+:::
+
+:::demo
+
+table/drag
+
+:::
+
+## 指定拖曳区域
+
+当表格的数据行存在需要用户操作的内容，比如点击或者复制时，可以通过`handler`手动指定允许拖曳的区域。
+
+:::warning
+
+必须设置`row-key`，否则会导致表格数据与表现不符
+
+:::
+
+:::demo
+
+table/dragWithHandler
+
+:::
+
 ## Table 属性
 
 | 属性           | 说明                                                      | 类型                | 可选值 | 默认值                  |

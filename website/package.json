@@ -19,8 +19,10 @@
     "vitepress": "^0.22.4"
   },
   "dependencies": {
+    "@vueuse/integrations": "^10.1.2",
     "axios": "^0.27.2",
     "normalize.css": "^8.0.1",
-    "prismjs": "^1.25.0"
+    "prismjs": "^1.25.0",
+    "sortablejs": "^1.15.0"
   }
 }

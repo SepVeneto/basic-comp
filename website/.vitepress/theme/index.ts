@@ -18,7 +18,6 @@ export default {
     })
 
     globals.forEach(([comp, name]) => {
-      console.log(name)
       app.component(name, comp)
     })
   },

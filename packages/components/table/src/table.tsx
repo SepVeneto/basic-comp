@@ -56,9 +56,9 @@ export default defineComponent({
     })
     const tableData = computed<Record<string, unknown>[]>(() => {
       if (props.data && props.data.length > 0) {
-        return [...props.data || []]
+        return props.data || []
       } else {
-        return props.filter ? props.filter(arrayData.value) : [...arrayData.value]
+        return props.filter ? props.filter(arrayData.value) : arrayData.value
       }
     })
 
