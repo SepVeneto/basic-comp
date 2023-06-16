@@ -7,6 +7,7 @@
     :config="tableConfig"
     :api="getList"
     row-key="name"
+    array-name="data"
     pagination
     :page-sizes="[100]"
   >
