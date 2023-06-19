@@ -40,7 +40,7 @@ export const configProviderProps = {
   datePicker: {
     type: Object as PropType<ConfigProviderDatePicker>,
     default: (): ConfigProviderDatePicker => ({
-      valueFormat: 'YYYY-MM-DD hh:mm:ss',
+      valueFormat: 'YYYY-MM-DD HH:mm:ss',
     }),
   },
 }
