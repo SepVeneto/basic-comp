@@ -36,9 +36,15 @@ export default defineComponent({
     watch(() => props.config, (config) => {
       searchConfig.value = [...config]
     }, { immediate: true, deep: true })
+
     watch(() => props.defaultValue, (value) => {
-      defaultParams.value = JSON.parse(JSON.stringify({ ...props.modelValue, ...value }))
-      context.emit('update:modelValue', JSON.parse(JSON.stringify({ ...props.modelValue, ...defaultParams.value })))
+      let val
+      if (value) {
+        val = { ...value }
+      } else {
+        val = { ...props.modelValue }
+      }
+      defaultParams.value = val
     }, { immediate: true })
 
     function updateData(key: string, val: string | string[]) {
