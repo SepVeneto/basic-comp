@@ -39,6 +39,9 @@
           <el-form-item label="select.arrayName: ">
             <bc-input v-model="globalConfig.select.arrayName" />
           </el-form-item>
+          <el-form-item label="datePicker.valueFormat">
+            <bc-input v-model="globalConfig.datePicker.valueFormat" />
+          </el-form-item>
         </el-form>
       </el-col>
     </el-row>
@@ -67,6 +70,7 @@ const options = [
 const searchConfig = ref([
   { catalog: 'input', prop: 'name' },
   { catalog: 'select', prop: 'options', api: 'test' },
+  { catalog: 'datepicker', prop: 'timerange', type: 'datetimerange' },
 ])
 const params = ref({})
 const globalConfig = ref({
@@ -79,6 +83,9 @@ const globalConfig = ref({
   },
   search: {
     export: false,
+  },
+  datePicker: {
+    valueFormat: 'YYYY-MM-DD HH:mm:ss',
   },
   select: {
     label: 'name',
