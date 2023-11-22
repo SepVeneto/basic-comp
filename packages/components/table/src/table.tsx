@@ -240,6 +240,7 @@ export default defineComponent({
           span-method={props.colspanOptions ? spanMethod : null}
           hidden-current={!!props.colspanOptions}
           body-border={!!props.colspanOptions}
+          v-loading={loading.value}
           v-slots={context.slots}
           {...context.attrs}
         >
