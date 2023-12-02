@@ -23,7 +23,7 @@ export const searchProps = {
    */
   defaultValue: {
     type: Object,
-    default: () => ({}),
+    default: undefined,
   },
   nameMode: {
     type: String as PropType<NameMode>,
