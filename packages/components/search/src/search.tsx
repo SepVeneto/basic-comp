@@ -38,12 +38,7 @@ export default defineComponent({
     }, { immediate: true, deep: true })
 
     watch(() => props.defaultValue, (value) => {
-      let val
-      if (value) {
-        val = { ...value }
-      } else {
-        val = { ...props.modelValue }
-      }
+      const val = JSON.parse(JSON.stringify(value || props.modelValue))
       defaultParams.value = val
     }, { immediate: true })
 
