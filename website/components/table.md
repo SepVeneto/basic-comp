@@ -25,6 +25,8 @@ table/basic
 
 ## 单选
 
+可以通过`getCheckboxProps`来单独设置某一行是否允许选中
+
 :::demo
 
 table/radio
@@ -34,6 +36,8 @@ table/radio
 ## 多选
 
 由于`element`的`table`多选功能的手动选择依赖表格数据的引用，在回显的时候很难处理，因此参考了`antdv`的做法，增强了多选功能，可以通过`{ type: 'select' }`开启.
+
+可以通过`getCheckboxProps`来单独设置某一行是否允许选中
 
 :::demo
 
@@ -228,3 +232,5 @@ table/dragWithHandler
 | type | 选择框的类型 | 'checkbox' \| 'radio' | 'checkbox' |
 | selectedRowKeys | 指定选中项的 key 数组，需要和 onChange 进行配合 | string[] | [] |
 | onChange | 选中项发生变化时的回调 | Function(selectedRowKeys) | - |
+| preserveRowKeys | 本地数据删除时是否保留选项的key（主要用于跨页选择保留选中结果） | boolean | - | false |
+| getCheckboxProps | 选择框的默认属性配置 | function(row) | - | - |
