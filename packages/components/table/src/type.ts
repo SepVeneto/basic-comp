@@ -1,11 +1,21 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
+import type { CheckboxProps, RadioProps } from 'element-plus'
 
 export type CellType = {
   row: Record<string, unknown>,
   rowIndex: number,
   column: TableColumnCtx<unknown>,
   columnIndex: number,
+}
+
+type TableCheckboxOptions = CheckboxProps | RadioProps
+export type TableRowSelection = {
+  type: 'select' | 'radio',
+  preserveRowKeys?: boolean
+  selectedRowKeys?: any[]
+  onChange?: (selectedKeys: any[], records: CellType['row']) => void
+  getCheckboxProps?: (row: CellType['row']) => TableCheckboxOptions
 }
 
 export type Colspanoptions = {
@@ -103,6 +113,13 @@ export const tableProps = {
    */
   activatedUpdate: {
     type: Boolean,
+  },
+  rowSelection: {
+    type: Object as PropType<TableRowSelection>,
+    default: () => ({
+      selectedRowKeys: [],
+      onChange: () => ({}),
+    }),
   },
 }
 

@@ -13,6 +13,9 @@
     :row-selection="{
       selectedRowKeys,
       onChange: onSelectChange,
+      getCheckboxProps: (row) => ({
+        disabled: row.id === 2,
+      }),
     }"
   />
 </template>

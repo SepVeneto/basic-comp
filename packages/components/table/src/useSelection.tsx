@@ -9,7 +9,7 @@ export function useSelection(
   configRef: {
     getRowKey: (row: Record<string, any>) => string,
     pageData: ComputedRef<Record<string, any>[]>,
-    getRecordByKey: (key: string) => Record<string, any>
+    getRecordByKey: (key: string) => Record<string, any>,
   },
 ): [(data: RowType, config: Record<string, any>) => JSX.Element, () => JSX.Element | null] {
   const { getRowKey, pageData } = configRef
@@ -35,8 +35,21 @@ export function useSelection(
   const preserveRecords = shallowRef(new Map<any, Record<string, any>>())
 
   const rowKeys = computed(() => {
-    return pageData.value.map(item => getRowKey(item)).filter(item => !!item)
+    return pageData.value
+      .map(item => getRowKey(item))
+      .filter(key => !isCheckboxDisabled(key))
   })
+  const checkboxPropsMap = computed(() => {
+    const getCheckboxProps = mergedRowSelection.value.getCheckboxProps
+    const map = new Map()
+    pageData.value.forEach((row) => {
+      const key = getRowKey(row)
+      const checkboxProps = getCheckboxProps?.(row) || {}
+      map.set(key, checkboxProps)
+    })
+    return map
+  })
+  const isCheckboxDisabled = (key: Key) => !!checkboxPropsMap.value.get(key)?.disabled
 
   watchEffect(() => {
     const keys = mergedSelectedKeys.value
@@ -87,12 +100,14 @@ export function useSelection(
   function renderRadio(row: RowType['row']) {
     const keySelected = derivedSelectedKey.value
     const key = getRowKey(row)
+    const options = mergedRowSelection.value.getCheckboxProps?.(row) || {}
 
     function onRowSelect() {
       setSelectedKey(key, row)
     }
     return (
       <el-radio
+        {...options}
         label={true}
         model-value={key === keySelected}
         onClick={(e: MouseEvent) => e.stopPropagation()}
@@ -103,6 +118,7 @@ export function useSelection(
   function renderCheckbox(row: RowType['row']) {
     const keySet = new Set(derivedSelectedKeySet.value)
     const key = getRowKey(row)
+    const options = mergedRowSelection.value.getCheckboxProps?.(row) || {}
 
     function onRowSelect() {
       const rowkey = getRowKey(row)
@@ -115,6 +131,7 @@ export function useSelection(
     }
     return (
       <el-checkbox
+        {...options}
         model-value={keySet.has(key)}
         onClick={(e: MouseEvent) => e.stopPropagation()}
         onChange={() => onRowSelect()}

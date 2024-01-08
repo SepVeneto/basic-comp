@@ -11,6 +11,7 @@ import { extractObject, getValue, logWarn, setValue } from '@basic-comp/utils'
 import cellEdit from './cellEdit'
 import { ElRadio, ElTable, ElTableColumn } from 'element-plus'
 import { useSelection } from './useSelection'
+import type { TableRowSelection } from './type'
 // import useLazyStore from './useLazyStore';
 
 export type RowType = {
@@ -33,7 +34,7 @@ export default defineComponent({
       default: '',
     },
     rowSelection: {
-      type: Object as PropType<{ preserveRowKeys?: boolean, selectedRowKeys: any[], onChange: (selection: any[], rows: any[], row: any) => void }>,
+      type: Object as PropType<TableRowSelection>,
       default: () => ({
         selectedRowKeys: [],
         onChange: () => ({}),
