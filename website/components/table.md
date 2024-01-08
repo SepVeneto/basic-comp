@@ -35,7 +35,7 @@ table/radio
 
 ## 多选
 
-由于`element`的`table`多选功能的手动选择依赖表格数据的引用，在回显的时候很难处理，因此参考了`antdv`的做法，增强了多选功能，可以通过`{ type: 'select' }`开启.
+由于`element`的`table`多选功能的手动选择依赖表格数据的引用，在回显的时候很难处理，因此参考了`antdv`的做法，增强了多选功能，可以通过`{ type: 'checkbox' }`开启.
 
 可以通过`getCheckboxProps`来单独设置某一行是否允许选中
 
