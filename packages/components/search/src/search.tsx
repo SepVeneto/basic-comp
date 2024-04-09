@@ -105,7 +105,7 @@ export default defineComponent({
     )
     const layout = { create, search, reset, upload, export: exportButton, advance: () => <></> }
     const node = () => (
-      <section class="bc-search-wraper">
+      <section class="bc-search bc-search-wraper">
         <el-form class="bc-search-containers" inline onSubmit={handleSubmit}>
           {searchConfig.value?.map(item => (
             <el-form-item label={props.nameMode === 'label' ? item.name : ''}>

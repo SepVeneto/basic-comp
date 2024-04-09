@@ -8,17 +8,12 @@
     @export="handleExport"
   />
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-  name: 'Basic',
-})
-</script>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 const searchConfig = ref([
   { catalog: 'input', name: '名称', prop: 'param.name' },
+  { catalog: 'select', name: '选项', prop: 'param.option', options: [1, 2] },
   { catalog: 'datepicker', type: 'daterange', prop: 'date' },
 ])
 const params = ref({
