@@ -2,17 +2,12 @@
   <bc-table
     :config="tableConfig"
     :data="tableData"
-  ></bc-table>
+    @save="handleSave"
+  />
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, toRaw } from 'vue';
-export default defineComponent({
-  name: 'BasicTable',
-});
-</script>
-
 <script lang="ts" setup>
+import { ref, toRaw } from 'vue'
 const tableConfig = ref([
   { label: '国籍', prop: 'country' },
   { label: '生日', prop: 'date', width: 100 },
@@ -22,7 +17,7 @@ const tableConfig = ref([
   { label: '地址', prop: 'address', width: 150 },
   { label: '身高', prop: 'height' },
   { label: '体重', prop: 'weight' },
-]);
+])
 const tableData = ref([
   {
     country: '意大利',
@@ -64,5 +59,11 @@ const tableData = ref([
     height: '269.4',
     weight: '59150',
   },
-]);
+])
+
+function handleSave(cell: string, prop: string, record: Record<string, any>) {
+  console.log('cell', cell)
+  console.log('prop', prop)
+  console.log('record', record)
+}
 </script>

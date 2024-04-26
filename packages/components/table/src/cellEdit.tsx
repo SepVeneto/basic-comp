@@ -1,4 +1,5 @@
 import { defineComponent, ref } from 'vue'
+import { Select as IconSelect } from '@element-plus/icons-vue'
 
 export default defineComponent({
   name: 'BcTableCellEdit',
@@ -30,9 +31,7 @@ export default defineComponent({
     }
     function save() {
       context.emit('save', cell.value)
-      // toggleEdit();
-      const el = inputRef.value.$el
-      el?.querySelector('input').blur()
+      toggleEdit()
     }
 
     const editInput = () => (
@@ -42,13 +41,17 @@ export default defineComponent({
         model-value={cell.value}
         v-focus
         v-slots={{
-          suffix: props.unit ? <span>{props.unit}</span> : null,
+          suffix: () => <el-icon
+              class="bc-table-input--operate"
+              color="var(--el-color-success)"
+              onClick={save}
+            ><IconSelect /></el-icon>,
         }}
         {...{
           'onUpdate:modelValue': (val: string) => { cell.value = val },
           onFocus: () => { cell.value = props.modelValue },
-          onBlur: () => { toggleEdit(); context.emit('blur', cell.value) },
-          onKeyup: (e: KeyboardEvent) => { e.code === 'Enter' && save() },
+          onBlur: () => { editing.value && toggleEdit() },
+          onKeyup: (e: KeyboardEvent) => { e.code.includes('Enter') && save() },
         }}
       >
       </bc-input>

@@ -13,7 +13,7 @@ export default defineComponent({
     CustomPagination: customPagination,
   },
   props: tableProps,
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'save'],
   setup(props, context) {
     const tableInject = useConfigInject('table')
     const arrayName = computed(() =>

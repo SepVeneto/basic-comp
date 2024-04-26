@@ -133,8 +133,10 @@ export default defineComponent({
     const renderCellEdit = (row: any, column: TableColumnCtx<any>, config: any) => (
       <cell-edit
         modelValue={getValue(row, column.property, config, props.disableTravel)}
-        onBlur={(val: string) => { setValue(row, column.property, val) }}
-        onSave={(cell: string) => { instance?.parent?.emit('save', cell, column.property) }}
+        onSave={(cell: string) => {
+          setValue(row, column.property, cell)
+          instance?.parent?.emit('save', cell, column.property, row)
+        }}
       />
     )
 

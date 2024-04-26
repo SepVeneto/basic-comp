@@ -2,7 +2,7 @@
 
 @include b(table) {
   .el-table__row:hover .bc-table-cell-edit {
-    padding: 5px 15px;
+    padding: 5px 10px;
     border: 1px solid #d9d9d9;
     border-radius: 5px;
   }
@@ -17,9 +17,12 @@
       height: 35px;
     }
   }
+  @include e(input--operate) {
+    cursor: pointer;
+  }
   @include e(cell-edit) {
     cursor: text;
-    padding: 6px 16px;
+    padding: 6px 11px;
     text-overflow: ellipsis;
     overflow: hidden;
     min-height: 35px;
