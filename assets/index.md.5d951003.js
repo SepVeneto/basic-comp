@@ -1,1 +1,0 @@
-import{o as e,c as t}from"./app.4f08d8e9.js";const r='{"title":"Basic-components","description":"","frontmatter":{"title":"Basic-components","page":true},"headers":[],"relativePath":"index.md"}',a={},i=Object.assign(a,{__name:"index",setup(o){return console.log("timer start"),setTimeout(()=>{},5e3),(s,n)=>(e(),t("div"))}});export{r as __pageData,i as default};
