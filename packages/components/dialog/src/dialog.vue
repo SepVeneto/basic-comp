@@ -60,14 +60,14 @@ import {
   ElIcon,
   ElScrollbar,
 } from 'element-plus'
-import { dialogProps } from './type'
+import { dialogEmits, dialogProps } from './type'
 import { computed, ref, useAttrs, useSlots, watch } from 'vue'
 import { FullScreen as IconFullScreen } from '@element-plus/icons-vue'
 
 defineOptions({ name: 'BcDialog' })
 
 const props = defineProps(dialogProps)
-const emit = defineEmits(['update:modelValue', 'cancel', 'submit'])
+const emit = defineEmits(dialogEmits)
 const slots = useSlots()
 const rawAttrs = useAttrs()
 const loading = ref(false)

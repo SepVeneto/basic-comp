@@ -2,7 +2,7 @@ import { computed, defineComponent, onActivated, reactive, ref, watch } from 'vu
 import { useConfigInject } from '@basic-comp/hooks'
 import customTable from './customTable'
 import customPagination from './pagination.vue'
-import { tableProps } from './type'
+import { tableEmits, tableProps } from './type'
 import type { CellType } from './type'
 import type { ApiResponseType } from '@basic-comp/components/type'
 
@@ -13,7 +13,7 @@ export default defineComponent({
     CustomPagination: customPagination,
   },
   props: tableProps,
-  emits: ['update:modelValue', 'save'],
+  emits: tableEmits,
   setup(props, context) {
     const tableInject = useConfigInject('table')
     const arrayName = computed(() =>

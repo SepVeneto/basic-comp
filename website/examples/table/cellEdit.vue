@@ -7,7 +7,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRaw } from 'vue'
+import { ref } from 'vue'
+import type { TableInstance } from '@basic-comp/components'
 const tableConfig = ref([
   { label: '国籍', prop: 'country' },
   { label: '生日', prop: 'date', width: 100 },
@@ -61,7 +62,7 @@ const tableData = ref([
   },
 ])
 
-function handleSave(cell: string, prop: string, record: Record<string, any>) {
+const handleSave: TableInstance['onSave'] = (cell: string, prop: string, record: Record<string, any>) => {
   console.log('cell', cell)
   console.log('prop', prop)
   console.log('record', record)

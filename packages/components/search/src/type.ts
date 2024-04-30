@@ -86,4 +86,11 @@ export const searchProps = {
   },
 }
 
+export const searchEmits = {
+  'update:modelValue': (data: object) => typeof data === 'object',
+  reset: () => true,
+  create: () => true,
+  export: () => true,
+}
+
 export type SearchProps = Partial<ExtractPropTypes<typeof searchProps>>

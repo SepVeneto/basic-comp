@@ -2,7 +2,7 @@ import { computed, defineComponent, h, ref, watch } from 'vue'
 import type { SetupContext } from 'vue'
 import { useConfigInject } from '@basic-comp/hooks'
 import type { RenderInputConfigType } from './type'
-import { searchProps } from './type'
+import { searchEmits, searchProps } from './type'
 import { renderUnit, setValue } from '@basic-comp/utils'
 import { BcUpload } from '../../upload'
 import BcButton from '../../button/src/button'
@@ -17,7 +17,7 @@ export default defineComponent({
     BcButton,
   },
   props: searchProps,
-  emits: ['update:modelValue', 'reset', 'create', 'export'],
+  emits: searchEmits,
   setup(props, context) {
     const searchInject = useConfigInject('search')
     const needExport = computed(() =>

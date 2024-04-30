@@ -16,6 +16,11 @@ export const dialogProps = {
     default: undefined,
   },
 }
+export const dialogEmits = {
+  'update:modelValue': (show: boolean) => typeof show === 'boolean',
+  cancel: () => true,
+  submit: () => true,
+}
 
 type Instance = abstract new (...args: any) => any
 export type DialogProps = ExtractProps<typeof ElDialog> | Partial<ExtractPropTypes<typeof dialogProps>>

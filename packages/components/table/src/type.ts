@@ -1,6 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
 import type { CheckboxProps, RadioProps } from 'element-plus'
+import type Table from './table'
 
 export type CellType = {
   row: Record<string, unknown>,
@@ -123,4 +124,10 @@ export const tableProps = {
   },
 }
 
+export const tableEmits = {
+  'update:modelValue': (params: object) => typeof params === 'object',
+  save: (cell: string, prop: string, record: object) => typeof cell === 'string' && typeof prop === 'string' && typeof record === 'object',
+}
+
 export type TableProps = Partial<ExtractPropTypes<typeof tableProps>>
+export type TableInstance = InstanceType<typeof Table>
