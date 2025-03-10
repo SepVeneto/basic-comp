@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, nextTick, ref } from 'vue'
 import { Select as IconSelect } from '@element-plus/icons-vue'
 
 export default defineComponent({
@@ -6,7 +6,10 @@ export default defineComponent({
   directives: {
     focus: {
       mounted: el => {
-        el.querySelector('input').focus()
+        // 兼容element-plus手动监听focus事件
+        nextTick().then(() => {
+          el.querySelector('input').focus()
+        })
       },
     },
   },
