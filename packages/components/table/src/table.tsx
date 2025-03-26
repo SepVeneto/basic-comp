@@ -78,7 +78,7 @@ export default defineComponent({
             ? `${row[parentProp]}_${key}_${row[key]}`
             : `${key}_${row[key]}`
           const column = totalColumn[spanKey]
-          if (!row[key]) {
+          if (row[key] == null) {
             whiteList[key] += 1
             return
           }
