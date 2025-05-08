@@ -140,6 +140,14 @@ export default defineComponent({
       />
     )
 
+    function isCellEditable(data: RowType['row'], editable: boolean | ((data: RowType['row']) => boolean)) {
+      if (typeof editable === 'function') {
+        return editable(data)
+      } else {
+        return !!editable
+      }
+    }
+
     const getColumnSlot = (data: RowType, config: any) => {
       if (config.children && config.children.length > 0) {
         return config.children.map((config: any) => transformTableColumn(config))
@@ -155,7 +163,7 @@ export default defineComponent({
           return
         }
         return renderRadio(row, $index, config)
-      } else if (config.editable) {
+      } else if (isCellEditable(row, config.editable)) {
         return renderCellEdit(row, column, config)
       }
       if (!column.property) {
