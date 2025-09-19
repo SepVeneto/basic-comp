@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@vueuse/integrations": "^10.1.2",
-    "axios": "^0.27.2",
+    "axios": "^1.12.2",
     "normalize.css": "^8.0.1",
     "prismjs": "^1.25.0",
     "sortablejs": "^1.15.0"
