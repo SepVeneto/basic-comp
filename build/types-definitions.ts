@@ -31,7 +31,6 @@ const outDir = path.resolve(buildOutput, 'types')
  */
 export const generateTypesDefinitions = async () => {
   const compilerOptions: CompilerOptions = {
-    emitDeclarationOnly: true,
     outDir,
     baseUrl: projRoot,
     preserveSymlinks: true,
@@ -41,7 +40,6 @@ export const generateTypesDefinitions = async () => {
   const project = new Project({
     compilerOptions,
     tsConfigFilePath: TSCONFIG_PATH,
-    skipAddingFilesFromTsConfig: true,
   })
 
   const sourceFiles = await addSourceFiles(project)

@@ -16,7 +16,7 @@ import type { TableRowSelection } from './type'
 
 export type RowType = {
   row: any,
-  column: TableColumnCtx<unknown>,
+  column: TableColumnCtx<Record<string, any>>,
   $index: number,
 }
 

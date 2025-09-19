@@ -27,7 +27,7 @@ export default defineComponent({
         data={props.data}
       >
         {props.config.map(config => (
-          <ElTableColumn {...config} />
+          <ElTableColumn {...(config as any)} />
         ))}
       </ElTable>
     )

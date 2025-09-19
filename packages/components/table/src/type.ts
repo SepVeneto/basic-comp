@@ -6,7 +6,7 @@ import type Table from './table'
 export type CellType = {
   row: Record<string, unknown>,
   rowIndex: number,
-  column: TableColumnCtx<unknown>,
+  column: TableColumnCtx<Record<string, any>>,
   columnIndex: number,
 }
 
