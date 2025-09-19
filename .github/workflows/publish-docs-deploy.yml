@@ -16,11 +16,11 @@ jobs:
       
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 20.16.0
 
       - name: Build
         run: |
-          npm i -g pnpm@8
+          npm i -g pnpm@9
           pnpm i --registry=https://registry.npmmirror.com
           pnpm docs:build
       - name: Deploy
