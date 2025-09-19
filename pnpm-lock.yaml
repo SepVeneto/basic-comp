@@ -79,8 +79,8 @@ importers:
         specifier: ^8.57.1
         version: 8.57.1
       esno:
-        specifier: ^0.9.1
-        version: 0.9.1
+        specifier: ^0.10.1
+        version: 0.10.1
       fs-extra:
         specifier: ^11.3.2
         version: 11.3.2
@@ -1822,10 +1822,6 @@ packages:
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
 
-  cross-spawn@7.0.3:
-    resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
-    engines: {node: '>= 8'}
-
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
@@ -2231,8 +2227,8 @@ packages:
     cpu: [x64]
     os: [netbsd]
 
-  esbuild-node-loader@0.3.2:
-    resolution: {integrity: sha512-4Y6sTwvB5pH+A7gmpd/xzyPkOZC4nmEWRoGBi4BQoE0DhZvrrzHqSmT+jb4x7m1rwv4BCuNbajN13LN8D0PGoA==}
+  esbuild-node-loader@0.4.3:
+    resolution: {integrity: sha512-Jzs+nTsq7z4GqUTwlh8guP03EYTAhoB9r+rwb3JpVcNVG1/2fNE8Tb40syJ2nLY2yam+lZjsoh7FYd+2dGjbjg==}
 
   esbuild-openbsd-64@0.13.15:
     resolution: {integrity: sha512-wTfvtwYJYAFL1fSs8yHIdf5GEE4NkbtbXtjLWjM3Cw8mmQKqsg8kTiqJ9NJQe5NX/5Qlo7Xd9r1yKMMkHllp5g==}
@@ -2245,8 +2241,8 @@ packages:
     cpu: [x64]
     os: [openbsd]
 
-  esbuild-register@3.4.2:
-    resolution: {integrity: sha512-kG/XyTDyz6+YDuyfB9ZoSIOOmgyFCH+xPRtsCa8W85HLRV5Csp+o3jWVbOSHgSLfyLc5DmP+KFDNwty4mEjC+Q==}
+  esbuild-register@3.6.0:
+    resolution: {integrity: sha512-H2/S7Pm8a9CL1uhp9OvjwrBh5Pvx0H8qVOxNu8Wed9Y7qv56MPtq+GGM8RJpq6glYJn9Wspr8uw7l55uyinNeg==}
     peerDependencies:
       esbuild: '>=0.12 <1'
 
@@ -2473,8 +2469,8 @@ packages:
     deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
-  esno@0.9.1:
-    resolution: {integrity: sha512-3pnZ7fI0+8R7kJSTwuOfzAvXNXun7eaZsTSE5avkNRrxTokq3Jm32gaah3Zgl5opHQ1K9SJasoQQySzmfN8alw==}
+  esno@0.10.1:
+    resolution: {integrity: sha512-wsXUWZxI0O59bvOjggWOGDd6VSwPxG+37Np8aUI1LwORIONN3L2nOOJHT7jZ3xAGkfq/J3YcnZsx+Mmw6BQFmQ==}
     hasBin: true
 
   espree@10.4.0:
@@ -6677,12 +6673,6 @@ snapshots:
 
   create-require@1.1.1: {}
 
-  cross-spawn@7.0.3:
-    dependencies:
-      path-key: 3.1.1
-      shebang-command: 2.0.0
-      which: 2.0.2
-
   cross-spawn@7.0.6:
     dependencies:
       path-key: 3.1.1
@@ -7082,7 +7072,7 @@ snapshots:
   esbuild-netbsd-64@0.14.54:
     optional: true
 
-  esbuild-node-loader@0.3.2:
+  esbuild-node-loader@0.4.3:
     dependencies:
       esbuild: 0.13.15
 
@@ -7092,10 +7082,10 @@ snapshots:
   esbuild-openbsd-64@0.14.54:
     optional: true
 
-  esbuild-register@3.4.2(esbuild@0.12.29):
+  esbuild-register@3.6.0(esbuild@0.13.15):
     dependencies:
-      debug: 4.3.4
-      esbuild: 0.12.29
+      debug: 4.4.3
+      esbuild: 0.13.15
     transitivePeerDependencies:
       - supports-color
 
@@ -7423,12 +7413,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  esno@0.9.1:
+  esno@0.10.1:
     dependencies:
-      cross-spawn: 7.0.3
-      esbuild: 0.12.29
-      esbuild-node-loader: 0.3.2
-      esbuild-register: 3.4.2(esbuild@0.12.29)
+      cross-spawn: 7.0.6
+      esbuild: 0.13.15
+      esbuild-node-loader: 0.4.3
+      esbuild-register: 3.6.0(esbuild@0.13.15)
     transitivePeerDependencies:
       - supports-color
 
