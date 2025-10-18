@@ -1,7 +1,8 @@
 {
-  "name": "website",
+  "name": "docs",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "vitepress dev .",
@@ -13,16 +14,18 @@
   "license": "ISC",
   "devDependencies": {
     "@sepveneto/basic-comp": "npm:@sepveneto/basic-comp@latest",
-    "@types/markdown-it": "^12.2.3",
-    "@types/markdown-it-container": "^2.0.4",
+    "@types/markdown-it": "^14.1.2",
+    "@types/markdown-it-container": "^2.0.10",
     "@types/prismjs": "^1.16.6",
-    "vitepress": "^0.22.4"
+    "vitepress": "^1.6.4"
   },
   "dependencies": {
+    "@vue/shared": "^3.5.22",
     "@vueuse/integrations": "^10.1.2",
     "axios": "^1.12.2",
     "normalize.css": "^8.0.1",
     "prismjs": "^1.25.0",
-    "sortablejs": "^1.15.0"
+    "sortablejs": "^1.15.0",
+    "unplugin-vue-components": "^29.1.0"
   }
 }

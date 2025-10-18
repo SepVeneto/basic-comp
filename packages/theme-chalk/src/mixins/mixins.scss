@@ -1,5 +1,7 @@
 @use 'config' as *;
 
+$B: null;
+
 @mixin b($block) {
   $B: $namespace + '-' + $block !global;
   .#{$B} {

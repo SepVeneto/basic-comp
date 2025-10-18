@@ -1,0 +1,81 @@
+[
+  {
+    "text": "组件总览",
+    "items": [
+      {
+        "link": "/components/overview",
+        "text": "组件总览"
+      }
+    ]
+  },
+  {
+    "text": "全局配置",
+    "items": [
+      {
+        "link": "/components/config-provider",
+        "text": "全局配置"
+      }
+    ]
+  },
+  {
+    "text": "基础组件",
+    "items": [
+      {
+        "link": "/components/button",
+        "text": "按键"
+      },
+      {
+        "link": "/components/status",
+        "text": "状态"
+      },
+      {
+        "link": "/components/motion",
+        "text": "过渡"
+      }
+    ]
+  },
+  {
+    "text": "表单组件",
+    "items": [
+      {
+        "link": "/components/form",
+        "text": "表单"
+      },
+      {
+        "link": "/components/select",
+        "text": "选择器"
+      },
+      {
+        "link": "/components/input",
+        "text": "输入框"
+      },
+      {
+        "link": "/components/upload",
+        "text": "上传"
+      },
+      {
+        "link": "/components/date-picker",
+        "text": "日期时间选择器"
+      }
+    ]
+  },
+  {
+    "text": "复合组件",
+    "items":[
+      {
+        "link": "/components/table",
+        "text": "表格"
+      },
+
+
+      {
+        "link": "/components/search",
+        "text": "搜索栏"
+      },
+      {
+        "link": "/components/dialog",
+        "text": "对话框"
+      }
+    ]
+  }
+]

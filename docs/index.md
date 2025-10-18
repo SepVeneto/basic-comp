@@ -1,8 +1,21 @@
 ---
-title: Install
+title: Basic-components
+layout: home
+
+hero:
+  name: "Basic Components"
+  text: "基于Element的组件库"
+  tagline: 对element-plus的部分组件进行功能扩展
+  actions:
+    - theme: brand
+      text: 组件列表
+      link: /components/overview
+    - theme: alt
+      text: 更新日志
+      link: /changelog
 ---
 
-# 安装
+# 快速开始
 
 ## 环境支持
 
@@ -12,27 +25,44 @@ title: Install
 | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | Edge ≥ 79                                                              | Firefox ≥ 78                                                                      | Chrome ≥ 64                                                                    | Safari ≥ 12                                                                    |
 
-## 本地安装
+## 安装
 
-```bash
-git clone https://github.com/SepVeneto/basic-comp.git
+根据项目的lock文件选择对应的安装方式
 
-pnpm i
-
-pnpm build:comps
-
-# 或者通过npm link建立软连接
+::: code-group
+```shell [pnpm]
+pnpm i @sepveneto/basic-comp
 ```
 
-## 使用包管理器安装
+```shell [yarn]
+yarn add @sepveneto/basic-comp
+```
 
-```bash
-# npm
-npm i @sepveento/basic-comp
+```shell [npm]
+npm i @sepveneto/basic-comp
+```
+:::
 
-#yarn
-yarn add @sepveento/basic-comp
+## 用法
 
-#pnpm
-pnpm i @sepveento/basic-comp
+### 全局引用
+
+```js
+import { createApp } from 'vue'
+import basicComp from '@sepveneto/basic-comp'
+import '@sepveneto/basic-comp/css'
+
+createApp().use(BasicComp).mount('#app');
+```
+
+### 插件支持
+可以在`tsconfig.json`中通过`compilerOptions.type`指定全局组件类型
+
+```json
+{
+  "compilerOptions": {
+    // ...
+    "types": ["@sepveneto/basic-comp/global"]
+  }
+}
 ```

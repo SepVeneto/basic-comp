@@ -1,13 +1,8 @@
 import path from 'path'
-// import Inspect from 'vite-plugin-inspect'
-import { defineConfig } from 'vite'
-// import { projRoot } from './.vitepress/utils/paths'
 import type { Alias } from 'vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import {
-  indexRoot,
-  pkgRoot,
-} from '../build/pkg'
+import { indexRoot, pkgRoot } from '../constants'
+import { MarkdownTransform } from '../plugin/markdown-transform'
 
 const alias: Alias[] = []
 if (process.env.DOC_ENV !== 'production') {
@@ -23,7 +18,7 @@ if (process.env.DOC_ENV !== 'production') {
   )
 }
 
-export default defineConfig({
+export const getViteConfig = () => ({
   server: {
     host: true,
     port: 3333,
@@ -33,20 +28,24 @@ export default defineConfig({
       allow: [path.resolve(__dirname, '..')],
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        silenceDeprecations: ['legacy-js-api'],
+      },
+    },
+  },
   plugins: [
-    vueJsx()
+    vueJsx(),
+    MarkdownTransform(),
   ],
   resolve: {
     alias: [
       {
         find: 'packages',
-        replacement: path.resolve(__dirname, '../packages')
+        replacement: path.resolve(__dirname, '../packages'),
       },
       ...alias,
-    ]
+    ],
   },
-  // plugins: [Inspect()],
-  // optimizeDeps: {
-  //   include: ['@vueuse/core', 'dayjs'],
-  // },
 })

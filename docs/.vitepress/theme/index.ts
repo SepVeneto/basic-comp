@@ -1,13 +1,16 @@
 import BasicComp from '@sepveneto/basic-comp'
 import ElementPlus from 'element-plus'
-
-import VPApp, { globals } from '../vitepress'
+// eslint-disable-next-line import/no-named-as-default
+import DefaultTheme from 'vitepress/theme'
+import { globals } from '../vitepress'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import './custom.css'
 
 export default {
-  Layout: VPApp,
+  extends: DefaultTheme,
   enhanceApp: async ({ app }) => {
     app.use(ElementPlus, {
-      // locale: await import('element-plus/es/locale/lang/zh-cn')
+      locale: zhCn,
     })
     app.use(BasicComp, {
       select: {

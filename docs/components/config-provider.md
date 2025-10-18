@@ -14,7 +14,7 @@ title: config-provider
 
 :::demo
 
-configProvider/configProvider
+config-provider/basic
 
 :::
 

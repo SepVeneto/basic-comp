@@ -4,7 +4,7 @@
   "bin": "",
   "workspaces": [
     "packages/*",
-    "websites"
+    "docs"
   ],
   "packageManager": "pnpm@7.3.0",
   "scripts": {
@@ -15,10 +15,10 @@
     "lint": "vue-cli-service lint",
     "build": "rimraf dist && esno ./build/build.ts",
     "build:style": "cd packages/theme-chalk && rimraf dist && npm run build",
-    "docs:dev": "pnpm run -C website dev",
-    "docs:build": "pnpm run -C website build",
-    "docs:serve": "pnpm run -C website serve",
-    "gh-pages": "git subtree push --prefix website/.vitepress/dist origin gh-pages",
+    "docs:dev": "pnpm run -C docs dev",
+    "docs:build": "pnpm run -C docs build",
+    "docs:serve": "pnpm run -C docs serve",
+    "gh-pages": "git subtree push --prefix docs /.vitepress/dist origin gh-pages",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "dependencies": {
@@ -27,11 +27,11 @@
     "@basic-comp/utils": "workspace:*",
     "@element-plus/icons-vue": "^0.2.7",
     "@rollup/plugin-commonjs": "^21.1.0",
-    "core-js": "^3.45.1",
-    "element-plus": "^2.11.3",
+    "core-js": "^3.46.0",
+    "element-plus": "^2.11.5",
     "fast-glob": "^3.3.3",
-    "vue": "^3.5.21",
-    "vue-router": "^4.5.1"
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
@@ -40,7 +40,7 @@
     "@types/fs-extra": "^11.0.4",
     "@vitejs/plugin-vue": "^4.6.2",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
-    "@vue/compiler-sfc": "^3.5.21",
+    "@vue/compiler-sfc": "^3.5.22",
     "@vue/test-utils": "^2.4.6",
     "bumpp": "^9.11.1",
     "chalk": "^4.1.2",
@@ -63,12 +63,12 @@
     "rollup-plugin-filesize": "^10.0.0",
     "rollup-plugin-scss": "^3.0.0",
     "rollup-plugin-vue": "^6.0.0",
-    "sass": "^1.92.1",
+    "sass": "^1.93.2",
     "transliteration": "^2.3.5",
     "ts-morph": "^17.0.1",
     "tslib": "^2.8.1",
-    "typescript": "^5.9.2",
-    "vite": "^4.5.14",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.20",
     "vitest": "^1.6.1"
   },
   "pnpm": {
