@@ -23,7 +23,7 @@ const footerLocale = {
 
 export function MarkdownTransform(): Plugin {
   return {
-    name: 'element-plus-md-transform',
+    name: 'basic-comp-md-transform',
 
     enforce: 'pre',
 
@@ -109,7 +109,7 @@ const transformComponentMarkdown = (
   code: string,
   append: Append,
 ) => {
-  const docUrl = `${GITHUB_BLOB_URL}/${docsDirName}/component/${componentId}.md`
+  const docUrl = `${GITHUB_BLOB_URL}/${docsDirName}/components/${componentId}.md`
   const componentUrl = `${GITHUB_TREE_URL}/packages/components/${componentId}`
   const styleUrl = `${GITHUB_TREE_URL}/packages/theme-chalk/src/${componentId}.scss`
 

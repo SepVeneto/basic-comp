@@ -36,6 +36,11 @@ export const getViteConfig = () => ({
     },
   },
   plugins: [
+    // Components({
+    //   dirs: ['.vitepress/vitepress/components'],
+    //   allowOverrides: true,
+    //   include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+    // }),
     vueJsx(),
     MarkdownTransform(),
   ],

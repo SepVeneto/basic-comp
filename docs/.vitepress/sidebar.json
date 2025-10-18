@@ -13,7 +13,7 @@
     "items": [
       {
         "link": "/components/config-provider",
-        "text": "全局配置"
+        "text": "Config Provider 全局配置"
       }
     ]
   },
@@ -22,15 +22,15 @@
     "items": [
       {
         "link": "/components/button",
-        "text": "按键"
+        "text": "Button 按钮"
       },
       {
         "link": "/components/status",
-        "text": "状态"
+        "text": "Status 状态"
       },
       {
         "link": "/components/motion",
-        "text": "过渡"
+        "text": "Motion 动画"
       }
     ]
   },
@@ -39,23 +39,23 @@
     "items": [
       {
         "link": "/components/form",
-        "text": "表单"
+        "text": "Form 表单"
       },
       {
         "link": "/components/select",
-        "text": "选择器"
+        "text": "Select 选择器"
       },
       {
         "link": "/components/input",
-        "text": "输入框"
+        "text": "Input 输入框"
       },
       {
         "link": "/components/upload",
-        "text": "上传"
+        "text": "Upload 上传"
       },
       {
         "link": "/components/date-picker",
-        "text": "日期时间选择器"
+        "text": "Date Picker 日期时间选择器"
       }
     ]
   },
@@ -64,17 +64,17 @@
     "items":[
       {
         "link": "/components/table",
-        "text": "表格"
+        "text": "Table 表格"
       },
 
 
       {
         "link": "/components/search",
-        "text": "搜索栏"
+        "text": "Search 搜索栏"
       },
       {
         "link": "/components/dialog",
-        "text": "对话框"
+        "text": "Dialog 对话框"
       }
     ]
   }

@@ -1,0 +1,62 @@
+<template>
+  <svg
+    width="280"
+    height="180"
+    viewBox="0 0 280 180"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      width="280"
+      height="180"
+      fill="var(--el-fill-color-light)"
+    />
+    <g filter="url(#filter0_d_upload)">
+      <rect
+        x="60"
+        y="54"
+        width="160"
+        height="72"
+        rx="2"
+        fill="var(--el-fill-color-blank)"
+      />
+      <rect
+        x="59.7"
+        y="53.7"
+        width="160.6"
+        height="72.6"
+        rx="2.3"
+        stroke="var(--el-border-color-dark)"
+        stroke-width="0.6"
+      />
+    </g>
+    <rect
+      x="100"
+      y="80"
+      width="80"
+      height="40"
+      rx="2"
+      fill="var(--el-fill-color-light)"
+    />
+    <path
+      d="M140 85V95"
+      stroke="var(--el-color-primary)"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+    <path
+      d="M135 90L140 85L145 90"
+      stroke="var(--el-color-primary)"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+    <rect
+      x="125"
+      y="105"
+      width="30"
+      height="8"
+      rx="1"
+      fill="var(--el-color-primary)"
+    />
+  </svg>
+</template>

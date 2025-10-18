@@ -1,0 +1,52 @@
+<template>
+  <svg
+    width="280"
+    height="180"
+    viewBox="0 0 280 180"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      width="280"
+      height="180"
+      fill="var(--el-fill-color-light)"
+    />
+    <g filter="url(#filter0_d_status)">
+      <rect
+        x="60"
+        y="54"
+        width="160"
+        height="72"
+        rx="2"
+        fill="var(--el-fill-color-blank)"
+      />
+      <rect
+        x="59.7"
+        y="53.7"
+        width="160.6"
+        height="72.6"
+        rx="2.3"
+        stroke="var(--el-border-color-dark)"
+        stroke-width="0.6"
+      />
+    </g>
+    <circle
+      cx="100"
+      cy="90"
+      r="8"
+      fill="var(--el-color-success)"
+    />
+    <circle
+      cx="140"
+      cy="90"
+      r="8"
+      fill="var(--el-color-warning)"
+    />
+    <circle
+      cx="180"
+      cy="90"
+      r="8"
+      fill="var(--el-color-error)"
+    />
+  </svg>
+</template>
