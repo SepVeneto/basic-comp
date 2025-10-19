@@ -3,6 +3,9 @@ import type { Alias } from 'vite'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { indexRoot, pkgRoot } from '../constants'
 import { MarkdownTransform } from '../plugin/markdown-transform'
+import Icons from 'unplugin-icons/vite'
+import IconResolver from 'unplugin-icons/resolver'
+import Components from 'unplugin-vue-components/vite'
 
 const alias: Alias[] = []
 if (process.env.DOC_ENV !== 'production') {
@@ -36,13 +39,19 @@ export const getViteConfig = () => ({
     },
   },
   plugins: [
-    // Components({
-    //   dirs: ['.vitepress/vitepress/components'],
-    //   allowOverrides: true,
-    //   include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-    // }),
+    Components({
+      dirs: ['.vitepress/vitepress/components'],
+      allowOverrides: true,
+      resolvers: [
+        IconResolver(),
+      ],
+      include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+    }),
     vueJsx(),
     MarkdownTransform(),
+    Icons({
+      autoInstall: true,
+    }),
   ],
   resolve: {
     alias: [

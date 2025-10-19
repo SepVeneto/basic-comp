@@ -31,7 +31,7 @@
             rel="noreferrer noopener"
             target="_blank"
           >
-            <!-- <i-ri-github-line /> -->
+            <i-ri-github-line />
           </a>
         </ElIcon>
       </ElTooltip>
@@ -51,7 +51,7 @@
           @keydown.prevent.enter="copyCode"
           @keydown.prevent.space="copyCode"
         >
-          <!-- <i-ri-file-copy-line /> -->
+          <i-ri-file-copy-line />
         </ElIcon>
       </ElTooltip>
       <ElTooltip
@@ -69,7 +69,7 @@
           @click="toggleSourceVisible()"
         >
           <ElIcon :size="16">
-            <!-- <i-ri-code-line /> -->
+            <i-ri-code-line />
           </ElIcon>
         </button>
       </ElTooltip>

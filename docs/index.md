@@ -8,7 +8,7 @@ hero:
   tagline: 对element-plus的部分组件进行功能扩展
   actions:
     - theme: brand
-      text: 组件列表
+      text: 组件总览
       link: /components/overview
     - theme: alt
       text: 更新日志

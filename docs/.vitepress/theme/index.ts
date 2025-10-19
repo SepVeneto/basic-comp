@@ -4,7 +4,7 @@ import ElementPlus from 'element-plus'
 import DefaultTheme from 'vitepress/theme'
 import { globals } from '../vitepress'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import './custom.css'
+import './custom.scss'
 
 export default {
   extends: DefaultTheme,

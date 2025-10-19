@@ -8,8 +8,22 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    IRiCodeLine: typeof import('~icons/ri/code-line')['default']
+    IRiFileCopyLine: typeof import('~icons/ri/file-copy-line')['default']
+    IRiGithubLine: typeof import('~icons/ri/github-line')['default']
     OvButton: typeof import('./.vitepress/vitepress/components/overview-icons/ov-button.vue')['default']
+    OvConfigProvider: typeof import('./.vitepress/vitepress/components/overview-icons/ov-config-provider.vue')['default']
+    OvDatePicker: typeof import('./.vitepress/vitepress/components/overview-icons/ov-date-picker.vue')['default']
+    OvDialog: typeof import('./.vitepress/vitepress/components/overview-icons/ov-dialog.vue')['default']
     Overview: typeof import('./.vitepress/vitepress/components/overview.vue')['default']
+    OvForm: typeof import('./.vitepress/vitepress/components/overview-icons/ov-form.vue')['default']
+    OvInput: typeof import('./.vitepress/vitepress/components/overview-icons/ov-input.vue')['default']
+    OvMotion: typeof import('./.vitepress/vitepress/components/overview-icons/ov-motion.vue')['default']
+    OvSearch: typeof import('./.vitepress/vitepress/components/overview-icons/ov-search.vue')['default']
+    OvSelect: typeof import('./.vitepress/vitepress/components/overview-icons/ov-select.vue')['default']
+    OvStatus: typeof import('./.vitepress/vitepress/components/overview-icons/ov-status.vue')['default']
+    OvTable: typeof import('./.vitepress/vitepress/components/overview-icons/ov-table.vue')['default']
+    OvUpload: typeof import('./.vitepress/vitepress/components/overview-icons/ov-upload.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VpApp: typeof import('./.vitepress/vitepress/components/vp-app.vue')['default']
