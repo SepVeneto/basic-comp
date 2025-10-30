@@ -1,6 +1,7 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
-import { PaginationProps, type CheckboxProps, type RadioProps } from 'element-plus'
+import type { CheckboxProps, RadioProps } from 'element-plus'
+import { PaginationProps } from 'element-plus'
 import type Table from './table'
 
 export type CellType = {
