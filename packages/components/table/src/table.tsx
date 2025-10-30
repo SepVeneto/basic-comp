@@ -194,6 +194,13 @@ export default defineComponent({
     function handleSimpleRowsChange(rows: number) {
       simpleTable.rows = rows
     }
+    const paginationConfig = computed(() => {
+      if (['string', 'boolean'].includes(typeof props.pagination)) {
+        return {}
+      } else {
+        return props.pagination
+      }
+    })
 
     const pagination = () => {
       if (!props.pagination) {
@@ -205,24 +212,26 @@ export default defineComponent({
               [simpleTable.page, 'currentPage'],
               [simpleTable.rows, 'pageSize'],
             ]}
+            total={tableData.value.length}
+            layout="prev, pager, next"
             {...{
               'onUpdate:currentPage': handleSimplePageChange,
               'onUpdate:pageSize': handleSimpleRowsChange,
+              ...paginationConfig.value,
             }}
-            total={tableData.value.length}
-            layout="prev, pager, next"
           />)
         : (<custom-pagination
             v-models={[
               [searchModel.value.page, 'currentPage'],
               [searchModel.value.rows, 'pageSize'],
             ]}
+            total={props.custom ? props.total : arrayTotal.value}
             {...{
               'onUpdate:currentPage': handlePageChange,
               'onUpdate:pageSize': handleRowsChange,
+              ...context.attrs,
+              ...paginationConfig.value,
             }}
-            {...context.attrs}
-            total={props.custom ? props.total : arrayTotal.value}
           />)
     }
     context.expose({
