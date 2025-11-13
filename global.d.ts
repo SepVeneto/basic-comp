@@ -25,6 +25,7 @@ type ConfigProvider = typeof import('@sepveneto/basic-comp')['BcConfigProvider']
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BcConfigProvider: ConfigProvider,
     BcButton: Button,
     BcSearch: Search,
     BcTable: Table,
