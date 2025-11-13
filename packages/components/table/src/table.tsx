@@ -17,7 +17,6 @@ export default defineComponent({
   setup(props, context) {
     const tableInject = useConfigInject('table')
     const arrayName = computed(() =>
-      // @ts-expect-error: vue bug
       tableInject.value?.arrayName || props.arrayName,
     )
     const totalName = computed(() =>
@@ -49,31 +48,24 @@ export default defineComponent({
     // const configProviderTable = computed(() => table.value)
     // const responseWrap = computed(() => response.value?.data ?? 'data')
     const tableDataName = computed(() => {
-      // @ts-expect-error: vue bug
       if (props.arrayName == null) {
         return null
       } else {
-        // @ts-expect-error: vue bug
         return (props.arrayName || arrayName.value) ?? ''
       }
     })
     const tableData = computed<Record<string, unknown>[]>(() => {
-      // @ts-expect-error: vue bug
       if (props.data && props.data.length > 0) {
-        // @ts-expect-error: vue bug
         return props.data || []
       } else {
-        // @ts-expect-error: vue bug
         return props.filter ? props.filter(arrayData.value) : arrayData.value
       }
     })
 
     const totalColumn = computed(() => {
-      // @ts-expect-error: vue bug
       const { includes = [], parentProp = null } = props.colspanOptions
       const totalColumn: Record<string, { index: number, num: number }> = {}
       const whiteList: Record<string, number> = {}
-      // @ts-expect-error: vue bug
       includes.forEach(item => {
         whiteList[item] = 0
       })
@@ -105,7 +97,6 @@ export default defineComponent({
     })
     const searchModel = computed({
       get() {
-        // @ts-expect-error: vue bug
         const { [pageName.value]: page, [pageSizeName.value]: rows, ...params } = props.modelValue
         return { page, rows, ...params }
       },
@@ -117,16 +108,13 @@ export default defineComponent({
       const { page, rows } = simpleTable
       const start = (page - 1) * rows
       const end = page * rows
-      // @ts-expect-error: vue bug
       return props.data?.slice(start, end)
     })
 
-    // @ts-expect-error: vue bug
     watch(() => props.config, (config: Record<string, unknown>[]) => {
       config && (tableConfig.value = [...config])
     }, { deep: true, immediate: true })
 
-    // @ts-expect-error: vue bug
     if (props.activatedUpdate) {
       onActivated(() => {
         init()
@@ -135,27 +123,21 @@ export default defineComponent({
       init()
     }
     function init() {
-      // @ts-expect-error: vue bug
       if (props.custom) {
-        // @ts-expect-error: vue bug
         props.api && props.immediate && props.api()
       } else {
-        // @ts-expect-error: vue bug
         if (props.load && props.immediate && props.api) {
           loading.value = true
         }
-        // @ts-expect-error: vue bug
         props.api && props.immediate && getList()
       }
     }
     function getList() {
-      // @ts-expect-error: vue bug
       if (!props.custom && props.load) {
         loading.value = true
       }
       const wrap = responseWrap.value
       const array = tableDataName.value
-      // @ts-expect-error: vue bug
       return props.api?.().then((data: ApiResponseType) => {
         const response = data[wrap] as Record<string, any>
         arrayData.value = (array ? response[array] : data[wrap]) || []
@@ -177,7 +159,6 @@ export default defineComponent({
       })
     }
     function spanMethod({ row, column, rowIndex }: CellType) {
-      // @ts-expect-error: vue bug
       const { includes = [], parentProp = null } = props.colspanOptions
       const key = column.property
       const spanKey = parentProp
@@ -201,7 +182,6 @@ export default defineComponent({
     function handlePageChange(page: number) {
       searchModel.value.page = page
       updateParams(searchModel.value)
-      // @ts-expect-error: vue bug
       props.custom ? props.api?.() : getList()
     }
     function handleRowsChange(rows: number) {
@@ -215,21 +195,17 @@ export default defineComponent({
       simpleTable.rows = rows
     }
     const paginationConfig = computed(() => {
-      // @ts-expect-error: vue bug
       if (['string', 'boolean'].includes(typeof props.pagination)) {
         return {}
       } else {
-        // @ts-expect-error: vue bug
         return props.pagination
       }
     })
 
     const pagination = () => {
-      // @ts-expect-error: vue bug
       if (!props.pagination) {
         return null
       }
-      // @ts-expect-error: vue bug
       return props.simple
         ? (<custom-pagination
             v-models={[
@@ -249,7 +225,6 @@ export default defineComponent({
               [searchModel.value.page, 'currentPage'],
               [searchModel.value.rows, 'pageSize'],
             ]}
-            // @ts-expect-error: vue bug
             total={props.custom ? props.total : arrayTotal.value}
             {...{
               'onUpdate:currentPage': handlePageChange,
@@ -270,15 +245,10 @@ export default defineComponent({
           class="bc-table"
           ref={customTableRef}
           config={tableConfig.value}
-          // @ts-expect-error: vue bug
           data={props.simple ? simpleData.value : tableData.value}
-          // @ts-expect-error: vue bug
           span-method={props.colspanOptions ? spanMethod : null}
-          // @ts-expect-error: vue bug
           hidden-current={!!props.colspanOptions}
-          // @ts-expect-error: vue bug
           body-border={!!props.colspanOptions}
-          // @ts-expect-error: vue bug
           row-selection={props.rowSelection}
           v-loading={loading.value}
           v-slots={context.slots}

@@ -1,7 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
-import type { CheckboxProps, RadioProps } from 'element-plus'
-import { PaginationProps } from 'element-plus'
+import type { CheckboxProps, PaginationProps, RadioProps } from 'element-plus'
 import type Table from './table'
 
 export type CellType = {
@@ -69,7 +68,7 @@ export const tableProps = {
   /**
    * 是否开启分页功能
    */
-  pagination: [Object as PropType<PaginationProps>, Boolean],
+  pagination: Object as PropType<PaginationProps>,
   /**
    * 远程数据获取的回调函数，支持promise
    */

@@ -21,6 +21,7 @@ type Upload = typeof import('@sepveneto/basic-comp')['BcUpload']
 type Form = typeof import('@sepveneto/basic-comp')['BcForm']
 type FormItem = typeof import('@sepveneto/basic-comp')['BcFormItem']
 type Status = typeof import('@sepveneto/basic-comp')['BcStatus']
+type ConfigProvider = typeof import('@sepveneto/basic-comp')['BcConfigProvider']
 
 declare module 'vue' {
   export interface GlobalComponents {
