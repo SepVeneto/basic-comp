@@ -53,7 +53,7 @@
   </ElDialog>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import {
   ElButton,
   ElDialog,
@@ -61,78 +61,101 @@ import {
   ElScrollbar,
 } from 'element-plus'
 import { dialogEmits, dialogProps } from './type'
-import { computed, ref, useAttrs, useSlots, watch } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { FullScreen as IconFullScreen } from '@element-plus/icons-vue'
 
-defineOptions({ name: 'BcDialog' })
+export default defineComponent({
+  name: 'BcDialog',
+  components: {
+    ElButton,
+    ElDialog,
+    ElIcon,
+    ElScrollbar,
+    IconFullScreen,
+  },
+  props: dialogProps,
+  emits: dialogEmits,
+  setup(props, { slots, attrs: rawAttrs, emit, expose }) {
+    const loading = ref(false)
 
-const props = defineProps(dialogProps)
-const emit = defineEmits(dialogEmits)
-const slots = useSlots()
-const rawAttrs = useAttrs()
-const loading = ref(false)
+    const visible = ref(false)
 
-const visible = ref(false)
-
-watch(() => props.modelValue, (show) => {
-  if (show === visible.value) return
-  visible.value = show
-  emit('update:modelValue', show)
-})
-
-const hasHeader = computed(() => !!slots.header)
-const hasTitle = computed(() => !!slots.title)
-const hasFooter = computed(() => !!slots.footer)
-
-const fullscreen = ref(false)
-const isFullscreen = computed(() => {
-  if (props.needFullscreen) {
-    return fullscreen.value
-  } else {
-    return !!rawAttrs.fullscreen || rawAttrs.fullscreen === ''
-  }
-})
-const scrollbarClass = computed(() => [
-  'bc-dialog-scrollbar',
-  isFullscreen.value && 'bc-dialog-is-fullscreen',
-])
-fullscreen.value = !!rawAttrs.fullscreen
-
-function handleSubmit() {
-  if (!props.confirm) {
-    emit('submit')
-    return
-  }
-  loading.value = true
-  const res = props.confirm()
-  if (res instanceof Promise) {
-    res.finally(() => {
-      loading.value = false
+    watch(() => props.modelValue, (show) => {
+      if (show === visible.value) return
+      visible.value = show
+      emit('update:modelValue', show)
     })
-  }
-  emit('submit')
-}
-function close() {
-  visible.value = false
-  emit('update:modelValue', false)
-}
-function open() {
-  visible.value = true
-  emit('update:modelValue', true)
-}
-function handleFullScreen() {
-  fullscreen.value = !fullscreen.value
-}
-function handleCancel() {
-  close()
-}
-function setLoading(state: boolean) {
-  loading.value = state
-}
 
-defineExpose({
-  open,
-  close,
-  setLoading,
+    const hasHeader = computed(() => !!slots.header)
+    const hasTitle = computed(() => !!slots.title)
+    const hasFooter = computed(() => !!slots.footer)
+
+    const fullscreen = ref(false)
+    const isFullscreen = computed(() => {
+      if (props.needFullscreen) {
+        return fullscreen.value
+      } else {
+        return !!rawAttrs.fullscreen || rawAttrs.fullscreen === ''
+      }
+    })
+    const scrollbarClass = computed(() => [
+      'bc-dialog-scrollbar',
+      isFullscreen.value && 'bc-dialog-is-fullscreen',
+    ])
+    fullscreen.value = !!rawAttrs.fullscreen
+
+    function handleSubmit() {
+      if (!props.confirm) {
+        emit('submit')
+        return
+      }
+      loading.value = true
+      const res = props.confirm()
+      if (res instanceof Promise) {
+        res.finally(() => {
+          loading.value = false
+        })
+      }
+      emit('submit')
+    }
+    function close() {
+      visible.value = false
+      emit('update:modelValue', false)
+    }
+    function open() {
+      visible.value = true
+      emit('update:modelValue', true)
+    }
+    function handleFullScreen() {
+      fullscreen.value = !fullscreen.value
+    }
+    function handleCancel() {
+      close()
+    }
+    function setLoading(state: boolean) {
+      loading.value = state
+    }
+
+    expose({
+      open,
+      close,
+      setLoading,
+    })
+
+    return {
+      visible,
+      loading,
+      fullscreen,
+      close,
+      hasHeader,
+      hasTitle,
+      rawAttrs,
+      handleFullScreen,
+      scrollbarClass,
+      hasFooter,
+      handleCancel,
+      handleSubmit,
+    }
+  },
 })
 </script>

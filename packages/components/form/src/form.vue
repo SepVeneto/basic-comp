@@ -4,10 +4,14 @@
   </ElForm>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import { ElForm } from 'element-plus'
+import { defineComponent } from 'vue'
 
-defineOptions({
+export default defineComponent({
   name: 'BcForm',
+  components: {
+    ElForm,
+  },
 })
 </script>

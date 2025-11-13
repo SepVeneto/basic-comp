@@ -4,164 +4,45 @@
 
 import process from 'process'
 import path from 'path'
-import { mkdir, readFile, writeFile } from 'fs/promises'
+import { readFile, writeFile } from 'fs/promises'
 import consola from 'consola'
-import * as vueCompiler from 'vue/compiler-sfc'
 import glob from 'fast-glob'
 import chalk from 'chalk'
-import { Project } from 'ts-morph'
 import {
   PKG_PREFIX,
   outputDir as buildOutput,
-  indexRoot as epRoot,
-  pkgRoot,
   projectRoot as projRoot,
 } from './pkg'
 import type { Module } from './module'
 import { buildConfig } from './module'
 
-// import { pathRewriter } from '../utils'
-import type { CompilerOptions, SourceFile } from 'ts-morph'
-
-const TSCONFIG_PATH = path.resolve(projRoot, 'tsconfig.web.json')
-const outDir = path.resolve(buildOutput, 'types')
+import { spawn } from 'child_process'
+import { copy, remove } from 'fs-extra'
 
 /**
  * fork = require( https://github.com/egoist/vue-dts-gen/blob/main/src/index.ts
  */
 export const generateTypesDefinitions = async () => {
-  const compilerOptions: CompilerOptions = {
-    outDir,
-    baseUrl: projRoot,
-    preserveSymlinks: true,
-    skipLibCheck: true,
-    noImplicitAny: false,
-  }
-  const project = new Project({
-    compilerOptions,
-    tsConfigFilePath: TSCONFIG_PATH,
-  })
-
-  const sourceFiles = await addSourceFiles(project)
-  consola.success('Added source files')
-
-  typeCheck(project)
-  consola.success('Type check passed!')
-
-  await project.emit({
-    emitOnlyDtsFiles: true,
-  })
-
-  const tasks = sourceFiles.map(async (sourceFile) => {
-    const relativePath = path.relative(pkgRoot, sourceFile.getFilePath())
-    consola.trace(
-      chalk.yellow(
-        `Generating definition for file: ${chalk.bold(relativePath)}`,
-      ),
-    )
-
-    const emitOutput = sourceFile.getEmitOutput()
-    const emitFiles = emitOutput.getOutputFiles()
-    if (emitFiles.length === 0) {
-      console.log(pkgRoot, sourceFile.getFilePath())
-      throw new Error(`Emit no file: ${chalk.bold(relativePath)}`)
-    }
-
-    const subTasks = emitFiles.map(async (outputFile) => {
-      const filepath = outputFile.getFilePath()
-      await mkdir(path.dirname(filepath), {
-        recursive: true,
-      })
-
-      await writeFile(
-        filepath,
-        pathRewriter('esm')(outputFile.getText()),
-        'utf8',
-      )
-
-      consola.success(
-        chalk.green(
-          `Definition for file: ${chalk.bold(relativePath)} generated`,
-        ),
-      )
-    })
-
-    await Promise.all(subTasks)
-  })
-
-  await Promise.all(tasks)
-}
-
-async function addSourceFiles(project: Project) {
-  project.addSourceFileAtPath(path.resolve(projRoot, 'types/env.d.ts'))
-
-  const globSourceFile = '**/*.{js?(x),ts?(x),vue}'
-  const filePaths = excludeFiles(
-    await glob([globSourceFile, '!basic-comp/**/*'], {
-      cwd: pkgRoot,
-      absolute: true,
-      onlyFiles: true,
-    }),
-  )
-  const epPaths = excludeFiles(
-    await glob(globSourceFile, {
-      cwd: epRoot,
-      onlyFiles: true,
-    }),
+  await run(
+    'npx vue-tsc -p tsconfig.web.json --declaration --emitDeclarationOnly --declarationDir dist/types',
   )
 
-  const sourceFiles: SourceFile[] = []
-  await Promise.all([
-    ...filePaths.map(async (file) => {
-      if (file.endsWith('.vue')) {
-        const content = await readFile(file, 'utf-8')
-        const hasTsNoCheck = content.includes('@ts-nocheck')
+  const typesDir = path.resolve(buildOutput, 'types', 'packages')
+  const filePaths = await glob('**/*.d.ts', {
+    cwd: typesDir,
+    absolute: true,
+  })
 
-        const sfc = vueCompiler.parse(content)
-        const { script, scriptSetup } = sfc.descriptor
-        if (script || scriptSetup) {
-          let content =
-            (hasTsNoCheck ? '// @ts-nocheck\n' : '') + (script?.content ?? '')
+  const rewriteTasks = filePaths.map(async (filePath) => {
+    const content = await readFile(filePath, 'utf8')
+    await writeFile(filePath, pathRewriter('esm')(content), 'utf8')
+  })
 
-          if (scriptSetup) {
-            const compiled = vueCompiler.compileScript(sfc.descriptor, {
-              id: 'xxx',
-            })
-            content += compiled.content
-          }
+  await Promise.all(rewriteTasks)
 
-          const lang = scriptSetup?.lang || script?.lang || 'js'
-          const sourceFile = project.createSourceFile(
-            `${path.relative(process.cwd(), file)}.${lang}`,
-            content,
-          )
-          sourceFiles.push(sourceFile)
-        }
-      } else {
-        const sourceFile = project.addSourceFileAtPath(file)
-        sourceFiles.push(sourceFile)
-      }
-    }),
-    ...epPaths.map(async (file) => {
-      const content = await readFile(path.resolve(epRoot, file), 'utf-8')
-      sourceFiles.push(
-        project.createSourceFile(path.resolve(pkgRoot, file), content),
-      )
-    }),
-  ])
-
-  return sourceFiles
-}
-
-function typeCheck(project: Project) {
-  console.log('start check...')
-  const diagnostics = project.getPreEmitDiagnostics()
-  if (diagnostics.length > 0) {
-    consola.error(project.formatDiagnosticsWithColorAndContext(diagnostics))
-    const err = new Error('Failed to generate dts.')
-    consola.error(err)
-    throw err
-  }
+  const sourceDir = path.join(typesDir, 'basic-comp')
+  await copy(sourceDir, typesDir)
+  await remove(sourceDir)
 }
 
 export const excludeFiles = (files: string[]): string[] => {
@@ -180,3 +61,28 @@ export const pathRewriter = (module: Module): ((id: string) => string) => {
     return id
   }
 }
+
+export const run = async (command: string, cwd: string = projRoot) =>
+  new Promise<void>((resolve, reject) => {
+    const [cmd, ...args] = command.split(' ')
+    consola.info(`run: ${chalk.green(`${cmd} ${args.join(' ')}`)}`)
+    const app = spawn(cmd, args, {
+      cwd,
+      stdio: 'inherit',
+      shell: process.platform === 'win32',
+    })
+
+    const onProcessExit = () => app.kill('SIGHUP')
+
+    app.on('close', (code) => {
+      process.removeListener('exit', onProcessExit)
+
+      if (code === 0) resolve()
+      else {
+        reject(
+          new Error(`Command failed. \n Command: ${command} \n Code: ${code}`),
+        )
+      }
+    })
+    process.on('exit', onProcessExit)
+  })

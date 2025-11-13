@@ -1,5 +1,5 @@
 import BasicComp from '@sepveneto/basic-comp'
-import ElementPlus from 'element-plus'
+import ElementPlus, { ID_INJECTION_KEY, ZINDEX_INJECTION_KEY } from 'element-plus'
 // eslint-disable-next-line import/no-named-as-default
 import DefaultTheme from 'vitepress/theme'
 import { globals } from '../vitepress'
@@ -12,6 +12,8 @@ export default {
     app.use(ElementPlus, {
       locale: zhCn,
     })
+    app.provide(ZINDEX_INJECTION_KEY, { current: 0 })
+    app.provide(ID_INJECTION_KEY, { prefix: 1024, current: 0 })
     app.use(BasicComp, {
       select: {
         apis: {

@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   export interface App {
     a?: boolean
   }

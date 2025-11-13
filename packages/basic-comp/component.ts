@@ -14,6 +14,8 @@ import { BcStatus } from '@basic-comp/components/status'
 import { BcDatePicker } from '@basic-comp/components/date-picker'
 import { BcForm, BcFormItem } from '@basic-comp/components/form'
 
+import type { Plugin } from 'vue'
+
 export default [
   BcForm,
   BcFormItem,
@@ -33,4 +35,4 @@ export default [
   BcDatePicker,
 
   createDialog,
-]
+] as Plugin[]
