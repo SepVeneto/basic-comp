@@ -1,6 +1,11 @@
 <template>
   <div style="margin-bottom: 10px">
-    <bc-button type="primary" @click="handleSearch">搜索</bc-button>
+    <bc-button
+      type="primary"
+      @click="handleSearch"
+    >
+      搜索
+    </bc-button>
   </div>
   <bc-table
     ref="tableRef"
@@ -10,16 +15,8 @@
     array-name="data"
     :pagination="{ layout: 'total, prev, pager, next, jumper' }"
     :page-sizes="[100]"
-  >
-  </bc-table>
+  />
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-  name: 'Remote',
-})
-</script>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
@@ -74,10 +71,10 @@ const tableData = ref([
     height: '269.4',
     weight: '59150',
   },
-]);
-const tableRef = ref();
+])
+const tableRef = ref()
 function handleSearch() {
-  tableRef.value.getList();
+  tableRef.value.getList()
 }
 function getList() {
   return new Promise(resolve => {
@@ -85,7 +82,7 @@ function getList() {
       resolve({
         data: {
           data: tableData.value,
-        }
+        },
       })
     }, 1000)
   })

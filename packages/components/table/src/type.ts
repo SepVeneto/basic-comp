@@ -68,7 +68,7 @@ export const tableProps = {
   /**
    * 是否开启分页功能
    */
-  pagination: Object as PropType<PaginationProps>,
+  pagination: [Object, Boolean] as PropType<PaginationProps | boolean>,
   /**
    * 远程数据获取的回调函数，支持promise
    */
