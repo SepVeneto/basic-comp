@@ -6,14 +6,13 @@ on:
     tags:
       - 'v*'
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   # Publish to NPM repository
   publish:
     runs-on: ubuntu-latest
+  permissions:
+    contents: read
+    id-token: write
 
     steps:
       - uses: actions/checkout@v3
@@ -27,8 +26,11 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 20.16.0
+          node-version: 20.17.0
           registry-url: https://registry.npmjs.org
+
+      - name: Update npm
+        run: npm install npm@11.6.1 -g
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -51,6 +53,6 @@ jobs:
       - name: Build and Publish
         run: sh ./scripts/publish.sh
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+          NODE_AUTH_TOKEN: ""
           NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
 
