@@ -1,3 +1,4 @@
+import type { SelectOption } from '@basic-comp/basic-comp'
 import type { ExtractPropTypes, PropType } from 'vue'
 export type SearchOperate = 'create' | 'search' | 'reset' | 'upload' | 'export' | 'advance'
 export type NameMode = 'placeholder' | 'label'
@@ -6,7 +7,7 @@ export type RenderInputConfigType = {
   catalog?: string,
   prop: string,
   name?: string,
-  options?: Record<string, unknown>[],
+  options?: SelectOption[],
   [key: string]: unknown,
 }
 
