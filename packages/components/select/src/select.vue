@@ -83,8 +83,23 @@ export default defineComponent({
     )
     const apiOptions = ref<SelectOptions>([])
 
-    const selectOptions = computed<SelectOptions>(() => {
-      return [...(props.options || apiOptions.value || [])]
+    type OptionItem = Exclude<SelectOption, string | number>
+    const selectOptions = computed<OptionItem[]>(() => {
+      const labelName = optionLabel.value
+      const valueName = optionValue.value
+      const options = props.options || apiOptions.value || []
+      const res = []
+      for (const item of options) {
+        if (typeof item !== 'object') {
+          res.push({
+            [labelName]: item,
+            [valueName]: item,
+          })
+        } else {
+          res.push(item)
+        }
+      }
+      return res
     })
     const needGroup = computed(() => {
       if (!props.group) {
@@ -96,9 +111,9 @@ export default defineComponent({
       const value = Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue]
       const res:(string | number)[] = []
       value.forEach(item => {
-        let obj: SelectOption = {}
+        let obj: OptionItem = {}
         if (props.modelValue instanceof Object) {
-          obj = props.modelValue as SelectOption
+          obj = props.modelValue as OptionItem
         } else {
           obj = selectOptions.value.find(each => each[optionValue.value] === item) || {}
         }
@@ -143,7 +158,7 @@ export default defineComponent({
         })
       }
     }
-    function hasValue(item: SelectOption): string {
+    function hasValue(item: Record<string, any>): string {
       const value = getValue(item, optionLabel.value)
       if (value === '' || !!value) {
         return value

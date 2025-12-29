@@ -2,9 +2,9 @@ import type { ExtractPropTypes, PropType } from 'vue'
 import type { ApiResponseType } from '@basic-comp/components/type'
 
 export type SelectOption = {
-  children?: SelectOption[],
+  children?: Record<string, any>[],
   [key: string]: any,
-}
+} | string | number
 
 export type SelectOptions = SelectOption[]
 
