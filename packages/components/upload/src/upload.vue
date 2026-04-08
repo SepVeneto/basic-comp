@@ -7,22 +7,24 @@
     no-footer
   >
     <section v-loading="uploading">
-      <el-alert
-        type="warning"
-        :closable="false"
-      >
-        <template #default>
-          <div class="text-center">
-            <span>您是否有标准的Excel模版，需要依照模版导入，否则会失败。</span><br>
-            <el-link
-              type="primary"
-              @click="handleDownloadTemplate"
-            >
-              还没有Excel模版?请下载模版
-            </el-link>
-          </div>
-        </template>
-      </el-alert>
+      <slot name="tips">
+        <el-alert
+          type="warning"
+          :closable="false"
+        >
+          <template #default>
+            <div class="text-center">
+              <span>您是否有标准的Excel模版，需要依照模版导入，否则会失败。</span><br>
+              <el-link
+                type="primary"
+                @click="handleDownloadTemplate"
+              >
+                还没有Excel模版?请下载模版
+              </el-link>
+            </div>
+          </template>
+        </el-alert>
+      </slot>
       <el-upload
         ref="uploadRef"
         style="text-align: center; margin-top: 20px"
