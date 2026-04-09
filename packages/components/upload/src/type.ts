@@ -25,6 +25,23 @@ export const uploadProps = {
     type: Boolean,
     default: true,
   },
+  noFooter: {
+    type: Boolean,
+    default: true,
+  },
+  manualUpload: Boolean,
+  title: {
+    type: String,
+    default: '文件导入',
+  },
+  accept: {
+    type: String,
+    default: '.xlsx,.xls',
+  },
+  limit: {
+    type: Number,
+    default: 1,
+  },
 }
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>

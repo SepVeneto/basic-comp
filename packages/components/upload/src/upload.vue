@@ -2,9 +2,10 @@
   <BcDialog
     v-model="dialogVisible"
     width="480px"
-    title="文件导入"
-    append-to-body
-    no-footer
+    :title="title"
+    :destroy-on-close="manualUpload"
+    :no-footer="noFooter"
+    @submit="handleSubmit"
   >
     <section v-loading="uploading">
       <slot name="tips">
@@ -29,11 +30,14 @@
         ref="uploadRef"
         style="text-align: center; margin-top: 20px"
         action=""
-        :show-file-list="false"
+        :show-file-list="manualUpload"
         with-credentials
         :http-request="uploadFile"
-        accept=".xlsx,.xls"
+        :accept="accept"
         :drag="drag"
+        :limit="limit"
+        :auto-upload="!manualUpload"
+        :on-exceed="onExceed"
       >
         <template v-if="drag">
           <el-icon class="el-icon--upload">
@@ -61,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import type { UploadRequestOptions } from 'element-plus'
+import { ElMessage, type UploadRequestOptions, type UploadUserFile } from 'element-plus'
 import { computed, defineComponent, ref } from 'vue'
 import { uploadProps } from './type'
 import { Plus as IconPlus } from '@element-plus/icons-vue'
@@ -87,6 +91,10 @@ export default defineComponent({
         context.emit('update:modelValue', visible)
       },
     })
+
+    function handleSubmit() {
+      uploadRef.value.submit()
+    }
 
     function uploadFile(options: UploadRequestOptions) {
       uploading.value = true
@@ -118,6 +126,11 @@ export default defineComponent({
         // upload.uploadFiles = [];
       })
     }
+
+    function onExceed(_files: File[], _uploadFiles: UploadUserFile[]) {
+      ElMessage.warning(`一次最多上传${props.limit}个文件`)
+    }
+
     function handleDownloadTemplate() {
       props.templateApi?.()
     }
@@ -128,6 +141,8 @@ export default defineComponent({
 
       uploadFile,
       handleDownloadTemplate,
+      handleSubmit,
+      onExceed,
     }
   },
 })
