@@ -65,7 +65,8 @@
 </template>
 
 <script lang="ts">
-import { ElMessage, type UploadRequestOptions, type UploadUserFile } from 'element-plus'
+import type { UploadRequestOptions, UploadUserFile } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { computed, defineComponent, ref } from 'vue'
 import { uploadProps } from './type'
 import { Plus as IconPlus } from '@element-plus/icons-vue'
