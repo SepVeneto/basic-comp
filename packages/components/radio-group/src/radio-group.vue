@@ -11,6 +11,7 @@
       <ElRadio
         v-for="item in radioOptions"
         :key="item[optionKey || optionValue]"
+        :label="item[optionKey || optionValue]"
         :value="item[optionValue] == null ? item : item[optionValue]"
         :disabled="itemDisabled && itemDisabled(item)"
       >
@@ -23,6 +24,7 @@
       <ElRadioButton
         v-for="item in radioOptions"
         :key="item[optionKey || optionValue]"
+        :label="item[optionKey || optionValue]"
         :value="item[optionValue] == null ? item : item[optionValue]"
         :disabled="itemDisabled && itemDisabled(item)"
       >
