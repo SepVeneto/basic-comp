@@ -14,6 +14,12 @@ export interface ConfigProviderSelectProps {
   arrayName?: string,
   apis?: Record<string, () => Promise<ApiResponseType>>
 }
+export interface ConfigProviderRadioGroupProps {
+  label?: string,
+  value?: string,
+  arrayName?: string,
+  apis?: Record<string, () => Promise<ApiResponseType>>
+}
 export interface ConfigProviderPaginationProps {
   pageName?: string
   pageSizeName?: string
@@ -32,6 +38,9 @@ export const configProviderProps = {
     type: Object as PropType<ConfigProviderSearchProps>,
   },
   select: {
+    type: Object as PropType<ConfigProviderSelectProps>,
+  },
+  radioGroup: {
     type: Object as PropType<ConfigProviderSelectProps>,
   },
   response: {

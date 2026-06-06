@@ -13,6 +13,7 @@ import { BcConfigProvider } from '@basic-comp/components/configProvider'
 import { BcStatus } from '@basic-comp/components/status'
 import { BcDatePicker } from '@basic-comp/components/date-picker'
 import { BcForm, BcFormItem } from '@basic-comp/components/form'
+import { BcRadioGroup } from '@basic-comp/components'
 
 import type { Plugin } from 'vue'
 
@@ -33,6 +34,7 @@ export default [
   BcSvgIcon,
   BcConfigProvider,
   BcDatePicker,
+  BcRadioGroup,
 
   createDialog,
 ] as Plugin[]

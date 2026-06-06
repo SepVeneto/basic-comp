@@ -9,6 +9,7 @@ export * from './select'
 export * from './svgIcon'
 export * from './upload'
 export * from './motion'
+export * from './radio-group'
 export * from './motionGroup'
 
 export declare interface ApiResponseType {

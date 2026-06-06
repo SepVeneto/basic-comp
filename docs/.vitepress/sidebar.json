@@ -50,6 +50,10 @@
         "text": "Input 输入框"
       },
       {
+        "link": "/components/radio",
+        "text": "Radio 单选框"
+      },
+      {
         "link": "/components/upload",
         "text": "Upload 上传"
       },
