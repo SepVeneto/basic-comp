@@ -125,7 +125,7 @@ export default defineComponent({
     })
 
     props.immediate && getList()
-    props.defaultValue && context.emit('update:modelValue', props.defaultValue)
+    props.defaultValue && !props.modelValue && context.emit('update:modelValue', props.defaultValue)
 
     function getList() {
       let api = props.api
