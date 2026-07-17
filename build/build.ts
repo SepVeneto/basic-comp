@@ -31,8 +31,8 @@ async function copyFiles() {
 }
 
 (async () => {
-  console.log('build components')
-  await buildModules()
+  // console.log('build components')
+  // await buildModules()
 
   console.log('generate types')
   await generateTypesDefinitions()
@@ -45,15 +45,15 @@ async function copyFiles() {
   // await buildIndexEntry()
 
   // console.log('copy type/package')
-  await copyFiles()
+  // await copyFiles()
 
-  console.log('copy style')
-  execSync('npm run build:style')
-  await copyStyle()
+  // console.log('copy style')
+  // execSync('npm run build:style')
+  // await copyStyle()
 
-  await copyReadme()
+  // await copyReadme()
 
-  await copyTypesDefinitions()
+  // await copyTypesDefinitions()
 
   // console.log('pack')
   // execSync('cd ./dist && npm pack --pack-destination ../')

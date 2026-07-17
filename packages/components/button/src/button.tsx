@@ -1,3 +1,4 @@
+import type { VNode } from 'vue'
 import { defineComponent } from 'vue'
 import { ElButton, ElMessageBox, ElTooltip } from 'element-plus'
 import { buttonProps } from './type'
@@ -25,7 +26,7 @@ export default defineComponent({
         context.emit('click', event)
       }
     }
-    const tooltip = (node: () => JSX.Element) => (
+    const tooltip = (node: () => VNode) => (
       <el-tooltip
         placement="top"
         v-slots={{ content: () => <span>{context.slots.default?.()}</span> }}

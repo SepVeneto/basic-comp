@@ -1,11 +1,11 @@
 import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import type { Component, PropType } from 'vue'
+import type { TableColumnInstance } from 'element-plus'
 import { ElTable, ElTableColumn } from 'element-plus'
-import type { ExtractProps } from '@basic-comp/utils'
 
-type ElTableColumnProps = ExtractProps<typeof ElTableColumn>
+type ElTableColumnProps = TableColumnInstance['$props']
 
-export default defineComponent({
+const SimpleTable: Component = defineComponent({
   name: 'SimpleTable',
   components: {
     ElTable,
@@ -13,7 +13,7 @@ export default defineComponent({
   },
   props: {
     data: {
-      type: Array,
+      type: Array as PropType<any[]>,
       default: () => ([]),
     },
     config: {
@@ -27,9 +27,11 @@ export default defineComponent({
         data={props.data}
       >
         {props.config.map(config => (
-          <ElTableColumn {...(config as any)} />
+          <ElTableColumn {...config } />
         ))}
       </ElTable>
     )
   },
 })
+
+export default SimpleTable

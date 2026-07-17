@@ -1,0 +1,21 @@
+{
+  "name": "@basic-comp/build",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "jiti ./build.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rolldown": "^1.2.0",
+    "rolldown-plugin-dts": "^0.27.11"
+  },
+  "devDependencies": {
+    "jiti": "^2.7.0",
+    "vue-tsc": "3.3.7"
+  }
+}

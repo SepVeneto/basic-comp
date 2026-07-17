@@ -1,5 +1,5 @@
-import type { RowType } from './customTable'
-import type { ComputedRef, Ref } from 'vue'
+import type { RowType } from './type'
+import type { ComputedRef, Ref, VNode } from 'vue'
 import { computed, shallowRef, watchEffect } from 'vue'
 
 type Key = string | number
@@ -11,7 +11,7 @@ export function useSelection(
     pageData: ComputedRef<Record<string, any>[]>,
     getRecordByKey: (key: string) => Record<string, any>,
   },
-): [(data: RowType, config: Record<string, any>) => JSX.Element, () => JSX.Element | null] {
+): [(data: RowType, config: Record<string, any>) => VNode, () => VNode | null] {
   const { getRowKey, pageData } = configRef
   const mergedRowSelection = computed(() => {
     const tmp = rowSelectionRef.value ?? {}

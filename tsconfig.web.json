@@ -1,16 +1,22 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "composite": true,
     "jsx": "preserve",
-    "lib": ["ES2018", "DOM", "DOM.Iterable"],
-    // "types": ["unplugin-vue-macros/macros-global"],
+    "baseUrl": "./",
+    "jsxImportSource": "vue",
+    "lib": ["ES2018", "ES2022.Intl", "DOM", "DOM.Iterable"],
+    "types": [],
     "skipLibCheck": true
   },
-  "include": ["packages", "types/components.d.ts", "types/env.d.ts"],
+  "include": ["packages", "typings/env.d.ts", "typings/style.d.ts"],
   "exclude": [
     "node_modules",
     "**/dist",
-    "**/gulpfile.ts",
-    "**/__tests__/**/*"
+    "**/__tests__/**/*",
+    "**/buildfile.ts",
+    "**/test-helper",
+    "packages/test-utils",
+    "**/*.md"
   ]
 }
