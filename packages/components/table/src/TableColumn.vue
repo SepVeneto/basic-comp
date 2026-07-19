@@ -57,7 +57,7 @@
 <script lang="ts" setup>
 import { ElTableColumn } from 'element-plus'
 import type { RowType } from './type'
-import CellEdit from './cellEdit'
+import CellEdit from './cellEdit.vue'
 import { extractObject, getValue, setValue } from '@basic-comp/utils'
 import { computed, getCurrentInstance } from 'vue'
 defineOptions({

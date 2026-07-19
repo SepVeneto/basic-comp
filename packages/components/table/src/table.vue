@@ -10,6 +10,7 @@
       :hidden-current="!!colspanOptions"
       :body-border="!!colspanOptions"
       :row-selection="rowSelection"
+      :row-key="rowKey"
       :empty-text="emptyText"
       v-bind="$attrs"
     >
@@ -71,7 +72,7 @@ const params = defineModel<Record<string, any>>({ default: () => ({ page: 1, row
 
 const props = withDefaults(defineProps<TableProps>(), {
   immediate: true,
-  load: true,
+  apiLoad: true,
   total: 0,
   rowSelection: () => ({
     type: 'select',
@@ -141,11 +142,7 @@ const simpleData = computed(() => {
   return props.data?.slice(start, end) || []
 })
 const tableDataName = computed(() => {
-  if (props.arrayName == null) {
-    return null
-  } else {
-    return (props.arrayName || arrayName.value) ?? ''
-  }
+  return (props.arrayName || arrayName.value) ?? ''
 })
 const tableData = computed<Record<string, unknown>[]>(() => {
   if (props.data && props.data.length > 0) {
@@ -209,7 +206,7 @@ function init() {
   if (props.custom) {
     props.api && props.immediate && props.api()
   } else {
-    if (props.load && props.immediate && props.api) {
+    if (props.apiLoad && props.immediate && props.api) {
       loading.value = true
     }
     props.api && props.immediate && getList()

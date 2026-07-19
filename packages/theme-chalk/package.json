@@ -2,21 +2,12 @@
   "name": "@basic-comp/theme-chalk",
   "version": "0.0.1",
   "scripts": {
-    "build": "gulp"
+    "clean": "rimraf dist",
+    "build": "tsx buildfile.ts"
   },
   "devDependencies": {
-    "@types/gulp": "^4.0.9",
-    "@types/gulp-autoprefixer": "^0.0.33",
-    "@types/gulp-clean-css": "^4.3.0",
-    "@types/gulp-sass": "^5.0.0",
-    "@types/node": "^18.11.19",
-    "gulp": "^5.0.1",
-    "gulp-autoprefixer": "^8.0.0",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-sass": "^5.1.0",
-    "kolorist": "^1.5.1",
-    "sass": "^1.52.3",
-    "ts-node": "^10.8.1",
-    "typescript": "^4.9.5"
+    "sass-embedded": "^1.100.0",
+    "lightningcss": "^1.32.0",
+    "tsx": "catalog:"
   }
 }

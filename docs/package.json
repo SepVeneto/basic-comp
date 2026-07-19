@@ -22,9 +22,10 @@
   },
   "dependencies": {
     "@vue/shared": "^3.5.22",
+    "@vueuse/core": "^14.3.0",
     "@vueuse/integrations": "^10.1.2",
-    "element-plus": "^2.11.5",
     "axios": "^1.12.2",
+    "element-plus": "^2.11.5",
     "normalize.css": "^8.0.1",
     "prismjs": "^1.25.0",
     "sortablejs": "^1.15.0",

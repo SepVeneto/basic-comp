@@ -5,16 +5,19 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "jiti ./build.ts"
+    "start": "jiti ./buildfile.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "rolldown": "^1.2.0",
-    "rolldown-plugin-dts": "^0.27.11"
+    "rolldown-plugin-dts": "0.25.0",
+    "@vitejs/plugin-vue": "catalog:",
+    "@vitejs/plugin-vue-jsx": "catalog:"
   },
   "devDependencies": {
+    "@pnpm/types": "^1101.4.0",
     "jiti": "^2.7.0",
     "vue-tsc": "3.3.7"
   }

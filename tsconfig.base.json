@@ -15,7 +15,9 @@
     "rootDir": ".",
     "types": [],
     "paths": {
-      "@basic-comp/*": ["packages/*"]
+      "@basic-comp/components": ["./packages/components"],
+      "@basic-comp/components/*": ["./packages/components/*"],
+      "@sepveneto/basic-comp": ["./packages/basic-comp"]
     }
   }
 }

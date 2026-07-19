@@ -19,7 +19,7 @@
     // "useDefineForClassFields": true,
     "module": "ESNext",
     // "rootDir": "./",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     // "baseUrl": "./",
     "paths": {
       "@sepveneto/basic-comp": ["../pakcages/basic-comp"]

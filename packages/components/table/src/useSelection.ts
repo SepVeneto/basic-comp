@@ -1,6 +1,7 @@
 import type { RowType } from './type'
 import type { ComputedRef, Ref, VNode } from 'vue'
-import { computed, shallowRef, watchEffect } from 'vue'
+import { computed, h, shallowRef, watchEffect } from 'vue'
+import { ElCheckbox, ElRadio } from 'element-plus'
 
 type Key = string | number
 
@@ -13,6 +14,7 @@ export function useSelection(
   },
 ): [(data: RowType, config: Record<string, any>) => VNode, () => VNode | null] {
   const { getRowKey, pageData } = configRef
+  
   const mergedRowSelection = computed(() => {
     const tmp = rowSelectionRef.value ?? {}
     return { type: 'checkbox', ...tmp }
@@ -32,6 +34,7 @@ export function useSelection(
     const keys = derivedSelectedKey.value
     return new Set(Array.isArray(keys) ? keys : [keys])
   })
+  
   const preserveRecords = shallowRef(new Map<any, Record<string, any>>())
 
   const rowKeys = computed(() => {
@@ -39,6 +42,7 @@ export function useSelection(
       .map(item => getRowKey(item))
       .filter(key => !isCheckboxDisabled(key))
   })
+  
   const checkboxPropsMap = computed(() => {
     const getCheckboxProps = mergedRowSelection.value.getCheckboxProps
     const map = new Map()
@@ -49,6 +53,7 @@ export function useSelection(
     })
     return map
   })
+  
   const isCheckboxDisabled = (key: Key) => !!checkboxPropsMap.value.get(key)?.disabled
 
   watchEffect(() => {
@@ -89,14 +94,18 @@ export function useSelection(
     }
     onSelectionChange?.(avaliableKeys, records, record)
   }
+
   function setSelectedKey(key: any, record?: RowType) {
     const { onChange: onSelectionChange } = mergedRowSelection.value
     onSelectionChange?.(key, record)
   }
 
+  // ==== 渲染相关逻辑优化改造 ====
+
   function renderCell({ row }: RowType, _config: Record<string, any>) {
     return mergedRowSelection.value.type === 'radio' ? renderRadio(row) : renderCheckbox(row)
   }
+
   function renderRadio(row: RowType['row']) {
     const keySelected = derivedSelectedKey.value
     const key = getRowKey(row)
@@ -105,16 +114,16 @@ export function useSelection(
     function onRowSelect() {
       setSelectedKey(key, row)
     }
-    return (
-      <el-radio
-        {...options}
-        label={true}
-        model-value={key === keySelected}
-        onClick={(e: MouseEvent) => e.stopPropagation()}
-        onChange={() => onRowSelect()}
-      >{ '' }</el-radio>
-    )
+
+    return h(ElRadio, {
+      ...options,
+      label: true,
+      modelValue: key === keySelected,
+      onClick: (e: MouseEvent) => e.stopPropagation(),
+      onChange: () => onRowSelect()
+    }, () => '')
   }
+
   function renderCheckbox(row: RowType['row']) {
     const keySet = new Set(derivedSelectedKeySet.value)
     const key = getRowKey(row)
@@ -129,22 +138,30 @@ export function useSelection(
       }
       setSelectedKeys(Array.from(keySet), row)
     }
-    return (
-      <el-checkbox
-        {...options}
-        model-value={keySet.has(key)}
-        onClick={(e: MouseEvent) => e.stopPropagation()}
-        onChange={() => onRowSelect()}
-      />
-    )
+
+    return h(ElCheckbox, {
+      ...options,
+      modelValue: keySet.has(key),
+      onClick: (e: MouseEvent) => e.stopPropagation(),
+      onChange: () => onRowSelect()
+    })
   }
+
   function renderTop() {
+    if (mergedRowSelection.value.type === 'radio') {
+      return null
+    }
+
     const keySet = new Set(derivedSelectedKeySet.value)
-    const disabledChecked = computed(() => rowKeys.value.length === 0)
-    const checkedCurrentAll = computed(() => rowKeys.value.every((key: string) => keySet.has(key)))
-    const checkedCurrentSome = computed(() => rowKeys.value.some((key: string) => keySet.has(key)))
+    
+    // 性能优化：原代码在 renderTop() 被调用时重复创建 computed 监听器，
+    // 这里直接平铺为普通表达式，跟随 render 执行时实时计算快照即可。
+    const disabledChecked = rowKeys.value.length === 0
+    const checkedCurrentAll = rowKeys.value.every((key: string) => keySet.has(key))
+    const checkedCurrentSome = rowKeys.value.some((key: string) => keySet.has(key))
+
     function onSelectAllChange() {
-      if (checkedCurrentAll.value) {
+      if (checkedCurrentAll) {
         rowKeys.value.forEach(key => {
           keySet.delete(key)
         })
@@ -157,16 +174,14 @@ export function useSelection(
       }
       setSelectedKeys(Array.from(keySet))
     }
-    return mergedRowSelection.value.type === 'radio'
-      ? null
-      : (
-      <el-checkbox
-        model-value={checkedCurrentAll.value && !disabledChecked.value}
-        indeterminate={!checkedCurrentAll.value && checkedCurrentSome.value}
-        onChange={onSelectAllChange}
-        disabled={disabledChecked.value}
-      />
-        )
+
+    return h(ElCheckbox, {
+      modelValue: checkedCurrentAll && !disabledChecked,
+      indeterminate: !checkedCurrentAll && checkedCurrentSome,
+      onChange: onSelectAllChange,
+      disabled: disabledChecked
+    })
   }
+
   return [renderCell, renderTop]
 }

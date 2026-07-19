@@ -26,11 +26,11 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 20.17.0
+          node-version: 22.13.0
           registry-url: https://registry.npmjs.org
 
       - name: Update npm
-        run: npm install npm@11.6.1 -g
+        run: npm install npm@11.13.0 -g
 
       - name: Get pnpm store directory
         id: pnpm-cache

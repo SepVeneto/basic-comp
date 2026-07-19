@@ -1,5 +1,5 @@
 import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
-import type { CheckboxProps, PaginationProps, RadioProps } from 'element-plus'
+import type { CheckboxProps, PaginationProps, RadioProps, TableProps as ElTableProps } from 'element-plus'
 import type Table from './table.vue'
 
 export type RowType = {
@@ -17,10 +17,16 @@ export type CellType = {
 
 type TableCheckboxOptions = CheckboxProps | RadioProps
 export type TableRowSelection = {
-  type: 'select' | 'radio',
+  type: 'select',
   preserveRowKeys?: boolean
-  selectedRowKeys?: any[]
+  selectedRowKeys?: PropertyKey[]
   onChange?: (selectedKeys: any[], records: CellType['row']) => void
+  getCheckboxProps?: (row: CellType['row']) => TableCheckboxOptions
+} | {
+  type: 'radio',
+  preserveRowKeys?: boolean
+  selectedRowKeys?: PropertyKey
+  onChange?: (selectedKeys: any, records: CellType['row']) => void
   getCheckboxProps?: (row: CellType['row']) => TableCheckboxOptions
 }
 
@@ -31,7 +37,7 @@ export type Colspanoptions = {
 
 type DefaultRow = Record<PropertyKey, any>
 
-export interface TableProps<T extends DefaultRow = DefaultRow> {
+export interface TableProps<T extends DefaultRow = DefaultRow> extends Omit<ElTableProps, 'emptyText'> {
   emptyText?: string | ((val: any, column: Record<string, any>) => string)
   /**
    * 远程获取表格数据的字段名，可通过config-provider全局设置，默认rows
@@ -89,7 +95,7 @@ export interface TableProps<T extends DefaultRow = DefaultRow> {
   /**
    * 是否开启接口请求时的loading过渡
    */
-  load?: boolean,
+  apiLoad?: boolean,
   /**
    * 是否禁用activated时自动触发列表更新
    */

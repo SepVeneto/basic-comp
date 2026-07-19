@@ -17,7 +17,7 @@ export default {
     app.use(BasicComp, {
       select: {
         apis: {
-          merchant: () => Promise.resolve({ data: [{ labe: 1, value: 1 }] }),
+          merchant: () => Promise.resolve({ data: [{ label: 1, value: 1 }] }),
         },
       },
     })
