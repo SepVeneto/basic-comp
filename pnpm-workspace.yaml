@@ -1,3 +1,21 @@
 packages:
   - 'packages/**'
   - 'docs'
+  - 'build'
+allowBuilds:
+  '@parcel/watcher': true
+  core-js: true
+  esbuild: true
+  vue-demi: true
+
+catalog:
+  vue: 3.5.25
+  '@vitejs/plugin-vue': ^6.0.8
+  '@vitejs/plugin-vue-jsx': ^5.1.6
+  tsx: ^4.23.0
+
+peerDependencyRules:
+  ignoreMissing:
+    - vite
+    - "@types/markdown-it"
+    - "@algolia/client-search"

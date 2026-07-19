@@ -2,8 +2,8 @@
 
 @include b(table) {
   .el-table__row:hover .bc-table-cell-edit {
-    padding: 5px 10px;
-    border: 1px solid #d9d9d9;
+    // padding: 5px 10px;
+    box-shadow: 0 0 0 1px #d9d9d9 inset;
     border-radius: 5px;
   }
   @include e(input) {
@@ -12,9 +12,9 @@
     height: 35px;
     input {
       font-size: 14px;
-      /* font-family: YaHei; */
+      font-family: inherit;
       line-height: 35px;
-      height: 35px;
+      // height: 35px;
     }
   }
   @include e(input--operate) {
@@ -22,7 +22,9 @@
   }
   @include e(cell-edit) {
     cursor: text;
-    padding: 6px 11px;
+    padding: 0 11px;
+    padding-top: 6px;
+    padding-bottom: 5px;
     text-overflow: ellipsis;
     overflow: hidden;
     min-height: 35px;

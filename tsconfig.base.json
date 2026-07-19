@@ -3,9 +3,8 @@
     "outDir": "dist",
     "target": "es2018",
     "module": "esnext",
-    "baseUrl": ".",
     "sourceMap": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowJs": false,
     "strict": true,
     "noUnusedLocals": true,
@@ -16,7 +15,9 @@
     "rootDir": ".",
     "types": [],
     "paths": {
-      "@basic-comp/*": ["packages/*"]
+      "@basic-comp/components": ["./packages/components"],
+      "@basic-comp/components/*": ["./packages/components/*"],
+      "@sepveneto/basic-comp": ["./packages/basic-comp"]
     }
   }
 }

@@ -12,9 +12,7 @@ export * from './motion'
 export * from './radio-group'
 export * from './motionGroup'
 
-export declare interface ApiResponseType {
-  code: string,
-  msg: string,
-  data: unknown,
-  [key: string]: unknown
+export declare interface ApiResponseType<T = unknown> {
+  data: T,
+  [key: string]: any
 }
