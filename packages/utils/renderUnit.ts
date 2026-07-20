@@ -35,7 +35,7 @@ export const renderUnit = (
   value: Record<string, unknown>,
   config: RenderInputConfigType,
   context: RenderContextType,
-): VNode | Slot | undefined => {
+): VNode | Slot | undefined | null | VNode[] => {
   const { catalog, prop, name, options, ...params } = config
   const modelValue = getValue(value, prop)
 
@@ -75,6 +75,6 @@ export const renderUnit = (
     })
   } 
   
-  // 兜底返回具名插槽
-  return context?.context?.slots[config.prop]
+  const slots = context?.context?.slots[config.prop]?.() || null
+  return slots
 }

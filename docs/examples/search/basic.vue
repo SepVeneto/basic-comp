@@ -6,12 +6,18 @@
     create
     @create="handleCreate"
     @export="handleExport"
-  />
+  >
+    <template #customProp>
+      <div>div</div>
+      <div>div2</div>
+    </template>
+  </bc-search>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 const searchConfig = ref([
+  { catalog: 'custom', name: '自定义', prop: 'customProp' },
   { catalog: 'input', name: '名称', prop: 'param.name' },
   { catalog: 'select', name: '选项', prop: 'param.option', options: [1, 2] },
   { catalog: 'datepicker', type: 'daterange', prop: 'date' },

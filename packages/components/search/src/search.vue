@@ -1,45 +1,36 @@
 <template>
   <section class="bc-search bc-search-wraper">
-    <!-- 表单区 -->
     <el-form class="bc-search-containers" :inline="true" @submit="handleSubmit">
-      <!-- 动态表单项列表 -->
       <el-form-item v-for="item in searchConfig" :key="item.prop" :label="nameMode === 'label' ? item.name : ''">
-        <!-- 使用局部函数组件调用原有的 renderUnit 动态渲染核心交互单元 -->
         <RenderUnitComponent :item="item" />
       </el-form-item>
 
-      <!-- 操作按钮排版区 -->
       <el-form-item>
         <template v-for="item in layout" :key="item">
-          <!-- 新增按钮 -->
           <slot name="create" v-if="item === 'create'">
             <bc-button type="primary" @click="emit('create')">
               新增
             </bc-button>
           </slot>
 
-          <!-- 搜索按钮 -->
           <slot name="search" v-if="item === 'search'">
             <bc-button type="primary" @click="handleSearch">
               搜索
             </bc-button>
           </slot>
 
-          <!-- 重置按钮 -->
           <slot name="reset" v-if="item === 'reset'">
             <bc-button type="primary" class="el-icon-refresh" @click="handleReset">
               重置
             </bc-button>
           </slot>
 
-          <!-- 导入/上传按钮 -->
           <slot name="upload" v-if="item === 'upload'">
             <bc-button @click="handleUpload">
               {{ upload?.text || '导入' }}
             </bc-button>
           </slot>
 
-          <!-- 导出按钮 -->
           <slot name="export" v-if="item === 'export' && needExport">
             <bc-button @click="emit('export')">
               导出
@@ -47,12 +38,10 @@
           </slot>
         </template>
 
-        <!-- 默认插槽 -->
         <slot />
       </el-form-item>
     </el-form>
 
-    <!-- 弹窗上传组件 -->
     <bc-upload v-if="upload" v-model="uploadVisible" v-bind="{ ...upload, ...$attrs }" @success="handleSearch" />
   </section>
 </template>
