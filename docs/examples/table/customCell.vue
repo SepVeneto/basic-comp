@@ -1,5 +1,5 @@
 <template>
-  <bc-table
+  <BcTable
     :config="tableConfig"
     :data="tableData"
   >
@@ -10,10 +10,11 @@
       <bc-button text type="primary" @click="handleEdit(row)">编辑</bc-button>
       <bc-button text type="primary" @click="handleRemove(row)">删除</bc-button>
     </template>
-  </bc-table>
+  </BcTable>
 </template>
 
 <script lang="ts">
+import { BcTable } from '@basic-comp/components';
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'CustomCell',

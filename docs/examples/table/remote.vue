@@ -7,6 +7,7 @@
       搜索
     </bc-button>
   </div>
+  <!-- @vue-generic {ShipData}-->
   <bc-table
     ref="tableRef"
     :config="tableConfig"
@@ -15,11 +16,28 @@
     array-name="data"
     :pagination="{ layout: 'total, prev, pager, next, jumper' }"
     :page-sizes="[100]"
-  />
+  >
+    <template #weight="{row}">
+      <div>{{ row.name }}</div>
+    </template>
+  </bc-table>
 </template>
 
 <script lang="ts" setup>
+import { BcTable } from '@basic-comp/components'
 import { ref } from 'vue'
+
+type ShipData = {
+  country: string
+  catalog: string
+  name: string
+  originName: string
+  date: string
+  address: string
+  height: string
+  weight: string
+}
+
 const tableConfig = ref([
   { label: '国籍', prop: 'country' },
   { label: '生日', prop: 'date' },
@@ -30,7 +48,7 @@ const tableConfig = ref([
   { label: '身高', prop: 'height' },
   { label: '体重', prop: 'weight' },
 ])
-const tableData = ref([
+const tableData = ref<ShipData[]>([
   {
     country: '意大利',
     catalog: '战列舰',
@@ -77,7 +95,7 @@ function handleSearch() {
   tableRef.value.getList()
 }
 function getList() {
-  return new Promise(resolve => {
+  return new Promise<{ data: { data: ShipData[] }}>(resolve => {
     setTimeout(() => {
       resolve({
         data: {

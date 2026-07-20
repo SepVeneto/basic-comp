@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts" setup>
+import { BcTable } from '@basic-comp/components'
 import { ref } from 'vue'
 
 const selectedRowKeys = ref<string>('')

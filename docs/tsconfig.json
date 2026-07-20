@@ -22,11 +22,11 @@
     "moduleResolution": "bundler",
     // "baseUrl": "./",
     "paths": {
-      "@sepveneto/basic-comp": ["../pakcages/basic-comp"]
+      "@sepveneto/basic-comp": ["../pakcages/basic-comp/index"]
     },
     // "rootDirs": [],
     // "typeRoots": [],
-    "types": ["element-plus/global", "./global"],
+    "types": ["element-plus/global", "../types/global"],
     // "allowUmdGlobalAccess": true,
     "resolveJsonModule": true,
     // "noResolve": true,
