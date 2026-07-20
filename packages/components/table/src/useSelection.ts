@@ -1,12 +1,12 @@
-import type { RowType } from './type'
+import type { DefaultRow, RowType, TableRowSelection } from './type'
 import type { ComputedRef, Ref, VNode } from 'vue'
 import { computed, h, shallowRef, watchEffect } from 'vue'
 import { ElCheckbox, ElRadio } from 'element-plus'
 
 type Key = string | number
 
-export function useSelection(
-  rowSelectionRef: Ref<any>,
+export function useSelection<T extends DefaultRow> (
+  rowSelectionRef: Ref<TableRowSelection<T> | undefined>,
   configRef: {
     getRowKey: (row: Record<string, any>) => string,
     pageData: ComputedRef<Record<string, any>[]>,
