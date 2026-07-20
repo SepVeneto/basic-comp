@@ -93,6 +93,10 @@ function clearSelection() {
   refTable.value?.clearSelection()
 }
 
+defineSlots<{
+  [key: string]: (row: any, column: any, $index: number) => any
+}>()
+
 defineExpose({
   clearSelection,
   getRef: () => refTable.value,

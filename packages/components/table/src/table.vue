@@ -49,10 +49,10 @@
   </section>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends DefaultRow = DefaultRow, R = any">
 import { computed, onActivated, ref, useTemplateRef } from 'vue'
 import CustomTable from './customTable.vue'
-import type { CellType, TableProps } from './type'
+import type { CellType, DefaultRow, TableProps } from './type'
 import CustomPagination from './pagination.vue'
 import { useConfigInject } from '@basic-comp/hooks'
 import type { ApiResponseType } from '@basic-comp/components/type'
@@ -70,7 +70,12 @@ defineExpose({
 
 const params = defineModel<Record<string, any>>({ default: () => ({ page: 1, rows: 20 }) })
 
-const props = withDefaults(defineProps<TableProps>(), {
+const props = withDefaults(defineProps<TableProps & {
+  /**
+   * 远程数据获取的回调函数，支持promise
+   */
+  api?: () => Promise<ApiResponseType<R>>,
+}>(), {
   immediate: true,
   apiLoad: true,
   total: 0,

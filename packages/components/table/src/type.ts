@@ -1,6 +1,5 @@
 import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
 import type { CheckboxProps, PaginationProps, RadioProps, TableProps as ElTableProps } from 'element-plus'
-import type Table from './table.vue'
 
 export type RowType = {
   row: any,
@@ -35,7 +34,7 @@ export type Colspanoptions = {
   parentProp: string | null,
 }
 
-type DefaultRow = Record<PropertyKey, any>
+export type DefaultRow = Record<PropertyKey, any>
 
 export interface TableProps<T extends DefaultRow = DefaultRow> extends Omit<ElTableProps, 'emptyText'> {
   emptyText?: string | ((val: any, column: Record<string, any>) => string)
@@ -62,7 +61,7 @@ export interface TableProps<T extends DefaultRow = DefaultRow> extends Omit<ElTa
   /**
    * 表格数据的过滤器
    */
-  filter?: (data: T[]) => any,
+  filter?: (data: T[]) => T[],
   /**
    * 针对远程数据，是否需要自动获取（created阶段请求数据）
    */
@@ -72,10 +71,6 @@ export interface TableProps<T extends DefaultRow = DefaultRow> extends Omit<ElTa
    */
   showPagination?: boolean
   pagination?: PaginationProps
-  /**
-   * 远程数据获取的回调函数，支持promise
-   */
-  api?: () => Promise<any>,
   /**
    * 表格列的配置
    */
@@ -116,6 +111,3 @@ export interface TableProps<T extends DefaultRow = DefaultRow> extends Omit<ElTa
 export const tableEmits = {
   save: (cell: string, prop: string, record: object) => typeof cell === 'string' && typeof prop === 'string' && typeof record === 'object',
 }
-
-// export type TableProps = Partial<ExtractPropTypes<typeof tableProps>>
-export type TableInstance = InstanceType<typeof Table>

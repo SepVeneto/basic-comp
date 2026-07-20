@@ -65,6 +65,9 @@
     "@element-plus/icons-vue": "^2.0.0",
     "vue": "^3.2.20"
   },
+  "dependencies": {
+    "lodash-unified": "^1.0.3"
+  },
   "devDependencies": {
     "vue": "3.5.25"
   }
