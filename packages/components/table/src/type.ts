@@ -7,26 +7,26 @@ export type RowType = {
   $index: number,
 }
 
-export type CellType = {
-  row: Record<string, unknown>,
+export type CellType<T extends DefaultRow> = {
+  row: T,
   rowIndex: number,
   column: TableColumnCtx<Record<string, any>>,
   columnIndex: number,
 }
 
 type TableCheckboxOptions = CheckboxProps | RadioProps
-export type TableRowSelection = {
+export type TableRowSelection<T extends DefaultRow> = {
   type: 'select',
   preserveRowKeys?: boolean
   selectedRowKeys?: PropertyKey[]
-  onChange?: (selectedKeys: any[], records: CellType['row']) => void
-  getCheckboxProps?: (row: CellType['row']) => TableCheckboxOptions
+  onChange?: (selectedKeys: any[], records: CellType<T>['row']) => void
+  getCheckboxProps?: (row: CellType<T>['row']) => TableCheckboxOptions
 } | {
   type: 'radio',
   preserveRowKeys?: boolean
   selectedRowKeys?: PropertyKey
-  onChange?: (selectedKeys: any, records: CellType['row']) => void
-  getCheckboxProps?: (row: CellType['row']) => TableCheckboxOptions
+  onChange?: (selectedKeys: any, records: CellType<T>['row']) => void
+  getCheckboxProps?: (row: CellType<T>['row']) => TableCheckboxOptions
 }
 
 export type Colspanoptions = {
@@ -95,7 +95,7 @@ export interface TableProps<T extends DefaultRow = DefaultRow> extends Omit<ElTa
    * 是否禁用activated时自动触发列表更新
    */
   activatedUpdate?: boolean
-  rowSelection?: TableRowSelection
+  rowSelection?: TableRowSelection<T>
 }
 // export const tableProps = {
 

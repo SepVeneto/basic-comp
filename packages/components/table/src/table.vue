@@ -217,7 +217,7 @@ function init() {
     props.api && props.immediate && getList()
   }
 }
-function spanMethod({ row, column, rowIndex }: CellType) {
+function spanMethod<T extends DefaultRow>({ row, column, rowIndex }: CellType<T>) {
   const { includes = [], parentProp = null } = props.colspanOptions
   const key = column.property
   const spanKey = parentProp
