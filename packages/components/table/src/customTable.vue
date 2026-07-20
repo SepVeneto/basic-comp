@@ -52,23 +52,23 @@
   </ElTable>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T extends DefaultRow">
 import { ElTable, ElTableColumn } from 'element-plus'
 import { computed, useTemplateRef } from 'vue'
 import { useSelection } from './useSelection'
-import type { TableRowSelection } from './type'
+import type { DefaultRow, TableRowSelection } from './type'
 import TableColumn from './TableColumn.vue'
 
 const props = withDefaults(defineProps<{
   bodyBorder?: boolean,
   // eslint-disable-next-line vue/require-default-prop
   emptyText?: string |((val: any, column: Record<string, any>) => string)
-  data: any[]
+  data: T[]
   config: Record<string, any>[],
   customIcon?: boolean,
   hiddenCurrent?: boolean,
   // eslint-disable-next-line vue/require-default-prop
-  rowSelection?: TableRowSelection,
+  rowSelection?: TableRowSelection<T>,
   showOverflowTooltip?: boolean,
   // eslint-disable-next-line vue/require-default-prop
   rowKey?: string |((row: any) => string),
@@ -93,9 +93,19 @@ function clearSelection() {
   refTable.value?.clearSelection()
 }
 
-defineSlots<{
-  [key: string]: (row: any, column: any, $index: number) => any
-}>()
+type DynamicTableSlots<T, K extends string = string> = {
+  [P in K]: (scope: { 
+    row: T
+    column: Record<string, any>
+    $index: number 
+  }) => any
+} & {
+  [P in K as `${P}-header`]: (scope: { 
+    column: Record<string, any> 
+  }) => any
+}
+
+defineSlots<DynamicTableSlots<T>>()
 
 defineExpose({
   clearSelection,

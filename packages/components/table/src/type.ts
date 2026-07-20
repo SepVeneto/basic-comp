@@ -1,5 +1,6 @@
 import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
 import type { CheckboxProps, PaginationProps, RadioProps, TableProps as ElTableProps } from 'element-plus'
+import { ApiResponseType } from '@basic-comp/components/type'
 
 export type RowType = {
   row: any,
@@ -36,7 +37,11 @@ export type Colspanoptions = {
 
 export type DefaultRow = Record<PropertyKey, any>
 
-export interface TableProps<T extends DefaultRow = DefaultRow> extends Omit<ElTableProps, 'emptyText'> {
+export interface TableProps<T extends DefaultRow = DefaultRow, R = any> extends Omit<ElTableProps, 'emptyText'> {
+  /**
+   * 远程数据获取的回调函数，支持promise
+   */
+  api?: () => Promise<ApiResponseType<R>>,
   emptyText?: string | ((val: any, column: Record<string, any>) => string)
   /**
    * 远程获取表格数据的字段名，可通过config-provider全局设置，默认rows
@@ -70,7 +75,7 @@ export interface TableProps<T extends DefaultRow = DefaultRow> extends Omit<ElTa
    * 是否开启分页功能
    */
   showPagination?: boolean
-  pagination?: PaginationProps
+  pagination?: Partial<PaginationProps>
   /**
    * 表格列的配置
    */

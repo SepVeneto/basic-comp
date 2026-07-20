@@ -61,6 +61,10 @@ defineOptions({
   name: 'BcTable',
 })
 
+defineSlots<{
+  [key: string]: (scope: { row: T, column: any, $index: number}) => any
+}>()
+
 const refTable = useTemplateRef('tableRef')
 defineExpose({
   getList,
@@ -70,12 +74,7 @@ defineExpose({
 
 const params = defineModel<Record<string, any>>({ default: () => ({ page: 1, rows: 20 }) })
 
-const props = withDefaults(defineProps<TableProps & {
-  /**
-   * 远程数据获取的回调函数，支持promise
-   */
-  api?: () => Promise<ApiResponseType<R>>,
-}>(), {
+const props = withDefaults(defineProps<TableProps<T, R>>(), {
   immediate: true,
   apiLoad: true,
   total: 0,
@@ -149,7 +148,7 @@ const simpleData = computed(() => {
 const tableDataName = computed(() => {
   return (props.arrayName || arrayName.value) ?? ''
 })
-const tableData = computed<Record<string, unknown>[]>(() => {
+const tableData = computed<T[]>(() => {
   if (props.data && props.data.length > 0) {
     return props.data || []
   } else {
@@ -172,7 +171,7 @@ const totalColumn = computed(() => {
   includes.forEach(item => {
     whiteList[item] = 0
   })
-  tableData.value.forEach((row: Record<string, unknown>) => {
+  tableData.value.forEach((row) => {
     Object.keys(row).forEach(key => {
       if (!Object.keys(whiteList).includes(key)) {
         return
