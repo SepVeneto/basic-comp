@@ -1,20 +1,20 @@
-import type { DefaultRow, RowType, TableRowSelection } from './type'
 import type { ComputedRef, Ref, VNode } from 'vue'
-import { computed, h, shallowRef, watchEffect } from 'vue'
+import type { DefaultRow, RowType, TableRowSelection } from './type'
 import { ElCheckbox, ElRadio } from 'element-plus'
+import { computed, h, shallowRef, watchEffect } from 'vue'
 
 type Key = string | number
 
-export function useSelection<T extends DefaultRow> (
+export function useSelection<T extends DefaultRow>(
   rowSelectionRef: Ref<TableRowSelection<T> | undefined>,
   configRef: {
-    getRowKey: (row: Record<string, any>) => string,
-    pageData: ComputedRef<Record<string, any>[]>,
-    getRecordByKey: (key: string) => Record<string, any>,
+    getRowKey: (row: Record<string, any>) => string
+    pageData: ComputedRef<Record<string, any>[]>
+    getRecordByKey: (key: string) => Record<string, any>
   },
 ): [(data: RowType, config: Record<string, any>) => VNode, () => VNode | null] {
   const { getRowKey, pageData } = configRef
-  
+
   const mergedRowSelection = computed(() => {
     const tmp = rowSelectionRef.value ?? {}
     return { type: 'checkbox', ...tmp }
@@ -34,7 +34,7 @@ export function useSelection<T extends DefaultRow> (
     const keys = derivedSelectedKey.value
     return new Set(Array.isArray(keys) ? keys : [keys])
   })
-  
+
   const preserveRecords = shallowRef(new Map<any, Record<string, any>>())
 
   const rowKeys = computed(() => {
@@ -42,7 +42,7 @@ export function useSelection<T extends DefaultRow> (
       .map(item => getRowKey(item))
       .filter(key => !isCheckboxDisabled(key))
   })
-  
+
   const checkboxPropsMap = computed(() => {
     const getCheckboxProps = mergedRowSelection.value.getCheckboxProps
     const map = new Map()
@@ -53,7 +53,7 @@ export function useSelection<T extends DefaultRow> (
     })
     return map
   })
-  
+
   const isCheckboxDisabled = (key: Key) => !!checkboxPropsMap.value.get(key)?.disabled
 
   watchEffect(() => {
@@ -64,7 +64,7 @@ export function useSelection<T extends DefaultRow> (
   function updateRecordsCache(keys: any[]) {
     if (mergedRowSelection.value.preserveRowKeys) {
       const newCache = new Map<any, Record<string, any>>()
-      keys.forEach(key => {
+      keys.forEach((key) => {
         let record = configRef.getRecordByKey(key)
         if (!record && preserveRecords.value.has(key)) {
           record = preserveRecords.value.get(key)!
@@ -83,8 +83,9 @@ export function useSelection<T extends DefaultRow> (
     if (preserveRowKeys) {
       avaliableKeys = keys
       records = keys.map(key => preserveRecords.value.get(key)!)
-    } else {
-      keys.forEach(key => {
+    }
+    else {
+      keys.forEach((key) => {
         const record = configRef.getRecordByKey(key)
         if (record !== undefined) {
           avaliableKeys.push(key)
@@ -120,7 +121,7 @@ export function useSelection<T extends DefaultRow> (
       label: true,
       modelValue: key === keySelected,
       onClick: (e: MouseEvent) => e.stopPropagation(),
-      onChange: () => onRowSelect()
+      onChange: () => onRowSelect(),
     }, () => '')
   }
 
@@ -133,7 +134,8 @@ export function useSelection<T extends DefaultRow> (
       const rowkey = getRowKey(row)
       if (keySet.has(rowkey)) {
         keySet.delete(rowkey)
-      } else {
+      }
+      else {
         keySet.add(rowkey)
       }
       setSelectedKeys(Array.from(keySet), row)
@@ -143,7 +145,7 @@ export function useSelection<T extends DefaultRow> (
       ...options,
       modelValue: keySet.has(key),
       onClick: (e: MouseEvent) => e.stopPropagation(),
-      onChange: () => onRowSelect()
+      onChange: () => onRowSelect(),
     })
   }
 
@@ -153,7 +155,7 @@ export function useSelection<T extends DefaultRow> (
     }
 
     const keySet = new Set(derivedSelectedKeySet.value)
-    
+
     // 性能优化：原代码在 renderTop() 被调用时重复创建 computed 监听器，
     // 这里直接平铺为普通表达式，跟随 render 执行时实时计算快照即可。
     const disabledChecked = rowKeys.value.length === 0
@@ -162,11 +164,12 @@ export function useSelection<T extends DefaultRow> (
 
     function onSelectAllChange() {
       if (checkedCurrentAll) {
-        rowKeys.value.forEach(key => {
+        rowKeys.value.forEach((key) => {
           keySet.delete(key)
         })
-      } else {
-        rowKeys.value.forEach(key => {
+      }
+      else {
+        rowKeys.value.forEach((key) => {
           if (!keySet.has(key)) {
             keySet.add(key)
           }
@@ -179,7 +182,7 @@ export function useSelection<T extends DefaultRow> (
       modelValue: checkedCurrentAll && !disabledChecked,
       indeterminate: !checkedCurrentAll && checkedCurrentSome,
       onChange: onSelectAllChange,
-      disabled: disabledChecked
+      disabled: disabledChecked,
     })
   }
 

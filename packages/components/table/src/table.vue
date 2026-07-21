@@ -50,29 +50,16 @@
 </template>
 
 <script lang="ts" setup generic="T extends DefaultRow, Name extends string">
+import type { ApiResponseType } from '@basic-comp/components/type'
+import type { CellType, DefaultRow, TableProps } from './type'
+import { useConfigInject } from '@basic-comp/hooks'
 import { computed, onActivated, ref, useTemplateRef } from 'vue'
 import CustomTable from './customTable.vue'
-import type { CellType, DefaultRow, TableProps } from './type'
 import CustomPagination from './pagination.vue'
-import { useConfigInject } from '@basic-comp/hooks'
-import type { ApiResponseType } from '@basic-comp/components/type'
 
 defineOptions({
   name: 'BcTable',
 })
-
-defineSlots<{
-  [key: string]: (scope: { row: T, column: any, $index: number}) => any
-}>()
-
-const refTable = useTemplateRef('tableRef')
-defineExpose({
-  getList,
-  clearSelection: () => refTable.value?.clearSelection(),
-  getRef: () => refTable.value?.getRef(),
-})
-
-const params = defineModel<Record<string, any>>({ default: () => ({ page: 1, rows: 20 }) })
 
 const props = withDefaults(defineProps<TableProps<T, Name>>(), {
   immediate: true,
@@ -89,10 +76,24 @@ const props = withDefaults(defineProps<TableProps<T, Name>>(), {
   }),
 })
 
+defineSlots<{
+  [key: string]: (scope: { row: T, column: any, $index: number }) => any
+}>()
+
+const refTable = useTemplateRef('tableRef')
+defineExpose({
+  getList,
+  clearSelection: () => refTable.value?.clearSelection(),
+  getRef: () => refTable.value?.getRef(),
+})
+
+const params = defineModel<Record<string, any>>({ default: () => ({ page: 1, rows: 20 }) })
+
 const needShowPagination = computed(() => {
   if (typeof props.showPagination === 'boolean') {
     return props.showPagination
-  } else {
+  }
+  else {
     return !!props.pagination
   }
 })
@@ -133,7 +134,8 @@ const searchModel = computed({
 const paginationConfig = computed(() => {
   if (['string', 'boolean'].includes(typeof props.pagination)) {
     return {}
-  } else {
+  }
+  else {
     return props.pagination
   }
 })
@@ -151,7 +153,8 @@ const tableDataName = computed(() => {
 const tableData = computed<T[]>(() => {
   if (props.data && props.data.length > 0) {
     return props.data || []
-  } else {
+  }
+  else {
     return props.filter ? props.filter(arrayData.value) : arrayData.value
   }
 })
@@ -159,7 +162,8 @@ const tableData = computed<T[]>(() => {
 const list = computed(() => {
   if (props.simple) {
     return simpleData.value
-  } else {
+  }
+  else {
     return tableData.value
   }
 })
@@ -168,11 +172,11 @@ const totalColumn = computed(() => {
   const { includes = [], parentProp = null } = props.colspanOptions
   const totalColumn: Record<string, { index: number, num: number }> = {}
   const whiteList: Record<string, number> = {}
-  includes.forEach(item => {
+  includes.forEach((item) => {
     whiteList[item] = 0
   })
   tableData.value.forEach((row) => {
-    Object.keys(row).forEach(key => {
+    Object.keys(row).forEach((key) => {
       if (!Object.keys(whiteList).includes(key)) {
         return
       }
@@ -186,7 +190,8 @@ const totalColumn = computed(() => {
       }
       if (column != null) {
         Object.assign(totalColumn[spanKey], { num: column.num + 1 })
-      } else {
+      }
+      else {
         totalColumn[spanKey] = {
           index: whiteList[key],
           num: 1,
@@ -202,14 +207,16 @@ if (props.activatedUpdate) {
   onActivated(() => {
     init()
   })
-} else {
+}
+else {
   init()
 }
 
 function init() {
   if (props.custom) {
     props.api && props.immediate && props.api()
-  } else {
+  }
+  else {
     if (props.apiLoad && props.immediate && props.api) {
       loading.value = true
     }
@@ -233,7 +240,8 @@ function spanMethod<T extends DefaultRow>({ row, column, rowIndex }: CellType<T>
       colspan: 1,
       rowspan: totalColumn.value[spanKey].num,
     }
-  } else {
+  }
+  else {
     return [0, 0]
   }
 }

@@ -1,38 +1,38 @@
+import type { ApiResponseType } from '@basic-comp/components/type'
+import type { CheckboxProps, TableProps as ElTableProps, PaginationProps, RadioProps } from 'element-plus'
 import type { TableColumnCtx } from 'element-plus/lib/components/table/src/table-column/defaults'
-import type { CheckboxProps, PaginationProps, RadioProps, TableProps as ElTableProps } from 'element-plus'
-import { ApiResponseType } from '@basic-comp/components/type'
 
-export type RowType = {
-  row: any,
-  column: TableColumnCtx<Record<string, any>>,
-  $index: number,
+export interface RowType {
+  row: any
+  column: TableColumnCtx<Record<string, any>>
+  $index: number
 }
 
-export type CellType<T extends DefaultRow> = {
-  row: T,
-  rowIndex: number,
-  column: TableColumnCtx<Record<string, any>>,
-  columnIndex: number,
+export interface CellType<T extends DefaultRow> {
+  row: T
+  rowIndex: number
+  column: TableColumnCtx<Record<string, any>>
+  columnIndex: number
 }
 
 type TableCheckboxOptions = CheckboxProps | RadioProps
 export type TableRowSelection<T extends DefaultRow> = {
-  type: 'select',
+  type: 'select'
   preserveRowKeys?: boolean
   selectedRowKeys?: PropertyKey[]
   onChange?: (selectedKeys: any[], records: CellType<T>['row']) => void
   getCheckboxProps?: (row: CellType<T>['row']) => TableCheckboxOptions
 } | {
-  type: 'radio',
+  type: 'radio'
   preserveRowKeys?: boolean
   selectedRowKeys?: PropertyKey
   onChange?: (selectedKeys: any, records: CellType<T>['row']) => void
   getCheckboxProps?: (row: CellType<T>['row']) => TableCheckboxOptions
 }
 
-export type Colspanoptions = {
-  includes: string[],
-  parentProp: string | null,
+export interface Colspanoptions {
+  includes: string[]
+  parentProp: string | null
 }
 
 export type DefaultRow = Record<PropertyKey, any>
@@ -41,7 +41,7 @@ export interface TableProps<T extends DefaultRow, Name extends string> extends O
   /**
    * 远程数据获取的回调函数，支持promise
    */
-  api?: () => Promise<ApiResponseType<Name extends undefined ? T[] : { [K in Name]: T[] }>>,
+  api?: () => Promise<ApiResponseType<Name extends undefined ? T[] : { [K in Name]: T[] }>>
   emptyText?: string | ((val: any, column: Record<string, any>) => string)
   /**
    * 远程获取表格数据的字段名，可通过config-provider全局设置，默认rows
@@ -66,7 +66,7 @@ export interface TableProps<T extends DefaultRow, Name extends string> extends O
   /**
    * 表格数据的过滤器
    */
-  filter?: (data: T[]) => T[],
+  filter?: (data: T[]) => T[]
   /**
    * 针对远程数据，是否需要自动获取（created阶段请求数据）
    */
@@ -87,15 +87,15 @@ export interface TableProps<T extends DefaultRow, Name extends string> extends O
   /**
    * 固定底部的横向滚动条（Beta）
    */
-  fixXScroll?: boolean,
+  fixXScroll?: boolean
   /**
    * 简易表格，支持本地分页
    */
-  simple?: boolean,
+  simple?: boolean
   /**
    * 是否开启接口请求时的loading过渡
    */
-  apiLoad?: boolean,
+  apiLoad?: boolean
   /**
    * 是否禁用activated时自动触发列表更新
    */

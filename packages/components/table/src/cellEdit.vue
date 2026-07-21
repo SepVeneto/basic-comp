@@ -2,30 +2,29 @@
   <!-- 编辑状态 -->
   <bc-input
     v-if="editing"
-    ref="inputRef"
+    v-focus
     class="bc-table-input"
     :model-value="cell"
-    v-focus
     @update:model-value="(val: string) => { cell = val }"
     @focus="handleFocus"
     @blur="handleBlur"
     @keyup.enter="save"
   >
     <template #suffix>
-      <el-icon
+      <ElIcon
         class="bc-table-input--operate"
         color="var(--el-color-success)"
         @click="save"
       >
         <IconSelect />
-      </el-icon>
+      </ElIcon>
     </template>
   </bc-input>
 
   <!-- 展示状态 -->
-  <div 
-    v-else 
-    class="bc-table-cell-edit" 
+  <div
+    v-else
+    class="bc-table-cell-edit"
     @click="toggleEdit"
   >
     {{ modelValue }}{{ unit }}
@@ -33,13 +32,13 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
-import { ElIcon } from 'element-plus'
 import { Select as IconSelect } from '@element-plus/icons-vue'
+import { ElIcon } from 'element-plus'
+import { nextTick, ref } from 'vue'
 
 // 1. 定义组件选项
 defineOptions({
-  name: 'BcTableCellEdit'
+  name: 'BcTableCellEdit',
 })
 
 // 2. 定义 Props 与 Emits

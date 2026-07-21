@@ -11,8 +11,9 @@
 
 <script lang="ts">
 import type { PropType } from 'vue'
-import { defineComponent } from 'vue'
 import { ElPagination } from 'element-plus'
+import { defineComponent } from 'vue'
+
 export default defineComponent({
   name: 'BcTablePagination',
   components: {

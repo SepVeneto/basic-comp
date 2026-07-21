@@ -53,29 +53,31 @@
 </template>
 
 <script lang="ts" setup generic="T extends DefaultRow">
+import type { DefaultRow, TableRowSelection } from './type'
 import { ElTable, ElTableColumn } from 'element-plus'
 import { computed, useTemplateRef } from 'vue'
-import { useSelection } from './useSelection'
-import type { DefaultRow, TableRowSelection } from './type'
 import TableColumn from './TableColumn.vue'
+import { useSelection } from './useSelection'
 
 const props = withDefaults(defineProps<{
-  bodyBorder?: boolean,
-  // eslint-disable-next-line vue/require-default-prop
-  emptyText?: string |((val: any, column: Record<string, any>) => string)
+  bodyBorder?: boolean
+
+  emptyText?: string | ((val: any, column: Record<string, any>) => string)
   data: T[]
-  config: Record<string, any>[],
-  customIcon?: boolean,
-  hiddenCurrent?: boolean,
-  // eslint-disable-next-line vue/require-default-prop
-  rowSelection?: TableRowSelection<T>,
-  showOverflowTooltip?: boolean,
-  // eslint-disable-next-line vue/require-default-prop
-  rowKey?: string |((row: T) => string),
+  config: Record<string, any>[]
+  customIcon?: boolean
+  hiddenCurrent?: boolean
+
+  rowSelection?: TableRowSelection<T>
+  showOverflowTooltip?: boolean
+
+  rowKey?: string | ((row: T) => string)
 }>(), {
   bodyBorder: true,
 })
 defineEmits(['select'])
+
+defineSlots<DynamicTableSlots<T>>()
 
 const refTable = useTemplateRef('tableRef')
 
@@ -94,18 +96,16 @@ function clearSelection() {
 }
 
 type DynamicTableSlots<T, K extends string = string> = {
-  [P in K]: (scope: { 
+  [P in K]: (scope: {
     row: T
     column: Record<string, any>
-    $index: number 
+    $index: number
   }) => any
 } & {
-  [P in K as `${P}-header`]: (scope: { 
-    column: Record<string, any> 
+  [P in K as `${P}-header`]: (scope: {
+    column: Record<string, any>
   }) => any
 }
-
-defineSlots<DynamicTableSlots<T>>()
 
 defineExpose({
   clearSelection,
@@ -119,14 +119,16 @@ function getRowKey(row: T, rowKey = props.rowKey, index?: number) {
   }
   if (typeof rowKey === 'function') {
     return rowKey(row)
-  } else if (row[rowKey]) {
+  }
+  else if (row[rowKey]) {
     return row[rowKey]
-  } else {
+  }
+  else {
     return false
   }
 }
 
 function getRowByKey(key: string) {
-  return props.data.find((item) => getRowKey(item) === key)!
+  return props.data.find(item => getRowKey(item) === key)!
 }
 </script>
