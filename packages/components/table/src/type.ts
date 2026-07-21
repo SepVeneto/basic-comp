@@ -37,11 +37,69 @@ export interface Colspanoptions {
 
 export type DefaultRow = Record<PropertyKey, any>
 
-export interface TableProps<T extends DefaultRow, Name extends string> extends Omit<ElTableProps, 'emptyText'> {
+/**
+ * Application-level table type configuration.
+ *
+ * Augment this interface when every table response in an application uses the
+ * same list field:
+ *
+ * ```ts
+ * declare module '@sepveneto/basic-comp' {
+ *   interface GlobalTableProps {
+ *     arrayName: 'list'
+ *   }
+ * }
+ * ```
+ */
+export interface GlobalTableProps {}
+
+export type GlobalTableArrayName = GlobalTableProps extends { arrayName?: infer Name }
+  ? Extract<Name, string>
+  : never
+
+/** The response data shape selected by a local, global, or default list key. */
+export type TableApiData<T extends DefaultRow, Name extends string | undefined = GlobalTableArrayName>
+  = [Name] extends [never]
+    ? T[]
+    : Name extends string
+      ? { [K in Name]: T[] }
+      : T[]
+
+export type TableApi<T extends DefaultRow, Name extends string | undefined = GlobalTableArrayName>
+  = () => Promise<ApiResponseType<TableApiData<T, Name>>>
+
+export type TableApiFunction = () => Promise<ApiResponseType<any>>
+
+/** Extracts the row type from an API response using the resolved list key. */
+export type InferTableRow<
+  Api extends TableApiFunction | undefined,
+  Name extends string | undefined = GlobalTableArrayName,
+> = Api extends () => Promise<ApiResponseType<infer Data>>
+  ? [Name] extends [never]
+      ? Data extends (infer Row)[]
+        ? Row extends DefaultRow ? Row : DefaultRow
+        : DefaultRow
+      : Name extends string
+        ? Data extends Record<Name, (infer Row)[]>
+          ? Row extends DefaultRow ? Row : DefaultRow
+          : DefaultRow
+        : DefaultRow
+  : DefaultRow
+
+export type TableColumn<T extends DefaultRow> = Record<string, any> & {
+  prop?: keyof T & string
+  children?: TableColumn<T>[]
+  editable?: boolean | ((row: T) => boolean)
+}
+
+export interface TableProps<
+  T extends DefaultRow,
+  Name extends string | undefined = GlobalTableArrayName,
+> extends Omit<ElTableProps, 'emptyText'> {
   /**
    * 远程数据获取的回调函数，支持promise
    */
-  api?: () => Promise<ApiResponseType<Name extends undefined ? T[] : { [K in Name]: T[] }>>
+  api?: TableApi<T, Name>
   emptyText?: string | ((val: any, column: Record<string, any>) => string)
   /**
    * 远程获取表格数据的字段名，可通过config-provider全局设置，默认rows
@@ -79,7 +137,7 @@ export interface TableProps<T extends DefaultRow, Name extends string> extends O
   /**
    * 表格列的配置
    */
-  config: Record<string, any>[]
+  config: TableColumn<T>[]
   /**
    * 常规用法下开启分页功能，需要的总数
    */

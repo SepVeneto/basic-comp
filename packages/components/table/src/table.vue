@@ -49,9 +49,10 @@
   </section>
 </template>
 
-<script lang="ts" setup generic="T extends DefaultRow, Name extends string">
+<script lang="ts" setup generic="Api extends TableApiFunction | undefined = undefined, Name extends string | undefined = GlobalTableArrayName">
 import type { ApiResponseType } from '@basic-comp/components/type'
-import type { CellType, DefaultRow, TableProps } from './type'
+import type { Ref } from 'vue'
+import type { CellType, DefaultRow, GlobalTableArrayName, InferTableRow, TableApi, TableApiFunction, TableProps } from './type'
 import { useConfigInject } from '@basic-comp/hooks'
 import { computed, onActivated, ref, useTemplateRef } from 'vue'
 import CustomTable from './customTable.vue'
@@ -61,7 +62,7 @@ defineOptions({
   name: 'BcTable',
 })
 
-const props = withDefaults(defineProps<TableProps<T, Name>>(), {
+const props = withDefaults(defineProps<TableComponentProps>(), {
   immediate: true,
   apiLoad: true,
   total: 0,
@@ -75,10 +76,13 @@ const props = withDefaults(defineProps<TableProps<T, Name>>(), {
     parentProp: null,
   }),
 })
-
 defineSlots<{
-  [key: string]: (scope: { row: T, column: any, $index: number }) => any
+  [key: string]: (scope: { row: Row, column: any, $index: number }) => any
 }>()
+type Row = InferTableRow<Api, Name>
+type TableComponentProps = Omit<TableProps<Row, Name>, 'api'> & {
+  api?: Api & TableApi<Row, Name>
+}
 
 const refTable = useTemplateRef('tableRef')
 defineExpose({
@@ -104,7 +108,7 @@ const responseWrap = computed(() =>
 )
 const tableInject = useConfigInject('table')
 const arrayName = computed(() =>
-  tableInject.value?.arrayName || props.arrayName,
+  props.arrayName ?? tableInject.value?.arrayName,
 )
 const totalName = computed(() =>
   tableInject.value?.totalName || 'total',
@@ -117,7 +121,9 @@ const pageName = computed(() =>
   paginationInject.value?.pageName || 'page',
 )
 
-const arrayData = ref([])
+// Keep Row intact: Vue's deep Ref unwrapping cannot preserve a conditional
+// generic row type in a computed array.
+const arrayData = ref<Row[]>([]) as unknown as Ref<Row[]>
 const arrayTotal = ref(0)
 const loading = ref(false)
 
@@ -148,9 +154,9 @@ const simpleData = computed(() => {
   return props.data?.slice(start, end) || []
 })
 const tableDataName = computed(() => {
-  return (props.arrayName || arrayName.value) ?? ''
+  return props.arrayName ?? arrayName.value ?? ''
 })
-const tableData = computed<T[]>(() => {
+const tableData = computed<Row[]>(() => {
   if (props.data && props.data.length > 0) {
     return props.data || []
   }
