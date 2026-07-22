@@ -4,13 +4,13 @@
 </template>
 
 <script setup lang="ts">
+import { provideGlobalConfig } from '@basic-comp/hooks'
 import { reactive, watch } from 'vue'
 import { configProviderProps } from './type'
-import { provideGlobalConfig } from '@basic-comp/hooks'
 
 // 1. 定义组件选项
 defineOptions({
-  name: 'BcConfigProvider'
+  name: 'BcConfigProvider',
 })
 
 // 2. 接收 Props
@@ -25,7 +25,7 @@ watch(
   (newProps) => {
     Object.assign(configProvider, newProps)
   },
-  { deep: true }
+  { deep: true },
 )
 
 // 4. 全局依赖注入

@@ -1,66 +1,107 @@
 <template>
   <section class="bc-search bc-search-wraper">
-    <el-form class="bc-search-containers" :inline="true" @submit="handleSubmit">
-      <el-form-item v-for="item in searchConfig" :key="item.prop" :label="nameMode === 'label' ? item.name : ''">
+    <ElForm
+      class="bc-search-containers"
+      :inline="true"
+      @submit="handleSubmit"
+    >
+      <ElFormItem
+        v-for="item in searchConfig"
+        :key="item.prop"
+        :label="nameMode === 'label' ? item.name : ''"
+      >
         <RenderUnitComponent :item="item" />
-      </el-form-item>
+      </ElFormItem>
 
-      <el-form-item>
-        <template v-for="item in layout" :key="item">
-          <slot name="create" v-if="item === 'create'">
-            <bc-button type="primary" @click="emit('create')">
+      <ElFormItem>
+        <template
+          v-for="item in realLayout"
+          :key="item"
+        >
+          <slot
+            v-if="needCreate && item === 'create'"
+            name="create"
+          >
+            <BcButton
+              type="primary"
+              @click="emit('create')"
+            >
               新增
-            </bc-button>
+            </BcButton>
           </slot>
 
-          <slot name="search" v-if="item === 'search'">
-            <bc-button type="primary" @click="handleSearch">
+          <slot
+            v-if="item === 'search'"
+            name="search"
+          >
+            <BcButton
+              type="primary"
+              @click="handleSearch"
+            >
               搜索
-            </bc-button>
+            </BcButton>
           </slot>
 
-          <slot name="reset" v-if="item === 'reset'">
-            <bc-button type="primary" class="el-icon-refresh" @click="handleReset">
+          <slot
+            v-if="item === 'reset'"
+            name="reset"
+          >
+            <BcButton
+              type="primary"
+              class="el-icon-refresh"
+              @click="handleReset"
+            >
               重置
-            </bc-button>
+            </BcButton>
           </slot>
 
-          <slot name="upload" v-if="item === 'upload'">
-            <bc-button @click="handleUpload">
+          <slot
+            v-if="needImport && item === 'upload'"
+            name="upload"
+          >
+            <BcButton @click="handleUpload">
               {{ upload?.text || '导入' }}
-            </bc-button>
+            </BcButton>
           </slot>
 
-          <slot name="export" v-if="item === 'export' && needExport">
-            <bc-button @click="emit('export')">
+          <slot
+            v-if="needExport && item === 'export'"
+            name="export"
+          >
+            <BcButton @click="emit('export')">
               导出
-            </bc-button>
+            </BcButton>
           </slot>
         </template>
 
         <slot />
-      </el-form-item>
-    </el-form>
+      </ElFormItem>
+    </ElForm>
 
-    <bc-upload v-if="upload" v-model="uploadVisible" v-bind="{ ...upload, ...$attrs }" @success="handleSearch" />
+    <BcUpload
+      v-if="upload"
+      v-model="uploadVisible"
+      v-bind="{ ...upload, ...$attrs }"
+      @success="handleSearch"
+    />
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed, h, ref, useAttrs, useSlots, watch } from 'vue'
 import type { SetupContext } from 'vue'
-import { ElForm, ElFormItem } from 'element-plus'
+import type { RenderInputConfigType } from './type'
 import { useConfigInject } from '@basic-comp/hooks'
 import { renderUnit, setValue } from '@basic-comp/utils'
-import { BcUpload } from '../../upload'
+import { ElForm, ElFormItem } from 'element-plus'
+import { computed, h, ref, useAttrs, useSlots, watch } from 'vue'
 import BcButton from '../../button/src/button.vue'
-import type { RenderInputConfigType } from './type'
+import { BcUpload } from '../../upload'
 import { searchEmits, searchProps } from './type'
 
 // 1. 定义组件选项
 defineOptions({
   name: 'BcSearch',
-  inheritAttrs: false // 属性透传手动控制在 bc-upload 
+  inheritAttrs: false, // 属性透传手动控制在 bc-upload
 })
 
 // 2. 定义 Props 与 Emits
@@ -74,6 +115,9 @@ const attrs = useAttrs()
 // 4. 依赖注入与基础响应式状态
 const searchInject = useConfigInject('search')
 const needExport = computed(() => searchInject.value?.export ?? props.export)
+const needCreate = computed(() => searchInject.value?.create ?? props.create)
+const needImport = computed(() => searchInject.value?.import ?? props.import)
+const realLayout = computed(() => searchInject.value?.layout ?? props.layout)
 
 const paginationInject = useConfigInject('pagination')
 const pageName = computed(() => paginationInject.value?.pageName || props.pageName)
@@ -111,7 +155,7 @@ function handleSearch(params: MouseEvent | Record<string, unknown>) {
   emit('update:modelValue', {
     ...props.modelValue,
     ...(params instanceof MouseEvent ? {} : params),
-    [pageName.value]: 1
+    [pageName.value]: 1,
   })
   props.search?.()
 }
@@ -122,13 +166,16 @@ function handleReset() {
     const whiteList = Object.keys(params)
     if (!whiteList.includes(key)) {
       params[key] = Array.isArray(props.modelValue[key]) ? [] : undefined
-    } else {
+    }
+    else {
       const val = defaultParams.value[key]
       if (Array.isArray(val)) {
         params[key] = [...val]
-      } else if (isObject(val)) {
+      }
+      else if (isObject(val)) {
         params[key] = { ...val }
-      } else {
+      }
+      else {
         params[key] = val
       }
     }
@@ -144,7 +191,7 @@ function isObject(val: unknown) {
 }
 
 // 7. 局部函数式组件：衔接外部的 renderUnit 逻辑
-const RenderUnitComponent = (localProps: { item: RenderInputConfigType }) => {
+function RenderUnitComponent(localProps: { item: RenderInputConfigType }) {
   return renderUnit(h, props.modelValue as Record<string, unknown>, localProps.item, {
     nameMode: props.nameMode,
     handleSearch: props.search,

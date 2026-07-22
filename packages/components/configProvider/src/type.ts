@@ -1,23 +1,26 @@
-import type { ApiResponseType } from '@basic-comp/components/type'
+import type { ApiResponseType, SearchOperate } from '@basic-comp/components/type'
 import type { ExtractPropTypes, InjectionKey, PropType, Ref } from 'vue'
 
 export interface ConfigProviderSearchProps {
-  export?: boolean,
+  export?: boolean
+  create?: boolean
+  import?: boolean
+  layout?: SearchOperate[]
 }
 export interface ConfigProviderTableProps {
-  arrayName?: string,
-  totalName?: string,
+  arrayName?: string
+  totalName?: string
 }
 export interface ConfigProviderSelectProps {
-  label?: string,
-  value?: string,
-  arrayName?: string,
+  label?: string
+  value?: string
+  arrayName?: string
   apis?: Record<string, () => Promise<ApiResponseType>>
 }
 export interface ConfigProviderRadioGroupProps {
-  label?: string,
-  value?: string,
-  arrayName?: string,
+  label?: string
+  value?: string
+  arrayName?: string
   apis?: Record<string, () => Promise<ApiResponseType>>
 }
 export interface ConfigProviderPaginationProps {
@@ -25,7 +28,7 @@ export interface ConfigProviderPaginationProps {
   pageSizeName?: string
 }
 export interface ConfigProviderDatePicker {
-  valueFormat?: string,
+  valueFormat?: string
 }
 export const configProviderProps = {
   pagination: {
