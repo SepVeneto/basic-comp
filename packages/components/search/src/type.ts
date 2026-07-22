@@ -1,14 +1,15 @@
-import { SelectOptions } from '@sepveneto/basic-comp'
+import type { SelectOptions } from '@sepveneto/basic-comp'
 import type { ExtractPropTypes, PropType } from 'vue'
+
 export type SearchOperate = 'create' | 'search' | 'reset' | 'upload' | 'export' | 'advance'
 export type NameMode = 'placeholder' | 'label'
 
-export type RenderInputConfigType = {
-  catalog?: string,
-  prop: string,
-  name?: string,
-  options?: SelectOptions,
-  [key: string]: unknown,
+export interface RenderInputConfigType {
+  catalog?: string
+  prop: string
+  name?: string
+  options?: SelectOptions
+  [key: string]: unknown
 }
 
 export const searchProps = {
@@ -89,9 +90,9 @@ export const searchProps = {
 
 export const searchEmits = {
   'update:modelValue': (data: object) => typeof data === 'object',
-  reset: () => true,
-  create: () => true,
-  export: () => true,
+  'reset': () => true,
+  'create': () => true,
+  'export': () => true,
 }
 
 export type SearchProps = Partial<ExtractPropTypes<typeof searchProps>>

@@ -16,20 +16,23 @@ export interface CellType<T extends DefaultRow> {
 }
 
 type TableCheckboxOptions = CheckboxProps | RadioProps
-export type TableRowSelection<T extends DefaultRow> = {
-  type: 'select'
-  preserveRowKeys?: boolean
-  selectedRowKeys?: PropertyKey[]
-  onChange?: (selectedKeys: any[], records: CellType<T>['row']) => void
-  getCheckboxProps?: (row: CellType<T>['row']) => TableCheckboxOptions
-} | {
+export interface TableRadioSelection<T extends DefaultRow> {
   type: 'radio'
   preserveRowKeys?: boolean
   selectedRowKeys?: PropertyKey
-  onChange?: (selectedKeys: any, records: CellType<T>['row']) => void
-  getCheckboxProps?: (row: CellType<T>['row']) => TableCheckboxOptions
+  onChange?: (selectedKeys: any, record: T) => void
+  getCheckboxProps?: (row: T) => RadioProps
 }
 
+export interface TableCheckboxSelection<T extends DefaultRow> {
+  type: 'select'
+  preserveRowKeys?: boolean
+  selectedRowKeys?: PropertyKey[]
+  onChange?: (selectedKeys: any[], records: T[], record?: T) => void
+  getCheckboxProps?: (row: T) => TableCheckboxOptions
+}
+
+export type TableRowSelection<T extends DefaultRow> = TableRadioSelection<T> | TableCheckboxSelection<T>
 export interface Colspanoptions {
   includes: string[]
   parentProp: string | null
@@ -86,11 +89,21 @@ export type InferTableRow<
         : DefaultRow
   : DefaultRow
 
-export type TableColumn<T extends DefaultRow> = Record<string, any> & {
-  prop?: keyof T & string
-  children?: TableColumn<T>[]
-  editable?: boolean | ((row: T) => boolean)
-}
+type DataColumn<T extends DefaultRow = DefaultRow> = {
+  [K in keyof T]: {
+    prop?: K
+    editable?: boolean | ((row: T) => boolean)
+    filter?: ((value: T[K]) => string)
+  } | Partial<Omit<TableColumnCtx<T>, 'prop'>>
+}[Extract<keyof T, string>]
+
+type SlotColumn<T extends DefaultRow = DefaultRow> = {
+  prop: string
+  filter?: never
+  editable?: never
+} | Partial<Omit<TableColumnCtx<T>, 'prop'>>
+
+export type TableColumn<T extends DefaultRow> = DataColumn<T> | SlotColumn<T>
 
 export interface TableProps<
   T extends DefaultRow,

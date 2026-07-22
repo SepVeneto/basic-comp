@@ -68,7 +68,7 @@ const props = withDefaults(defineProps<{
   customIcon?: boolean
   hiddenCurrent?: boolean
 
-  rowSelection?: TableRowSelection<T>
+  rowSelection: TableRowSelection<T>
   showOverflowTooltip?: boolean
 
   rowKey?: string | ((row: T) => string)

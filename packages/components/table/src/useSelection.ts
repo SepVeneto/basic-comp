@@ -1,23 +1,23 @@
+import type { RadioProps } from 'element-plus'
 import type { ComputedRef, Ref, VNode } from 'vue'
-import type { DefaultRow, RowType, TableRowSelection } from './type'
+import type { DefaultRow, RowType, TableCheckboxSelection, TableRowSelection } from './type'
 import { ElCheckbox, ElRadio } from 'element-plus'
 import { computed, h, shallowRef, watchEffect } from 'vue'
 
 type Key = string | number
 
 export function useSelection<T extends DefaultRow>(
-  rowSelectionRef: Ref<TableRowSelection<T> | undefined>,
+  rowSelectionRef: Ref<TableRowSelection<T>>,
   configRef: {
-    getRowKey: (row: Record<string, any>) => string
-    pageData: ComputedRef<Record<string, any>[]>
-    getRecordByKey: (key: string) => Record<string, any>
+    getRowKey: (row: T) => string
+    pageData: ComputedRef<T[]>
+    getRecordByKey: (key: string) => T
   },
 ): [(data: RowType, config: Record<string, any>) => VNode, () => VNode | null] {
   const { getRowKey, pageData } = configRef
 
   const mergedRowSelection = computed(() => {
-    const tmp = rowSelectionRef.value ?? {}
-    return { type: 'checkbox', ...tmp }
+    return rowSelectionRef.value
   })
 
   const mergedSelectedKeys = computed(() => {
@@ -35,13 +35,7 @@ export function useSelection<T extends DefaultRow>(
     return new Set(Array.isArray(keys) ? keys : [keys])
   })
 
-  const preserveRecords = shallowRef(new Map<any, Record<string, any>>())
-
-  const rowKeys = computed(() => {
-    return pageData.value
-      .map(item => getRowKey(item))
-      .filter(key => !isCheckboxDisabled(key))
-  })
+  const preserveRecords = shallowRef(new Map<any, T>())
 
   const checkboxPropsMap = computed(() => {
     const getCheckboxProps = mergedRowSelection.value.getCheckboxProps
@@ -56,6 +50,12 @@ export function useSelection<T extends DefaultRow>(
 
   const isCheckboxDisabled = (key: Key) => !!checkboxPropsMap.value.get(key)?.disabled
 
+  const rowKeys = computed(() => {
+    return pageData.value
+      .map(item => getRowKey(item))
+      .filter(key => !isCheckboxDisabled(key))
+  })
+
   watchEffect(() => {
     const keys = mergedSelectedKeys.value
     updateRecordsCache(Array.isArray(keys) ? keys : [keys])
@@ -63,7 +63,7 @@ export function useSelection<T extends DefaultRow>(
 
   function updateRecordsCache(keys: any[]) {
     if (mergedRowSelection.value.preserveRowKeys) {
-      const newCache = new Map<any, Record<string, any>>()
+      const newCache = new Map<any, T>()
       keys.forEach((key) => {
         let record = configRef.getRecordByKey(key)
         if (!record && preserveRecords.value.has(key)) {
@@ -75,9 +75,16 @@ export function useSelection<T extends DefaultRow>(
     }
   }
 
-  function setSelectedKeys(keys: any[], record?: RowType) {
+  function isMultiple(config: TableRowSelection<T>): config is TableCheckboxSelection<T> {
+    return config.type === 'select'
+  }
+
+  function setSelectedKeys(keys: any[], record?: T) {
+    if (!isMultiple(mergedRowSelection.value))
+      return
+
     let avaliableKeys: any[] = []
-    let records: Record<string, any>[] = []
+    let records: T[] = []
     updateRecordsCache(keys)
     const { preserveRowKeys, onChange: onSelectionChange } = mergedRowSelection.value
     if (preserveRowKeys) {
@@ -96,7 +103,9 @@ export function useSelection<T extends DefaultRow>(
     onSelectionChange?.(avaliableKeys, records, record)
   }
 
-  function setSelectedKey(key: any, record?: RowType) {
+  function setSelectedKey(key: any, record: T) {
+    if (isMultiple(mergedRowSelection.value))
+      return
     const { onChange: onSelectionChange } = mergedRowSelection.value
     onSelectionChange?.(key, record)
   }
@@ -117,7 +126,7 @@ export function useSelection<T extends DefaultRow>(
     }
 
     return h(ElRadio, {
-      ...options,
+      ...options as RadioProps,
       label: true,
       modelValue: key === keySelected,
       onClick: (e: MouseEvent) => e.stopPropagation(),

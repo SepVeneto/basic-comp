@@ -78,7 +78,6 @@ function handleFocus() {
 }
 
 function handleBlur() {
-  return
   if (editing.value) {
     toggleEdit()
     emit('blur') // 补齐原有隐藏逻辑对应的 blur 事件上报
