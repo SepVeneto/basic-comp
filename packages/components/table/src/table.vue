@@ -127,14 +127,9 @@ const arrayData = ref<Row[]>([]) as unknown as Ref<Row[]>
 const arrayTotal = ref(0)
 const loading = ref(false)
 
-const searchModel = computed({
-  get() {
-    const { [pageName.value]: page, [pageSizeName.value]: rows, ...rest } = params.value
-    return { page, rows, ...rest }
-  },
-  set(obj: Record<string, unknown>) {
-    updateParams(obj)
-  },
+const searchModel = computed(() => {
+  const { [pageName.value]: page, [pageSizeName.value]: rows, ...rest } = params.value
+  return { page, rows, ...rest }
 })
 
 const paginationConfig = computed(() => {
@@ -281,7 +276,7 @@ function getList() {
 
 function handlePageChange(page: number) {
   searchModel.value.page = page
-  updateParams(searchModel.value)
+  updateParams()
   props.custom ? props.api?.() : getList()
 }
 function handleRowsChange(rows: number) {
@@ -289,8 +284,8 @@ function handleRowsChange(rows: number) {
   handlePageChange(1)
 }
 
-function updateParams(params: Record<string, unknown>) {
-  const { page, rows, ...args } = params
+function updateParams() {
+  const { page, rows, ...args } = searchModel.value
   params.value = {
     ...args,
     [pageName.value]: page,

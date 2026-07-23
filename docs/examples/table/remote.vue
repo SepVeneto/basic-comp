@@ -13,6 +13,7 @@
     :api="getList"
     row-key="name"
     array-name="data"
+    show-pagination
     :pagination="{ layout: 'total, prev, pager, next, jumper' }"
     :page-sizes="[100]"
   />
@@ -20,6 +21,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+
 const tableConfig = ref([
   { label: '国籍', prop: 'country' },
   { label: '生日', prop: 'date' },
@@ -77,10 +79,11 @@ function handleSearch() {
   tableRef.value.getList()
 }
 function getList() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         data: {
+          total: 100,
           data: tableData.value,
         },
       })
