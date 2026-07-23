@@ -174,7 +174,8 @@ table/dragWithHandler
 | data           | 表格数据源                                                | array               | -      | []                       |
 | api            | 远程数据获取的回调函数                                    | function(): promise | -      | -                       |
 | arrayName      | 远程获取表格数据的字段名，可通过 config-provider 全局设置 | string              | -      | -                       |
-| pagination     | 是否使用分页组件                                          | boolean             | -      | false                   |
+| show-pagination | 是否显示分页，优先级比`pagination`高 | boolean | - | - |
+| pagination     | 分页组件的配置，当不设置`show-pagination`时，设置该项会自动启用分页                                          | boolean             | -      | false                   |
 | modelValue/v-model | 分页参数，支持双向绑定                                    | object              | -      | `{ page: 1, rows: 20 }` |
 | total          | 本地数据源使用分页功能需要手动维护 total                  | number              | -      | 0                       |
 | colspanOptions | 行合并相关配置                                            | object              | -      | -                       |

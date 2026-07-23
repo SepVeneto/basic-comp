@@ -65,6 +65,7 @@ defineOptions({
 const props = withDefaults(defineProps<TableComponentProps>(), {
   immediate: true,
   apiLoad: true,
+  showPagination: undefined,
   total: 0,
   rowSelection: () => ({
     type: 'select',

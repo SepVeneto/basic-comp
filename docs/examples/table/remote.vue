@@ -13,7 +13,6 @@
     :api="getList"
     row-key="name"
     array-name="data"
-    show-pagination
     :pagination="{ layout: 'total, prev, pager, next, jumper' }"
     :page-sizes="[100]"
   />
